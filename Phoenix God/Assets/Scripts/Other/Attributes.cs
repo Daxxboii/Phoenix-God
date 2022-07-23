@@ -14,4 +14,17 @@ public static class Attributes
             List[randomIndex] = temp;
         }
     }
+
+    public static bool RandomTrueOrFalse(this bool variable)
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

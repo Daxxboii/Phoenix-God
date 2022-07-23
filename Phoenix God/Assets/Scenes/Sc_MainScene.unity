@@ -634,7 +634,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.5, y: 1}
+    m_SensorSize: {x: 0.5008881, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -956,6 +956,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1162096533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100038, guid: e82da8608e9095444b663210d49cc504,
+    type: 3}
+  m_PrefabInstance: {fileID: 740755290}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1162096534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162096533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a949771c21aa02c46adebdf78bcb2fd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1349126827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1143,15 +1161,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d5c23a836148704f81c7bb4ac002ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlaneLeft: {fileID: 308216894325249354, guid: 456d8b381bf21c04e8f5e0fc9f084678,
-    type: 3}
-  PlaneRight: {fileID: 84568632501044498, guid: d60f0b631239eed46842c479ce6ab4a2,
-    type: 3}
-  No_of_Planes_to_pool: 25
-  Distance_between_planes: 4
-  PlaneScale: 5
-  PlaneScaleLong: 2.5
-  PlaneInitialRotation: {x: -90, y: 90, z: 0}
+  Width: 12.07
+  Length: 26.47
+  X_Offset: 13.2
+  Y_Position: -31
+  TrackMaxLength: 30
+  Track_Material: {fileID: 2100000, guid: 2bf04efb33289a340b52234d568313ce, type: 2}
 --- !u!4 &1973508440
 Transform:
   m_ObjectHideFlags: 0
@@ -1160,7 +1175,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1973508438}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.134933, y: 120.91221, z: -131.75044}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

@@ -4,76 +4,103 @@ using UnityEngine;
 //using MyBox;
 public class GameManager : MonoBehaviour
 {
-    //[Foldout("World Generation",true)]
-    [Header("Pooling")]
 
-    [SerializeField] public GameObject PlaneLeft;//Plane Facing Right
-    [SerializeField] private GameObject PlaneRight;//Plane Facing Left
+    [Header("Procedural Generation")]
+    [SerializeField,Range(0f,100f)] private float Width;
+    [SerializeField,Range(0f, 100f)] private float Length;
+    [SerializeField,Range(0f, 100f),Tooltip("Slant for the pant")] private float X_Offset;//How tilted should the path be
+    [SerializeField] private float Y_Position;
+    [SerializeField, Range(0, 50)] private int TrackMaxLength;
+    [SerializeField] private Material Track_Material;
 
-    [Range(0f, 50f),Tooltip("Will spawn twice the number of planes,one for each direction"),SerializeField] private int No_of_Planes_to_pool;//Exact number of planes to start with
-    [Range(0f, 10f),SerializeField] private float Distance_between_planes;//Offset between each plane
-    [Range(1f, 10f),SerializeField] private float PlaneScale,PlaneScaleLong;
-    [SerializeField] private Vector3 PlaneInitialRotation;
-
-    private List<GameObject> Left_Ground_Planes, Right_Ground_Planes,All_Ground_Planes;//Lists to add track of planes
-    private GameObject AllPaths;
-    private Vector3 LatestPlanePosition;
-    private int index;//To keep count during loops
-
+    private Mesh TrackR, TrackL;
+    private GameObject dummy;
+    private GameObject AllFloors,PreviousSpawnedPlane;
+    private Vector3 OffsetBetweenPlanes;
+    private List<GameObject> AllPathsList;
+    private bool decideLeftOrRight;
 
     private void Awake()
     {
-        PoolFloorObjects();
+        CreateBaseMeshes();
+        SetUpBaseMesh();
+        CreateStartLayout();
     }
 
-
-    #region World Generation
-
-    //All over pooling Handler
-    void PoolFloorObjects()
+    void CreateBaseMeshes()
     {
-        AllPaths = new GameObject("All Paths");//Parenting for a tidy hierarchy
-        //AllPaths.transform.localRotation = PlaneInitialRotation;
-        All_Ground_Planes = new List<GameObject>();
-        PoolObjects(PlaneRight,Right_Ground_Planes,No_of_Planes_to_pool);
-        PoolObjects(PlaneLeft, Left_Ground_Planes, No_of_Planes_to_pool);
-        SortAtStart();
+        TrackL = new Mesh();
+        TrackR = new Mesh();
+
+        Vector3[] vertices = new Vector3[4];
+
+        vertices[0] = new Vector3(-Width, 0, -Length);
+        vertices[1] = new Vector3(-Width + X_Offset, 0, Length);
+        vertices[2] = new Vector3(Width + X_Offset, 0, Length);
+        vertices[3] = new Vector3(Width, 0, -Length);
+
+        TrackL.vertices = vertices;
+        TrackL.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
+
+        vertices[0] = new Vector3(-Width, 0, -Length);
+        vertices[1] = new Vector3(-Width - X_Offset, 0, Length);
+        vertices[2] = new Vector3(Width - X_Offset, 0, Length);
+        vertices[3] = new Vector3(Width, 0, -Length);
+
+        TrackR.vertices = vertices;
+        TrackR.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
     }
 
-    //For Spawning Planes at Start
-    void PoolObjects(GameObject plane, List<GameObject> ListToAdd, int Number_of_planes)
+    void SetUpBaseMesh()
     {
-        ListToAdd = new List<GameObject>();
-        for (int i = 0; i < No_of_Planes_to_pool; i++)
+        dummy = new GameObject("Ground_Plane");
+        dummy.AddComponent<MeshRenderer>().material = Track_Material;
+        dummy.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        dummy.AddComponent<MeshFilter>();
+    }
+
+    void CreateStartLayout()
+    {
+        AllFloors = new GameObject("All_Floors");
+        AllPathsList = new List<GameObject>();
+        OffsetBetweenPlanes = new Vector3();
+        OffsetBetweenPlanes.y = Y_Position;
+        for(int i = 0; i < TrackMaxLength; i++)
         {
-            GameObject spawnedPlane = Instantiate(plane, transform.position, Quaternion.identity);
-            spawnedPlane.transform.eulerAngles = PlaneInitialRotation;
-            //spawnedPlane.transform.localS= PlaneScaleLong;
-            spawnedPlane.transform.localScale *= PlaneScale;
-            ListToAdd.Add(spawnedPlane);
-            spawnedPlane.transform.SetParent(AllPaths.transform);
-            All_Ground_Planes.Add(spawnedPlane);
+            GameObject SpawnedPlane = Instantiate(dummy);
+            SpawnedPlane.GetComponent<MeshFilter>().mesh = decideLeftOrRight.RandomTrueOrFalse() ?TrackL:TrackR;
+            DecidePlaneXOffset(SpawnedPlane);
+            SpawnedPlane.transform.position = OffsetBetweenPlanes;
+            SpawnedPlane.transform.SetParent(AllFloors.transform);
+            OffsetBetweenPlanes.z += Length*2;
+            PreviousSpawnedPlane = SpawnedPlane;
+            AllPathsList.Add(SpawnedPlane);
         }
     }
-    //For Sorting Planes At Start
-    void SortAtStart()
+
+    void DecidePlaneXOffset(GameObject SpawnedPlane)
     {
-        index = 0;
-       All_Ground_Planes.Shuffle();
-        for (int i = 0; i < No_of_Planes_to_pool*2; i++)
+        if (PreviousSpawnedPlane != null)
         {
-            All_Ground_Planes[index].transform.position = LatestPlanePosition;
-            LatestPlanePosition.z += Distance_between_planes*PlaneScale;
-            index++;
+            Mesh SpawnedPlaneFilter = SpawnedPlane.GetComponent<MeshFilter>().sharedMesh;
+            Mesh PreviousPlaneFilter = PreviousSpawnedPlane.GetComponent<MeshFilter>().sharedMesh;
+
+            if ((SpawnedPlaneFilter == TrackL && PreviousPlaneFilter == TrackR)|| (SpawnedPlaneFilter == TrackR && PreviousPlaneFilter == TrackR))
+            {
+                OffsetBetweenPlanes.x -= X_Offset;
+            }
+            else 
+            {
+                OffsetBetweenPlanes.x += X_Offset;
+            }
         }
     }
-    //For spawning and despawning planes while playing
-    void SortDuringPlayMode()
+
+
+    private void UpdateMesh()
     {
 
     }
-
-    #endregion
 
    
 }
