@@ -1,32 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 //using MyBox;
 public class GameManager : MonoBehaviour
 {
+    public delegate void Trigger();
+    public static event Trigger ReceivedTouched;
 
-    [Header("Procedural Generation")]
+    [Header("Procedural Generation")] 
+    //Getting Both Width And Length of floor planes
     [SerializeField,Range(0f,100f)] private float Width;
     [SerializeField,Range(0f, 100f)] private float Length;
-    [SerializeField,Range(0f, 100f),Tooltip("Slant for the pant")] private float X_Offset;//How tilted should the path be
+
+    //How tilted should the path be
+    [SerializeField,Range(0f, 100f),Tooltip("Slant for the pant")] private float X_Offset;
+
+    //How High the path should be
     [SerializeField] private float Y_Position;
     [SerializeField, Range(0, 50)] private int TrackMaxLength;
+
+    //Material for the path
     [SerializeField] private Material Track_Material;
 
-    private Mesh TrackR, TrackL;
+    //Empty Variables to be assigned and generated later
+    private Mesh TrackR, TrackL;//Left and Right Track Meshes
     private GameObject dummy;
-    private GameObject AllFloors,PreviousSpawnedPlane;
+    private GameObject AllFloors,PreviousSpawnedPlane; //To keep track of all built floors
     private Vector3 OffsetBetweenPlanes;
     private List<GameObject> AllPathsList;
     private bool decideLeftOrRight;
 
     private void Awake()
     {
-        CreateBaseMeshes();
-        SetUpBaseMesh();
-        CreateStartLayout();
+        CreateBaseMeshes(); // Will Create a Left Mesh and Right Mesh
+        SetUpDummyMesh(); // Creates an empty gameobject with mesh filter
+        CreateStartLayout();// spawns empty gameobject with random L or R base mesh
     }
 
+    #region World Generation
     void CreateBaseMeshes()
     {
         TrackL = new Mesh();
@@ -51,7 +63,7 @@ public class GameManager : MonoBehaviour
         TrackR.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
     }
 
-    void SetUpBaseMesh()
+    void SetUpDummyMesh()
     {
         dummy = new GameObject("Ground_Plane");
         dummy.AddComponent<MeshRenderer>().material = Track_Material;
@@ -63,8 +75,10 @@ public class GameManager : MonoBehaviour
     {
         AllFloors = new GameObject("All_Floors");
         AllPathsList = new List<GameObject>();
+
         OffsetBetweenPlanes = new Vector3();
         OffsetBetweenPlanes.y = Y_Position;
+
         for(int i = 0; i < TrackMaxLength; i++)
         {
             GameObject SpawnedPlane = Instantiate(dummy);
@@ -96,11 +110,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #endregion
 
-    private void UpdateMesh()
+    #region Events
+    private void Update()
+    {
+#if UNITY_EDITOR
+        if (Input.GetMouseButtonDown(0))
+        {
+            ReceivedTouched.Invoke();
+        }
+#endif
+
+#if UNITY_ANDROID
+        if (Input.touchCount > 0)
+        {
+            ReceivedTouched.Invoke();
+        }
+#endif
+    }
+
+    private void CheckForTouch()
     {
 
     }
 
-   
+    #endregion
 }
