@@ -5,16 +5,19 @@ using DG.Tweening;
 //using MyBox;
 public class GameManager : MonoBehaviour
 {
+    //Triggers when Touch is recieved
     public delegate void Trigger();
     public static event Trigger ReceivedTouched;
 
+    public static GameManager GameManagerInstance;//Make a GameManger instance accesible by everyone , Singleton
+
     [Header("Procedural Generation")] 
     //Getting Both Width And Length of floor planes
-    [SerializeField,Range(0f,100f)] private float Width;
-    [SerializeField,Range(0f, 100f)] private float Length;
+    [SerializeField,Range(0f,100f)] public float Width;
+    [SerializeField,Range(0f, 100f)] public float Length;
 
     //How tilted should the path be
-    [SerializeField,Range(0f, 100f),Tooltip("Slant for the pant")] private float X_Offset;
+    [SerializeField,Range(0f, 100f),Tooltip("Slant for the path")] public float X_Offset;
 
     //How High the path should be
     [SerializeField] private float Y_Position;
@@ -26,17 +29,31 @@ public class GameManager : MonoBehaviour
     //Empty Variables to be assigned and generated later
     private Mesh TrackR, TrackL;//Left and Right Track Meshes
     private GameObject dummy;
+    private GameObject PreviousBuilds;//To cache previous Layouts
     private GameObject AllFloors,PreviousSpawnedPlane; //To keep track of all built floors
-    private Vector3 OffsetBetweenPlanes;
-    private List<GameObject> AllPathsList;
+    public static Vector3 OffsetBetweenPlanes;
+
+    public static List<GameObject> AllPathsList;
     private bool decideLeftOrRight;
+
+
+    [Header("Player Related")]
+    [SerializeField] private GameObject Player;
 
     private void Awake()
     {
+        GameManagerInstance = this;
+    }
+
+    public void SetUpWorldInEditor()
+    {
+        DestroyPreviousLayout();//Clear Up All Data
         CreateBaseMeshes(); // Will Create a Left Mesh and Right Mesh
         SetUpDummyMesh(); // Creates an empty gameobject with mesh filter
         CreateStartLayout();// spawns empty gameobject with random L or R base mesh
+        SetUpPlayerPosition();
     }
+
 
     #region World Generation
     void CreateBaseMeshes()
@@ -76,8 +93,8 @@ public class GameManager : MonoBehaviour
         AllFloors = new GameObject("All_Floors");
         AllPathsList = new List<GameObject>();
 
-        OffsetBetweenPlanes = new Vector3();
-        OffsetBetweenPlanes.y = Y_Position;
+        OffsetBetweenPlanes = new Vector3(0, Y_Position,-Length*2);
+        //OffsetBetweenPlanes.y = Y_Position;
 
         for(int i = 0; i < TrackMaxLength; i++)
         {
@@ -110,8 +127,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    #endregion
+    void DestroyPreviousLayout()
+    {
+        if (AllPathsList != null)
+        {
+            AllPathsList.Clear();
+        }
+       
+        if (AllFloors != null)
+        {
+            if (PreviousBuilds == null)
+            {
+                PreviousBuilds = new GameObject("Cached Floors");
+            }
 
+            AllFloors.SetActive(false);
+            AllFloors.transform.SetParent(PreviousBuilds.transform);
+
+            //Comment this out if you want to delete all the previous layouts 
+            /*foreach (Transform child in AllFloors.transform)
+            {
+                DestroyImmediate(child);
+            }*/
+        }
+        DestroyImmediate(dummy);
+
+    }
+
+    #endregion
     #region Events
     private void Update()
     {
@@ -130,10 +173,10 @@ public class GameManager : MonoBehaviour
 #endif
     }
 
-    private void CheckForTouch()
-    {
-
-    }
-
     #endregion
+
+    void SetUpPlayerPosition()
+    {
+        Player.transform.position = new Vector3(0, 0, -Length);
+    }
 }
