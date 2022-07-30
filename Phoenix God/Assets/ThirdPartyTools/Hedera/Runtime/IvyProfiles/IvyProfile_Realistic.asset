@@ -25,20 +25,20 @@ MonoBehaviour:
     ivyStepDistance: 0.1
     ivyLeafSize: 0.15
     ivyBranchSize: 0.1
-    maxFloatLength: 1
+    maxFloatLength: 0.833
     maxAdhesionDistance: 1
-    minLength: 0.5
-    maxLength: 2.6313462
-    maxBranchesTotal: 32
+    minLength: 0.6640693
+    maxLength: 10
+    maxBranchesTotal: 217
     primaryWeight: 0.5
     randomWeight: 0.75
     gravityWeight: 3
-    adhesionWeight: 2.11
-    branchingProbability: 0.25
+    adhesionWeight: 2.27
+    branchingProbability: 0.57
     leafProbability: 0
     leafSunlightBonus: 0.68
-    branchOptimize: 0.5
-    branchSmooth: 2
+    branchOptimize: 0
+    branchSmooth: 4
     branchTaper: 1
     namePrefix: Ivy[{0}]{1}
     markMeshAsStatic: 1
