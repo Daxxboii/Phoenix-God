@@ -101,5 +101,5 @@ Material:
     m_Colors:
     - _Color: {r: 0.9137255, g: 0.8541079, b: 0.8235294, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Hot: {r: 1, g: 0.089898266, b: 0, a: 1}
+    - _Hot: {r: 0, g: 0, b: 0, a: 1}
     - _Warm: {r: 1, g: 0.44866967, b: 0, a: 1}
