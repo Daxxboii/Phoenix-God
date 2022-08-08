@@ -2,12 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+
 //using MyBox;
 public class GameManager : MonoBehaviour
 {
-    //Triggers when Touch is recieved
-    public delegate void Trigger();
-    public static event Trigger ReceivedTouched;
 
     public static GameManager GameManagerInstance;//Make a GameManger instance accesible by everyone , Singleton
 
@@ -39,10 +37,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Related")]
     [SerializeField] private GameObject Player;
-
+    //For Inputs
+    [SerializeField] public Vector2 LRInput;
     private void Awake()
     {
-        GameManagerInstance = this;
+        if(GameManagerInstance == null)GameManagerInstance = this;
     }
 
     public void SetUpWorldInEditor()
@@ -51,18 +50,18 @@ public class GameManager : MonoBehaviour
         CreateBaseMeshes(); // Will Create a Left Mesh and Right Mesh
         SetUpDummyMesh(); // Creates an empty gameobject with mesh filter
         CreateStartLayout();// spawns empty gameobject with random L or R base mesh
-        SetUpPlayerPosition();
     }
 
 
     #region World Generation
-    void CreateBaseMeshes()
+     void CreateBaseMeshes()
     {
         TrackL = new Mesh();
         TrackR = new Mesh();
 
         Vector3[] vertices = new Vector3[4];
-
+        
+        //Vertices
         vertices[0] = new Vector3(-Width, 0, -Length);
         vertices[1] = new Vector3(-Width + X_Offset, 0, Length);
         vertices[2] = new Vector3(Width + X_Offset, 0, Length);
@@ -71,18 +70,19 @@ public class GameManager : MonoBehaviour
         TrackL.vertices = vertices;
         TrackL.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
 
+        //Vertices
         vertices[0] = new Vector3(-Width, 0, -Length);
         vertices[1] = new Vector3(-Width - X_Offset, 0, Length);
         vertices[2] = new Vector3(Width - X_Offset, 0, Length);
         vertices[3] = new Vector3(Width, 0, -Length);
-
+         
         TrackR.vertices = vertices;
         TrackR.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
     }
 
     void SetUpDummyMesh()
     {
-        dummy = new GameObject("Ground_Plane");
+        dummy = new GameObject("Track GameObject");
         dummy.AddComponent<MeshRenderer>().material = Track_Material;
         dummy.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         dummy.AddComponent<MeshFilter>();
@@ -155,28 +155,5 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-    #region Events
-    private void Update()
-    {
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-        {
-            ReceivedTouched.Invoke();
-        }
-#endif
-
-#if UNITY_ANDROID
-        if (Input.touchCount > 0)
-        {
-            ReceivedTouched.Invoke();
-        }
-#endif
-    }
-
-    #endregion
-
-    void SetUpPlayerPosition()
-    {
-        Player.transform.position = new Vector3(0, 0, -Length);
-    }
+  
 }

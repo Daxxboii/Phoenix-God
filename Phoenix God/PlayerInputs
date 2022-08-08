@@ -1,0 +1,75 @@
+// GENERATED AUTOMATICALLY FROM 'Assets/Presets/Player.inputactions'
+
+using System;
+using UnityEngine;
+using UnityEngine.Experimental.Input;
+
+
+[Serializable]
+public class Player : InputActionAssetReference
+{
+    public Player()
+    {
+    }
+    public Player(InputActionAsset asset)
+        : base(asset)
+    {
+    }
+    private bool m_Initialized;
+    private void Initialize()
+    {
+        // PlayerTouch
+        m_PlayerTouch = asset.GetActionMap("PlayerTouch");
+        m_PlayerTouch_TouchRecieved = m_PlayerTouch.GetAction("Touch Recieved");
+        m_Initialized = true;
+    }
+    private void Uninitialize()
+    {
+        m_PlayerTouch = null;
+        m_PlayerTouch_TouchRecieved = null;
+        m_Initialized = false;
+    }
+    public void SetAsset(InputActionAsset newAsset)
+    {
+        if (newAsset == asset) return;
+        if (m_Initialized) Uninitialize();
+        asset = newAsset;
+    }
+    public override void MakePrivateCopyOfActions()
+    {
+        SetAsset(ScriptableObject.Instantiate(asset));
+    }
+    // PlayerTouch
+    private InputActionMap m_PlayerTouch;
+    private InputAction m_PlayerTouch_TouchRecieved;
+    public struct PlayerTouchActions
+    {
+        private Player m_Wrapper;
+        public PlayerTouchActions(Player wrapper) { m_Wrapper = wrapper; }
+        public InputAction @TouchRecieved { get { return m_Wrapper.m_PlayerTouch_TouchRecieved; } }
+        public InputActionMap Get() { return m_Wrapper.m_PlayerTouch; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled { get { return Get().enabled; } }
+        public InputActionMap Clone() { return Get().Clone(); }
+        public static implicit operator InputActionMap(PlayerTouchActions set) { return set.Get(); }
+    }
+    public PlayerTouchActions @PlayerTouch
+    {
+        get
+        {
+            if (!m_Initialized) Initialize();
+            return new PlayerTouchActions(this);
+        }
+    }
+    private int m_AndroidSchemeIndex = -1;
+    public InputControlScheme AndroidScheme
+    {
+        get
+
+        {
+            if (m_AndroidSchemeIndex == -1) m_AndroidSchemeIndex = asset.GetControlSchemeIndex("Android ");
+            return asset.controlSchemes[m_AndroidSchemeIndex];
+        }
+    }
+}
