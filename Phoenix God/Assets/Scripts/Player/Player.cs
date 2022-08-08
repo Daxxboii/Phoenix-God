@@ -6,10 +6,9 @@ public class Player : MonoBehaviour
 {
     public static Player Singleton;
 
-    private Vector3 NextExpectedMove, NextMove;
-    private float Z_Offset;
     private float ScreenHalfWidth;
-    [SerializeField,Range(0f,1.5f)] private float TimeTakenToMove;
+
+    [SerializeField] private float PlayerSpeed;
     [SerializeField, Range(-50f, 10f)] private float FlightHeight;
     [SerializeField] private Animator Player_Animator;
     [SerializeField] private bool is_Gliding;
@@ -19,9 +18,6 @@ public class Player : MonoBehaviour
     {
         if (Singleton == null) Singleton = this;
         ScreenHalfWidth = Screen.width / 2f;
-        Z_Offset = GameManager.GameManagerInstance.Length;
-        NextExpectedMove = new Vector3(0, FlightHeight,Z_Offset );
-        NextMove.y = FlightHeight;
         Player_Animator.SetBool("Gliding", false);
     }
 
@@ -37,13 +33,20 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        if (InputManager.TouchInputX > ScreenHalfWidth)
+        transform.Translate(Vector3.forward * Time.deltaTime * PlayerSpeed);
+        if (InputManager.RecievingInput)
         {
-            Debug.Log("Moving Right");
-        }
-        else
-        {
-            Debug.Log("Moving Left");
+            if (InputManager.TouchInputX > ScreenHalfWidth)
+            {
+                Debug.Log("Moving Right");
+                transform.Translate(Vector3.right * Time.deltaTime * PlayerSpeed);
+            }
+
+            else
+            {
+                transform.Translate(Vector3.left * Time.deltaTime * PlayerSpeed);
+                Debug.Log("Moving Left");
+            }
         }
     }
     #endregion
