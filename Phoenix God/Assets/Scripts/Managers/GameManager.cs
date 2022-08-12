@@ -13,22 +13,25 @@ public class GameManager : MonoBehaviour
     [SerializeField,Range(0f,100f)] public float Width;
 
     //How High the path should be
-    [SerializeField,Range(-50f,10f)] private float Y_Position;
+    [SerializeField,Range(-50f,10f)] private float Height;
 
-    [SerializeField,HideInInspector] private List<Vector3> TurnPositions;
-    [SerializeField] private List<Vector3> AllVertices;
+    //List Of all turns
+     private List<Vector3> TurnPositions;
+    //List Of Vertices at turns
+     private List<Vector3> AllVertices;
 
+    //Number Of Turns
     [SerializeField,Range(2,50)] private int MaxNumberOfTurns;
+    //Run Up For Player
+    [SerializeField,Range(0,200)] private int RunUpDistance;
 
-    [SerializeField,Range(0,10)] private int RunUpDistance;
-
-    [SerializeField] private Vector3 ParentRotation;
+   
 
     //How Tilted the Plane should be
     [SerializeField,MinMaxSlider(1f,50f)] private Vector2 LRDeviation;
 
     //How Long the Plane should be
-    [SerializeField,MinMaxSlider(1f,100f)] private Vector2 FwdDeviation;
+    [SerializeField,MinMaxSlider(1f,200f)] private Vector2 FwdDeviation;
 
     [SerializeField,HideInInspector] List<GameObject> AllTracks;
    
@@ -36,6 +39,12 @@ public class GameManager : MonoBehaviour
   
     //Material for the path
     [SerializeField] private Material Track_Material;
+
+    //Rotation for All Planes
+    [SerializeField] private Vector3 ParentRotation;
+
+    //Mesh Generation Triangle Positions
+    private int[] triangles = { 0, 2, 1, 2, 3, 1 };
 
 
     [Header("Player Related")]
@@ -45,13 +54,18 @@ public class GameManager : MonoBehaviour
     //For Inputs
     [SerializeField] public Vector2 LRInput;
 
-    //Mesh Generation Triangle Positions
-    private int[] triangles = {0,2,1,2,3,1};
+
+    [Header("Gameplay")]
+    [SerializeField] private Transform Scene;
+    [SerializeField] private float PlayerSpeed;
+
 
 
     private void Awake()
     {
         if(GameManagerInstance == null)GameManagerInstance = this; //Singleton
+        UpdateWorld();
+
     }
 
     public void SetUpWorldInEditor()
@@ -61,43 +75,62 @@ public class GameManager : MonoBehaviour
         SpawnPlanes();//Do Spwaning
     }
 
-
-    #region World Generation
-
-    private void OnValidate()
+    void UpdateWorld() //Generation While in-game
     {
-        var Parent = GameObject.Find("Parent");
-        if (Parent != null) { Parent.transform.eulerAngles = ParentRotation; }
+        DecidePointOfTurning();//Get Vertices
+        SpawnPlanes();//Do Spwaning
     }
 
+    private void Update()
+    {
+        Scene.Translate(Vector3.forward * Time.deltaTime * PlayerSpeed);
+    }
+
+
+    #region World Generation
     public void DestroyPreviousLayout()
     {
         //All the positions where turns are made
         TurnPositions = new List<Vector3>(MaxNumberOfTurns);
 
         var Parent = GameObject.Find("Parent");
-        DestroyImmediate(Parent);
-
         var Track = GameObject.Find("Track");
-        DestroyImmediate(Track);
+
+        GameObject CachedData;
+        if (GameObject.Find("Cache") == null){CachedData = new GameObject("Cache");}
+        else{CachedData = GameObject.Find("Cache");}
+
+        if(Parent!=null) Parent.transform.SetParent(CachedData.transform);
+
+        if(Track!=null)Track.transform.SetParent(CachedData.transform);
+
+        CachedData.SetActive(false);
+       
     }
 
     public void DecidePointOfTurning()
     {
+
+        TurnPositions = new List<Vector3>(MaxNumberOfTurns);
         //Caching all points
         Vector3 PreviousPoint, CurrentPoint;
        
         PreviousPoint = Vector3.zero;
         CurrentPoint = Vector3.zero;
 
+        TurnPositions.Add(Vector3.zero);
+        Vector3 straightRunUpPath = new Vector3(0, RunUpDistance, Height);
+        TurnPositions.Add(straightRunUpPath);
+        CurrentPoint = straightRunUpPath;
+
         for (int i = 1; i <= MaxNumberOfTurns; i++)
         {
             //Distributing Points
-            PreviousPoint = new Vector3(Random.Range(LRDeviation.x, LRDeviation.y),  Random.Range(FwdDeviation.x, FwdDeviation.y),Y_Position);
+            PreviousPoint = new Vector3(Random.Range(LRDeviation.x, LRDeviation.y),  Random.Range(FwdDeviation.x, FwdDeviation.y),Height);
 
             //Checking if plane should go left or right
-            if (i % 2 == 0) CurrentPoint.x += PreviousPoint.x;
-            else CurrentPoint.x -= PreviousPoint.x;
+            if (i % 2 == 0) CurrentPoint.x = PreviousPoint.x;
+            else CurrentPoint.x = -PreviousPoint.x;
 
             CurrentPoint.y += PreviousPoint.y;
 
@@ -135,7 +168,7 @@ public class GameManager : MonoBehaviour
         var _VertIndex = 0;
 
 
-        for(int i = 0; i < MaxNumberOfTurns*2; i++)
+        for(int i = 0; i < MaxNumberOfTurns; i++)
         {
             Mesh TrackMesh = new Mesh();
             TrackMesh.name = "Procedural Track";
@@ -145,14 +178,13 @@ public class GameManager : MonoBehaviour
 
 
             List<Vector3> verts = new List<Vector3>();
-
             for (int j = 0; j <= 3; j++)
             {
                 verts.Add(AllVertices[_VertIndex]);
                 _VertIndex++;
+               
             }
             _VertIndex -= 2;
-
 
             TrackMesh.vertices = verts.ToArray();
             TrackMesh.triangles = triangles;
@@ -161,6 +193,9 @@ public class GameManager : MonoBehaviour
             Plane.GetComponent<MeshRenderer>().sharedMaterial = Track_Material;
         }
         Parent.transform.eulerAngles = ParentRotation;
+
+        Vector3 PlanePos = new Vector3(0, Height, 0);
+        Parent.transform.position = PlanePos;
     }
     #endregion
 

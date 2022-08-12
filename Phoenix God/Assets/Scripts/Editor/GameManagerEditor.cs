@@ -22,7 +22,7 @@ public class GameManagerEditor : Editor
             {
                 GUILayout.Label("World Generation");
 
-                if (GUILayout.Button("Bake Scene Paths"))
+                if (GUILayout.Button("Bake Scene For Testing"))
                 {
                     Target.SetUpWorldInEditor();
                     Debug.Log("Set Up");

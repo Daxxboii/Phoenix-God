@@ -8,10 +8,12 @@ public class Player : MonoBehaviour
 
     private float ScreenHalfWidth;
 
-    [SerializeField] private float PlayerSpeed;
-    [SerializeField, Range(-50f, 10f)] private float FlightHeight;
+    [SerializeField,Range(0,100)] private float LRPlayerSpeed;
+    [SerializeField,Range(0, 100)] private float ForwardPlayerSpeed;
+    [SerializeField,Range(-50f, 10f)] private float FlightHeight;
     [SerializeField] private Animator Player_Animator;
     [SerializeField] private bool is_Gliding;
+
 
 
     private void Awake()
@@ -32,18 +34,18 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * PlayerSpeed);
+        transform.Translate(Vector3.forward * Time.deltaTime * ForwardPlayerSpeed);
         if (InputManager.RecievingInput)
         {
             if (InputManager.TouchInputX > ScreenHalfWidth)
             {
                 Debug.Log("Moving Right");
-                transform.Translate(Vector3.right * Time.deltaTime * PlayerSpeed);
+                transform.Translate(Vector3.right * Time.deltaTime * LRPlayerSpeed);
             }
 
             else
             {
-                transform.Translate(Vector3.left * Time.deltaTime * PlayerSpeed);
+                transform.Translate(Vector3.left * Time.deltaTime * LRPlayerSpeed);
                 Debug.Log("Moving Left");
             }
         }
