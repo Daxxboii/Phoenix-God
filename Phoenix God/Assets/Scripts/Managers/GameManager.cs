@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
+
 //using MyBox;
 public class GameManager : MonoBehaviour
 {
@@ -49,46 +50,43 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Related")]
     //Player GameObject
-    [SerializeField] private GameObject Player;
+    [SerializeField] private GameObject PlayerGameObject;
 
     //For Inputs
-    [SerializeField] public Vector2 LRInput;
+    [SerializeField,HideInInspector] public Vector2 LRInput;
 
 
     [Header("Gameplay")]
     [SerializeField] private Transform Scene;
-    [SerializeField] private float PlayerSpeed;
+    [SerializeField] public bool isPlaying;
 
 
 
     private void Awake()
     {
         if(GameManagerInstance == null)GameManagerInstance = this; //Singleton
-        UpdateWorld();
+        SetUpWorldAtStart();
 
     }
 
     public void SetUpWorldInEditor()
     {
-        DestroyPreviousLayout();//Clean Up 
+        DestroyPreviousLayoutInEditor();//Clean Up 
         DecidePointOfTurning();//Get Vertices
         SpawnPlanes();//Do Spwaning
     }
 
-    void UpdateWorld() //Generation While in-game
+    void SetUpWorldAtStart() //Generation While in-game
     {
         DecidePointOfTurning();//Get Vertices
         SpawnPlanes();//Do Spwaning
     }
 
-    private void Update()
-    {
-        Scene.Translate(Vector3.forward * Time.deltaTime * PlayerSpeed);
-    }
+   
 
 
     #region World Generation
-    public void DestroyPreviousLayout()
+    public void DestroyPreviousLayoutInEditor()
     {
         //All the positions where turns are made
         TurnPositions = new List<Vector3>(MaxNumberOfTurns);
@@ -199,5 +197,10 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    private void Update()
+    {
+        Scene.Translate(Vector3.forward * Time.deltaTime * Player.Singleton.ForwardPlayerSpeed);
+    }
 
+   
 }

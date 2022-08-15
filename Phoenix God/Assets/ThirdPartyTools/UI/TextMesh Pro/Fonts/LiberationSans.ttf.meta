@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7bbeb8561e6d07543bbcc776739b7cfc
+guid: e760a430270cd0e44aeed54d92b406c9
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,10 +8,11 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Jumble
+  fontName: Liberation Sans
   fontNames:
-  - Jumble
-  fallbackFontReferences: []
+  - Liberation Sans
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     private float ScreenHalfWidth;
 
     [SerializeField,Range(0,100)] private float LRPlayerSpeed;
-    [SerializeField,Range(0, 100)] private float ForwardPlayerSpeed;
+    [SerializeField,Range(0, 100)] public float ForwardPlayerSpeed;
     [SerializeField,Range(-50f, 10f)] private float FlightHeight;
     [SerializeField] private Animator Player_Animator;
     [SerializeField] private bool is_Gliding;
@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     
     public void Update()
     {
-        Move();
+       if(GameManager.GameManagerInstance.isPlaying) Move();
     }
 
     #region Movement
