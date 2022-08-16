@@ -1053,7 +1053,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: -0.025142765, y: -1.16468544e-23, z: -2.929267e-25, w: 0.99968386}
-  m_LocalPosition: {x: 0, y: 10.6, z: -40.399998}
+  m_LocalPosition: {x: 0, y: -5.6100006, z: -40.399998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1222,7 +1222,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.5628227, y: 1}
+    m_SensorSize: {x: 0.56125355, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1239,7 +1239,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333120469}
   m_LocalRotation: {x: -0.025142765, y: -1.16468544e-23, z: -2.929267e-25, w: 0.99968386}
-  m_LocalPosition: {x: 0, y: 10.6, z: -40.399998}
+  m_LocalPosition: {x: 0, y: -5.6100006, z: -40.399998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 611505652}
@@ -2341,7 +2341,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740721052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -11.91, z: 0}
+  m_LocalPosition: {x: 0, y: -28.12, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 740367834}
@@ -4817,8 +4817,8 @@ MonoBehaviour:
   Height: -31
   MaxNumberOfTurns: 20
   RunUpDistance: 200
-  LRDeviation: {x: 8.57, y: 40.608334}
-  FwdDeviation: {x: 45.559998, y: 141.13}
+  LRDeviation: {x: 17.235683, y: 40.61}
+  FwdDeviation: {x: 88.870995, y: 141.13}
   AllTracks: []
   Track_Material: {fileID: 2100000, guid: 4743a9974310495428f6d0beda41730c, type: 2}
   ParentRotation: {x: 90, y: 0, z: 0}
