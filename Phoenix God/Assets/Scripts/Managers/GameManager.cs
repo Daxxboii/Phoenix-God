@@ -58,7 +58,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Gameplay")]
     [SerializeField] private Transform Scene;
-    [SerializeField] public bool isPlaying;
+    [HideInInspector] public bool isPlaying;
+    [SerializeField,HideInInspector] public float Score,MaxScore;
+    [SerializeField] private string MaxScoreSaveName;
 
 
 
@@ -66,6 +68,9 @@ public class GameManager : MonoBehaviour
     {
         if(GameManagerInstance == null)GameManagerInstance = this; //Singleton
         SetUpWorldAtStart();
+        
+        //Load High Score
+        if(PlayerPrefs.HasKey(MaxScoreSaveName))MaxScore = PlayerPrefs.GetFloat(MaxScoreSaveName);
 
     }
 
@@ -171,8 +176,8 @@ public class GameManager : MonoBehaviour
             Mesh TrackMesh = new Mesh();
             TrackMesh.name = "Procedural Track";
 
-            var Plane = Instantiate(Track);
-            Plane.transform.SetParent(Parent.transform);
+            
+            
 
 
             List<Vector3> verts = new List<Vector3>();
@@ -187,19 +192,39 @@ public class GameManager : MonoBehaviour
             TrackMesh.vertices = verts.ToArray();
             TrackMesh.triangles = triangles;
 
+            var Plane = Instantiate(Track);
+            Plane.transform.SetParent(Parent.transform);
             Plane.GetComponent<MeshFilter>().sharedMesh = TrackMesh;
             Plane.GetComponent<MeshRenderer>().sharedMaterial = Track_Material;
+            Plane.AddComponent<MeshCollider>();
+            Plane.layer = 9;
         }
         Parent.transform.eulerAngles = ParentRotation;
 
         Vector3 PlanePos = new Vector3(0, Height, 0);
         Parent.transform.position = PlanePos;
+
     }
     #endregion
 
     private void Update()
     {
-        Scene.Translate(Vector3.forward * Time.deltaTime * Player.Singleton.ForwardPlayerSpeed);
+        if (isPlaying)
+        { 
+            Score += Time.deltaTime;
+            if (Score > MaxScore) MaxScore = Score;
+            Scene.Translate(Vector3.forward * Time.deltaTime * Player.Singleton.ForwardPlayerSpeed);
+        }
+
+    }
+
+    public void GameOver()
+    {
+        MenuManager.Instance.GameOver();
+      
+        isPlaying = false;
+        PlayerPrefs.SetFloat(MaxScoreSaveName,MaxScore);
+        PlayerPrefs.Save();
     }
 
    

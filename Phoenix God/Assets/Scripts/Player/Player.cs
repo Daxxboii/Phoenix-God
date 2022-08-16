@@ -13,6 +13,10 @@ public class Player : MonoBehaviour
     [SerializeField,Range(-50f, 10f)] private float FlightHeight;
     [SerializeField] private Animator Player_Animator;
     [SerializeField] private bool is_Gliding;
+    [SerializeField] private LayerMask WhatIsGround;
+
+    Ray ray;
+    RaycastHit RayCastHit;
 
 
 
@@ -21,13 +25,16 @@ public class Player : MonoBehaviour
         if (Singleton == null) Singleton = this;
         ScreenHalfWidth = Screen.width / 2f;
         Player_Animator.SetBool("Gliding", false);
+
+        
+        //WhatIsGround = ~WhatIsGround;
     }
 
     
     
     public void Update()
     {
-       if(GameManager.GameManagerInstance.isPlaying) Move();
+        if (GameManager.GameManagerInstance.isPlaying) { Move(); CheckForTrack(); }
     }
 
     #region Movement
@@ -39,16 +46,28 @@ public class Player : MonoBehaviour
         {
             if (InputManager.TouchInputX > ScreenHalfWidth)
             {
-                Debug.Log("Moving Right");
+               // Debug.Log("Moving Right");
                 transform.Translate(Vector3.right * Time.deltaTime * LRPlayerSpeed);
             }
 
             else
             {
                 transform.Translate(Vector3.left * Time.deltaTime * LRPlayerSpeed);
-                Debug.Log("Moving Left");
+              //  Debug.Log("Moving Left");
             }
         }
     }
     #endregion
+
+    void CheckForTrack()
+    {
+        ray.origin = transform.position;
+        ray.direction = transform.TransformDirection(Vector3.down);
+
+
+        if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out RayCastHit, Mathf.Infinity))
+        {
+            GameManager.GameManagerInstance.GameOver();
+        }
+    }
 }
