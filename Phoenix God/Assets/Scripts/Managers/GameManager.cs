@@ -8,214 +8,44 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     public static GameManager GameManagerInstance;//Make a GameManger instance accesible by everyone , Singleton
-
-    [Header("Procedural Generation")] 
-    //Getting Both Width And Length of floor planes
-    [SerializeField,Range(0f,100f)] public float Width;
-
-    //How High the path should be
-    [SerializeField,Range(-50f,10f)] private float Height;
-
-    //List Of all turns
-     private List<Vector3> TurnPositions;
-    //List Of Vertices at turns
-     private List<Vector3> AllVertices;
-
-    //Number Of Turns
-    [SerializeField,Range(2,50)] private int MaxNumberOfTurns;
-    //Run Up For Player
-    [SerializeField,Range(0,200)] private int RunUpDistance;
-
-   
-
-    //How Tilted the Plane should be
-    [SerializeField,MinMaxSlider(1f,50f)] private Vector2 LRDeviation;
-
-    //How Long the Plane should be
-    [SerializeField,MinMaxSlider(1f,200f)] private Vector2 FwdDeviation;
-
-    [SerializeField,HideInInspector] List<GameObject> AllTracks;
-   
-    private GameObject Track;
-  
-    //Material for the path
-    [SerializeField] private Material Track_Material;
-
-    //Rotation for All Planes
-    [SerializeField] private Vector3 ParentRotation;
-
-    //Mesh Generation Triangle Positions
-    private int[] triangles = { 0, 2, 1, 2, 3, 1 };
-
+    
 
     [Header("Player Related")]
     //Player GameObject
     [SerializeField] private GameObject PlayerGameObject;
 
     //For Inputs
-    [SerializeField,HideInInspector] public Vector2 LRInput;
+    [SerializeField, HideInInspector] public Vector2 LRInput;
+
+    [HideInInspector] public Vector3 PlayerPosition;
 
 
     [Header("Gameplay")]
-    [SerializeField] private Transform Scene;
+    [SerializeField] public Transform Scene;
     [HideInInspector] public bool isPlaying;
-    [SerializeField,HideInInspector] public float Score,MaxScore;
+    [SerializeField, HideInInspector] public int Score, MaxScore;
     [SerializeField] private string MaxScoreSaveName;
-
-
-
-    private void Awake()
-    {
-        if(GameManagerInstance == null)GameManagerInstance = this; //Singleton
-        SetUpWorldAtStart();
-        
-        //Load High Score
-        if(PlayerPrefs.HasKey(MaxScoreSaveName))MaxScore = PlayerPrefs.GetFloat(MaxScoreSaveName);
-
-    }
-
-    public void SetUpWorldInEditor()
-    {
-        DestroyPreviousLayoutInEditor();//Clean Up 
-        DecidePointOfTurning();//Get Vertices
-        SpawnPlanes();//Do Spwaning
-    }
-
-    void SetUpWorldAtStart() //Generation While in-game
-    {
-        DecidePointOfTurning();//Get Vertices
-        SpawnPlanes();//Do Spwaning
-    }
+    [SerializeField] public Vector3 SceneStartPos;
 
    
 
 
-    #region World Generation
-    public void DestroyPreviousLayoutInEditor()
+    public void Awake()
     {
-        //All the positions where turns are made
-        TurnPositions = new List<Vector3>(MaxNumberOfTurns);
+        if(GameManagerInstance == null)GameManagerInstance = this; //Singleton
+        //Load High Score
+        if(PlayerPrefs.HasKey(MaxScoreSaveName))MaxScore = (int)PlayerPrefs.GetInt(MaxScoreSaveName);
 
-        var Parent = GameObject.Find("Parent");
-        var Track = GameObject.Find("Track");
-
-        GameObject CachedData;
-        if (GameObject.Find("Cache") == null){CachedData = new GameObject("Cache");}
-        else{CachedData = GameObject.Find("Cache");}
-
-        if(Parent!=null) Parent.transform.SetParent(CachedData.transform);
-
-        if(Track!=null)Track.transform.SetParent(CachedData.transform);
-
-        CachedData.SetActive(false);
-       
+        Player.PlanesHaveChanged += UpdateScore;
     }
-
-    public void DecidePointOfTurning()
-    {
-
-        TurnPositions = new List<Vector3>(MaxNumberOfTurns);
-        //Caching all points
-        Vector3 PreviousPoint, CurrentPoint;
-       
-        PreviousPoint = Vector3.zero;
-        CurrentPoint = Vector3.zero;
-
-        TurnPositions.Add(Vector3.zero);
-        Vector3 straightRunUpPath = new Vector3(0, RunUpDistance, Height);
-        TurnPositions.Add(straightRunUpPath);
-        CurrentPoint = straightRunUpPath;
-
-        for (int i = 1; i <= MaxNumberOfTurns; i++)
-        {
-            //Distributing Points
-            PreviousPoint = new Vector3(Random.Range(LRDeviation.x, LRDeviation.y),  Random.Range(FwdDeviation.x, FwdDeviation.y),Height);
-
-            //Checking if plane should go left or right
-            if (i % 2 == 0) CurrentPoint.x = PreviousPoint.x;
-            else CurrentPoint.x = -PreviousPoint.x;
-
-            CurrentPoint.y += PreviousPoint.y;
-
-            TurnPositions.Add(CurrentPoint);
-        }
-    }
-
-    public void SpawnPlanes()
-    {
-        Track = new GameObject("Track");
-        Track.AddComponent<MeshFilter>();
-        Track.AddComponent<MeshRenderer>();
-
-        var Parent = new GameObject("Parent");
-        
-
-
-        AllVertices = new List<Vector3>();
-        Vector3 UpdatedLRPosition;
-        
-
-        //Set all Vertex Points
-        foreach (Vector2 turn in TurnPositions)
-        {
-            UpdatedLRPosition = turn;
-            UpdatedLRPosition.x -= Width;
-            AllVertices.Add(UpdatedLRPosition);
-
-            UpdatedLRPosition = turn;
-            UpdatedLRPosition.x += Width;
-            AllVertices.Add(UpdatedLRPosition);
-        }
-
-
-        var _VertIndex = 0;
-
-
-        for(int i = 0; i < MaxNumberOfTurns; i++)
-        {
-            Mesh TrackMesh = new Mesh();
-            TrackMesh.name = "Procedural Track";
-
-            
-            
-
-
-            List<Vector3> verts = new List<Vector3>();
-            for (int j = 0; j <= 3; j++)
-            {
-                verts.Add(AllVertices[_VertIndex]);
-                _VertIndex++;
-               
-            }
-            _VertIndex -= 2;
-
-            TrackMesh.vertices = verts.ToArray();
-            TrackMesh.triangles = triangles;
-
-            var Plane = Instantiate(Track);
-            Plane.transform.SetParent(Parent.transform);
-            Plane.GetComponent<MeshFilter>().sharedMesh = TrackMesh;
-            Plane.GetComponent<MeshRenderer>().sharedMaterial = Track_Material;
-            Plane.AddComponent<MeshCollider>();
-            Plane.layer = 9;
-        }
-        Parent.transform.eulerAngles = ParentRotation;
-
-        Vector3 PlanePos = new Vector3(0, Height, 0);
-        Parent.transform.position = PlanePos;
-
-    }
-    #endregion
 
     private void Update()
     {
         if (isPlaying)
-        { 
-            Score += Time.deltaTime;
-            if (Score > MaxScore) MaxScore = Score;
+        {
             Scene.Translate(Vector3.forward * Time.deltaTime * Player.Singleton.ForwardPlayerSpeed);
+            PlayerPosition = PlayerGameObject.transform.position;
         }
-
     }
 
     public void GameOver()
@@ -223,9 +53,14 @@ public class GameManager : MonoBehaviour
         MenuManager.Instance.GameOver();
       
         isPlaying = false;
-        PlayerPrefs.SetFloat(MaxScoreSaveName,MaxScore);
+        PlayerPrefs.SetInt(MaxScoreSaveName,MaxScore);
         PlayerPrefs.Save();
     }
 
+    void UpdateScore()
+    {
+        Score++;
+        if (Score > MaxScore) MaxScore = Score;
+    }
    
 }

@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-[CustomEditor(typeof(GameManager))]
+[CustomEditor(typeof(WorldGenerator))]
 public class GameManagerEditor : Editor
 {
-    GameManager Target;
+    WorldGenerator Target;
 
     void OnSceneGUI()
     {
-        Target = (GameManager)target;
+        Target = (WorldGenerator)target;
 
         Handles.BeginGUI();
         {
@@ -22,10 +22,9 @@ public class GameManagerEditor : Editor
             {
                 GUILayout.Label("World Generation");
 
-                if (GUILayout.Button("Bake Scene For Testing"))
+                if (GUILayout.Button("Next"))
                 {
-                    Target.SetUpWorldInEditor();
-                    Debug.Log("Set Up");
+                    Target.UpdatePlanes();
                 }
             }
             GUILayout.EndArea();

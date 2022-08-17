@@ -33,8 +33,13 @@ public class InputManager : MonoBehaviour
 #if UNITY_ANDROID || UNITY_IOS
         if (Input.touchCount > 0)
         {
+            RecievingInput = true;
             Touch touch = Input.GetTouch(0);
-            TouchInputX = touch.position.x;
+            if(touch.position.y<(Screen.height/0.5f))TouchInputX = touch.position.x;
+        }
+        else
+        {
+            RecievingInput = false;
         }
 #endif
     }

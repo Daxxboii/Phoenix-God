@@ -4,6 +4,10 @@ using UnityEngine;
 using DG.Tweening;
 public class Player : MonoBehaviour
 {
+    public delegate void ChangedPlanes();
+    public static ChangedPlanes PlanesHaveChanged;
+
+
     public static Player Singleton;
 
     private float ScreenHalfWidth;
@@ -14,6 +18,10 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator Player_Animator;
     [SerializeField] private bool is_Gliding;
     [SerializeField] private LayerMask WhatIsGround;
+
+    [HideInInspector]public GameObject previousPlane, CurrentPlane;
+
+    Vector3 deltapos;
 
     Ray ray;
     RaycastHit RayCastHit;
@@ -30,8 +38,13 @@ public class Player : MonoBehaviour
         //WhatIsGround = ~WhatIsGround;
     }
 
-    
-    
+    public void Start()
+    {
+        CurrentPlane = WorldGenerator.Singleton.AllTracks[0];
+        previousPlane = WorldGenerator.Singleton.AllTracks[0];
+    }
+
+
     public void Update()
     {
         if (GameManager.GameManagerInstance.isPlaying) { Move(); CheckForTrack(); }
@@ -46,13 +59,19 @@ public class Player : MonoBehaviour
         {
             if (InputManager.TouchInputX > ScreenHalfWidth)
             {
-               // Debug.Log("Moving Right");
-                transform.Translate(Vector3.right * Time.deltaTime * LRPlayerSpeed);
+                // Debug.Log("Moving Right");
+                deltapos = transform.position;
+                deltapos.x += LRPlayerSpeed;
+                transform.position = Vector3.Lerp(transform.position, deltapos, Time.deltaTime);
+               //transform.Translate(Vector3.right * Time.deltaTime * LRPlayerSpeed);
             }
 
             else
             {
-                transform.Translate(Vector3.left * Time.deltaTime * LRPlayerSpeed);
+                deltapos = transform.position;
+                deltapos.x -= LRPlayerSpeed;
+                transform.position = Vector3.Lerp(transform.position, deltapos, Time.deltaTime);
+              //  transform.Translate(Vector3.left * Time.deltaTime * LRPlayerSpeed);
               //  Debug.Log("Moving Left");
             }
         }
@@ -68,6 +87,13 @@ public class Player : MonoBehaviour
         if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out RayCastHit, Mathf.Infinity))
         {
             GameManager.GameManagerInstance.GameOver();
+        }
+        else
+        {
+            CurrentPlane = RayCastHit.transform.gameObject;
+            if (CurrentPlane != previousPlane) { PlanesHaveChanged.Invoke();}
+            previousPlane = RayCastHit.transform.gameObject;
+
         }
     }
 }

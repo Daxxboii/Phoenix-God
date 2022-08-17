@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using LeTai.Asset.TranslucentImage;
@@ -8,6 +9,7 @@ using LeTai.Asset.TranslucentImage;
 public class MenuManager : MonoBehaviour
 {
     [Header("Menu Panels")]
+    [SerializeField] private GameObject TitlePanel;
     [SerializeField] private GameObject MainMenuPanel;
     [SerializeField] private GameObject PauseMenuPanel;
     [SerializeField] private GameObject GamePlayPanel;
@@ -26,13 +28,20 @@ public class MenuManager : MonoBehaviour
 
     public static MenuManager Instance;
 
+    [Header("Player")]
+    public Vector3 PlayerPos;
 
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
-        source.Strength = 0;
+
+        //Intro Screen
+        MainMenuPanel.SetActive(false);
+        CanvasGroup TitleAlpha = TitlePanel.GetComponent<CanvasGroup>();
+        DOVirtual.Float(100f, 0f, 3f, v => { source.Strength = v; TitleAlpha.alpha = v / 100; }).OnComplete(() => { MainMenuPanel.SetActive(true);TitlePanel.SetActive(false);});
+       
     }
 
     public void Pause()
@@ -62,21 +71,20 @@ public class MenuManager : MonoBehaviour
     public void Continue()
     {
         CountDown();
-       
     }
 
     void CountDown()
     {
+        CountDownText.gameObject.SetActive(true);
         PauseMenuPanel.SetActive(false);
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() => 
         {
             CountDownText.gameObject.SetActive(true);
-            DOVirtual.Float(3, 0, 3, x => { CountDownText.text = ((int)x).ToString(); }).OnComplete(() =>
+            DOVirtual.Float(4, 0, 3, x => { CountDownText.text = ((int)x).ToString(); }).OnComplete(() =>
              {
                  CountDownText.transform.gameObject.SetActive(false);
                  GameManager.GameManagerInstance.isPlaying = true;
                  GamePlayPanel.SetActive(true);
-                
              });
              
         });
@@ -86,10 +94,17 @@ public class MenuManager : MonoBehaviour
     {
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>
         {
+            GameManager.GameManagerInstance.Scene.transform.position = GameManager.GameManagerInstance.SceneStartPos;
+
+            WorldGenerator.Singleton.ResetWorld();
             GameOverPanel.SetActive(false);
             PauseMenuPanel.SetActive(false);
             MainMenuPanel.SetActive(true);
             MainMenuPanel.transform.DOScale(1, TransitionSpeed);
+
+            Player.Singleton.transform.DOMove(PlayerPos, 1f);
+            Player.Singleton.Start();
+
         });
         
     }
@@ -103,15 +118,18 @@ public class MenuManager : MonoBehaviour
     {
         GamePlayPanel.SetActive(false);
         GameOverPanel.SetActive(true);
-        YourScoreNumberText.text = GameManager.GameManagerInstance.Score.ToString();
-        HighScoreNumberText.text = GameManager.GameManagerInstance.MaxScore.ToString();
-
+        YourScoreNumberText.text = (GameManager.GameManagerInstance.Score).ToString();
+        HighScoreNumberText.text = (GameManager.GameManagerInstance.MaxScore).ToString();
     }
 
     public void Retry()
     {
         //Play Video
-        GamePlayPanel.SetActive(true);
+        Vector3 ResetPosition = Player.Singleton.CurrentPlane.GetComponent<MeshRenderer>().bounds.center;
+        ResetPosition.y = Player.Singleton.transform.position.y;
+
+        Player.Singleton.transform.DOMove(ResetPosition,1f);
+
         GameOverPanel.SetActive(false);
         Continue();
     }
