@@ -8,13 +8,14 @@ using LeTai.Asset.TranslucentImage;
 
 public class MenuManager : MonoBehaviour
 {
+    public Color DefaultColor;
     [Header("Menu Panels")]
     [SerializeField] private GameObject TitlePanel;
     [SerializeField] private GameObject MainMenuPanel;
     [SerializeField] private GameObject PauseMenuPanel;
     [SerializeField] private GameObject GamePlayPanel;
     [SerializeField] private GameObject GameOverPanel;
-
+    [SerializeField] private GameObject SettingsPanel;
 
     [SerializeField, Range(0.1f, 2f)] private float TransitionSpeed;
     [SerializeField] private TranslucentImageSource translucentImageSource;
@@ -94,6 +95,7 @@ public class MenuManager : MonoBehaviour
     {
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>
         {
+            SettingsPanel.SetActive(false);
             GameManager.GameManagerInstance.Scene.transform.position = GameManager.GameManagerInstance.SceneStartPos;
 
             WorldGenerator.Singleton.ResetWorld();
@@ -132,6 +134,29 @@ public class MenuManager : MonoBehaviour
 
         GameOverPanel.SetActive(false);
         Continue();
+    }
+
+    public void Settings()
+    {
+        MainMenuPanel.SetActive(false);
+        DOVirtual.Float(0f, 100f, 3f, v => { source.Strength = v; }).OnComplete(()=> { SettingsPanel.SetActive(true); });
+    }
+
+    int ColorIndex;
+
+    public void ChangeColor()
+    {
+        ColorIndex++;
+        if (ColorIndex > 5) { ColorIndex = 0; }
+
+        if (ColorIndex == 0) RenderSettings.fogColor = DefaultColor;
+        if (ColorIndex == 1) RenderSettings.fogColor = Color.blue;
+        if (ColorIndex == 2) RenderSettings.fogColor = Color.red;
+        if (ColorIndex == 3) RenderSettings.fogColor = Color.green;
+        if (ColorIndex == 4) RenderSettings.fogColor = Color.gray;
+        if (ColorIndex == 5) RenderSettings.fogColor = Color.white;
+        if (ColorIndex == 5) RenderSettings.fogColor = Color.magenta;
+
     }
 
     private void Update()
