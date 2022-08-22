@@ -62,16 +62,16 @@ public class Player : MonoBehaviour
                 // Debug.Log("Moving Right");
                 deltapos = transform.position;
                 deltapos.x += LRPlayerSpeed;
-                transform.position = Vector3.Lerp(transform.position, deltapos, Time.deltaTime);
-               //transform.Translate(Vector3.right * Time.deltaTime * LRPlayerSpeed);
+                //transform.position = Vector3.Lerp(transform.position, deltapos, Time.deltaTime);
+               transform.Translate(Vector3.right * Time.deltaTime * LRPlayerSpeed);
             }
 
             else
             {
                 deltapos = transform.position;
                 deltapos.x -= LRPlayerSpeed;
-                transform.position = Vector3.Lerp(transform.position, deltapos, Time.deltaTime);
-              //  transform.Translate(Vector3.left * Time.deltaTime * LRPlayerSpeed);
+                //transform.position = Vector3.Lerp(transform.position, deltapos, Time.deltaTime);
+                transform.Translate(Vector3.left * Time.deltaTime * LRPlayerSpeed);
               //  Debug.Log("Moving Left");
             }
         }
