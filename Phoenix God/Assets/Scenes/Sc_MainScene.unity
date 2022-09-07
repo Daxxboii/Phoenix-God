@@ -1356,7 +1356,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.56280196, y: 1}
+    m_SensorSize: {x: 0.56233424, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -6290,7 +6290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tap Right To Move Right
+  m_text: Hold Right To Move Right
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b86c5f9e2081d2a45b7e1e1c70607824, type: 2}
   m_sharedMaterial: {fileID: 21220291696645744, guid: b86c5f9e2081d2a45b7e1e1c70607824,
@@ -6548,7 +6548,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tap Left To Move Left
+  m_text: Hold Left To Move Left
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b86c5f9e2081d2a45b7e1e1c70607824, type: 2}
   m_sharedMaterial: {fileID: 21220291696645744, guid: b86c5f9e2081d2a45b7e1e1c70607824,
@@ -7065,7 +7065,7 @@ MonoBehaviour:
   FwdDeviation: {x: 140.55, y: 172.21335}
   MaxNumberOfTurns: 6
   RunUpDistance: 200
-  Track_Material: {fileID: 2100000, guid: 4743a9974310495428f6d0beda41730c, type: 2}
+  Track_Material: {fileID: 2100000, guid: 75f4e85908352394fb73ef25201c494d, type: 2}
   TurnPositions: []
   ParentRotation: {x: 90, y: 0, z: 0}
   AllTracks: []
