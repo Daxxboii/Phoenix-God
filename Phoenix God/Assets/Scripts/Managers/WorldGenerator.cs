@@ -29,7 +29,7 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] private Material Track_Material;
 
     //List Of all turns
-    [HideInInspector]public List<Vector3> TurnPositions;
+    public List<Vector3> TurnPositions;
 
     //Mesh Generation Triangle Positions
     private int[] triangles = { 0, 2, 1, 2, 3, 1 };
@@ -44,7 +44,7 @@ public class WorldGenerator : MonoBehaviour
     [HideInInspector] public List<GameObject> AllTracks = new List<GameObject>();
 
     //List Of Vertices at turns
-    [HideInInspector] List<Vector3> AllVertices = new List<Vector3>();
+     public List<Vector3> AllVertices = new List<Vector3>();
 
     //Dummy Track
     private GameObject Track;
@@ -236,10 +236,15 @@ public class WorldGenerator : MonoBehaviour
         GameObject Track = GameObject.Find("Track");
         if (Track != null) Destroy(Track);
 
+        NextDeviation = Vector3.zero;
+        LatestPoint = Vector3.zero;
+
         AllTracks.Clear();
         AllVertices.Clear();
         AllMeshes.Clear();
+        TurnPositions.Clear();
         GenerateStartingWorld();
+
 
     }
 

@@ -37,17 +37,22 @@ public class MenuManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
+        UpdateText();
+
+        Player.PlanesHaveChanged += UpdateText;
 
         //Intro Screen
         MainMenuPanel.SetActive(false);
         CanvasGroup TitleAlpha = TitlePanel.GetComponent<CanvasGroup>();
-        DOVirtual.Float(100f, 0f, 3f, v => { source.Strength = v; TitleAlpha.alpha = v / 100; }).OnComplete(() => { MainMenuPanel.SetActive(true);TitlePanel.SetActive(false);});
+        DOVirtual.Float(100f, 0f, 3f, v => { source.Strength = v; TitleAlpha.alpha = v / 100; }).OnComplete(() => { MainMenuPanel.SetActive(true);TitlePanel.SetActive(false);
+        translucentImageSource.enabled = false;});
        
     }
 
     public void Pause()
     {
         GameManager.GameManagerInstance.isPlaying = false;
+        translucentImageSource.enabled = true;
         DOVirtual.Float(0, 100, TransitionSpeed, v =>
         {
             source.Strength = v;
@@ -59,6 +64,7 @@ public class MenuManager : MonoBehaviour
     //When play button is pressed
     public void Play()
     {
+        UpdateText();
         GameManager.GameManagerInstance.Score = 0;
 
         MainMenuPanel.transform.DOScale(1.5f, TransitionSpeed).OnComplete(()=> {
@@ -78,8 +84,10 @@ public class MenuManager : MonoBehaviour
     {
         CountDownText.gameObject.SetActive(true);
         PauseMenuPanel.SetActive(false);
+        translucentImageSource.enabled = true;
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() => 
         {
+            translucentImageSource.enabled = false;
             CountDownText.gameObject.SetActive(true);
             DOVirtual.Float(4, 0, 3, x => { CountDownText.text = ((int)x).ToString(); }).OnComplete(() =>
              {
@@ -93,8 +101,10 @@ public class MenuManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        GameManager.GameManagerInstance.Score = 0;
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>
         {
+            translucentImageSource.enabled = false;
             SettingsPanel.SetActive(false);
             GameManager.GameManagerInstance.Scene.transform.position = GameManager.GameManagerInstance.SceneStartPos;
 
@@ -139,6 +149,7 @@ public class MenuManager : MonoBehaviour
     public void Settings()
     {
         MainMenuPanel.SetActive(false);
+        translucentImageSource.enabled = true;
         DOVirtual.Float(0f, 100f, 3f, v => { source.Strength = v; }).OnComplete(()=> { SettingsPanel.SetActive(true); });
     }
 
@@ -159,7 +170,7 @@ public class MenuManager : MonoBehaviour
 
     }
 
-    private void Update()
+    private void UpdateText()
     {
         ScoreText.text = ((int)GameManager.GameManagerInstance.Score).ToString();
         MaxScoreText.text = ((int)GameManager.GameManagerInstance.MaxScore).ToString();

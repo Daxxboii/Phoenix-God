@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public static float TouchInputX;
-    public static bool RecievingInput;
+    public float TouchInputX;
+    public bool RecievingInput;
+    Touch touch;
 
     private void Update()
     {
@@ -34,7 +35,7 @@ public class InputManager : MonoBehaviour
         if (Input.touchCount > 0)
         {
             RecievingInput = true;
-            Touch touch = Input.GetTouch(0);
+            touch = Input.GetTouch(0);
             if(touch.position.y<(Screen.height/0.5f))TouchInputX = touch.position.x;
         }
         else

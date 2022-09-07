@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField] private bool is_Gliding;
     [SerializeField] private LayerMask WhatIsGround;
 
+    [SerializeField] private InputManager _InputManager;
+    [SerializeField] private GameManager _GameManager;
     [HideInInspector]public GameObject previousPlane, CurrentPlane;
 
     Vector3 deltapos;
@@ -47,7 +49,7 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
-        if (GameManager.GameManagerInstance.isPlaying) { Move(); CheckForTrack(); }
+        if (_GameManager.isPlaying) { Move(); CheckForTrack(); }
     }
 
     #region Movement
@@ -55,14 +57,12 @@ public class Player : MonoBehaviour
     void Move()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * ForwardPlayerSpeed);
-        if (InputManager.RecievingInput)
+        if (_InputManager.RecievingInput)
         {
-            if (InputManager.TouchInputX > ScreenHalfWidth)
+            if (_InputManager.TouchInputX > ScreenHalfWidth)
             {
-                // Debug.Log("Moving Right");
                 deltapos = transform.position;
                 deltapos.x += LRPlayerSpeed;
-                //transform.position = Vector3.Lerp(transform.position, deltapos, Time.deltaTime);
                transform.Translate(Vector3.right * Time.deltaTime * LRPlayerSpeed);
             }
 
