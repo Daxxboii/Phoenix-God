@@ -23,10 +23,14 @@ public class Player : MonoBehaviour
     [SerializeField] private GameManager _GameManager;
     [HideInInspector]public GameObject previousPlane, CurrentPlane;
 
+    [SerializeField, Range(0, 100)] private float SpeedIncreasePercentage;
+
     Vector3 deltapos;
 
     Ray ray;
     RaycastHit RayCastHit;
+
+   
 
 
 
@@ -35,8 +39,6 @@ public class Player : MonoBehaviour
         if (Singleton == null) Singleton = this;
         ScreenHalfWidth = Screen.width / 2f;
         Player_Animator.SetBool("Gliding", false);
-
-        
         //WhatIsGround = ~WhatIsGround;
     }
 
@@ -82,18 +84,23 @@ public class Player : MonoBehaviour
     {
         ray.origin = transform.position;
         ray.direction = transform.TransformDirection(Vector3.down);
+        
+            if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out RayCastHit, Mathf.Infinity))
+            {
+                GameManager.GameManagerInstance.GameOver();
+            }
+            else
+            {
+                CurrentPlane = RayCastHit.transform.gameObject;
+                if (CurrentPlane != previousPlane) { PlanesHaveChanged.Invoke(); UpdateSpeed(); }
+                previousPlane = RayCastHit.transform.gameObject;
+            }
+    }
+    
 
-
-        if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out RayCastHit, Mathf.Infinity))
-        {
-            GameManager.GameManagerInstance.GameOver();
-        }
-        else
-        {
-            CurrentPlane = RayCastHit.transform.gameObject;
-            if (CurrentPlane != previousPlane) { PlanesHaveChanged.Invoke();}
-            previousPlane = RayCastHit.transform.gameObject;
-
-        }
+    void UpdateSpeed()
+    {
+        ForwardPlayerSpeed += ForwardPlayerSpeed * (SpeedIncreasePercentage * 0.01f);
+        LRPlayerSpeed += LRPlayerSpeed * (SpeedIncreasePercentage * 0.01f);
     }
 }

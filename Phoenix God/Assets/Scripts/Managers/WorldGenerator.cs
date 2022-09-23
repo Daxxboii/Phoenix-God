@@ -17,7 +17,7 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField, MinMaxSlider(1f, 50f)] private Vector2 LRDeviation;
 
     //How Long the Plane should be
-    [SerializeField, MinMaxSlider(1f, 200f)] private Vector2 FwdDeviation;
+    [SerializeField, MinMaxSlider(1f, 300f)] private Vector2 FwdDeviation;
 
     //Number Of Turns
     [SerializeField, Range(2, 10)] private int MaxNumberOfTurns;
@@ -29,7 +29,7 @@ public class WorldGenerator : MonoBehaviour
     [SerializeField] private Material Track_Material;
 
     //List Of all turns
-    public List<Vector3> TurnPositions;
+    public List<Vector3> TurnSegments;
 
     //Mesh Generation Triangle Positions
     private int[] triangles = { 0, 2, 1, 2, 3, 1 };
@@ -49,11 +49,7 @@ public class WorldGenerator : MonoBehaviour
     //Dummy Track
     private GameObject Track;
 
-    //Instructions
-    [SerializeField] private GameObject LeftCanvas;
-    [SerializeField] private GameObject RightCanvas;
-
-    [SerializeField, Range(1f, 50f)] private float DistanceOfInstructions;
+  
 
     Vector3 NextDeviation, LatestPoint;
 
@@ -68,7 +64,7 @@ public class WorldGenerator : MonoBehaviour
         GenerateStartingWorld();
     }
 
-    #region World Generation
+    #region World Generation Beginning
     void GenerateStartingWorld()
     {
         Track = new GameObject("Track");
@@ -80,10 +76,10 @@ public class WorldGenerator : MonoBehaviour
     void SpawnAllMeshes()
     {
         //Run Up
-        TurnPositions.Add(Vector3.zero);
+        TurnSegments.Add(new Vector3(0,-5,0));
             
         Vector3 straightRunUpPath = new Vector2(0, RunUpDistance);
-        TurnPositions.Add(straightRunUpPath);
+        TurnSegments.Add(straightRunUpPath);
 
         LatestPoint = straightRunUpPath;
 
@@ -99,7 +95,7 @@ public class WorldGenerator : MonoBehaviour
 
             LatestPoint.y += NextDeviation.y;
 
-            TurnPositions.Add(LatestPoint);
+            TurnSegments.Add(LatestPoint);
         }
 
         //Parent for all planes
@@ -109,7 +105,7 @@ public class WorldGenerator : MonoBehaviour
 
 
         //Spawn LR Points along line 
-        foreach (Vector2 turn in TurnPositions)
+        foreach (Vector2 turn in TurnSegments)
         {
             UpdatedLRPosition = turn;
             UpdatedLRPosition.x -= Width;
@@ -156,76 +152,66 @@ public class WorldGenerator : MonoBehaviour
 
         Vector3 PlanePos = new Vector3(0, Height, 0);
         Parent.transform.position = PlanePos;
-
-        //Instructions
-        Vector3 temppos;
-        temppos = AllTracks[1].GetComponent<MeshRenderer>().bounds.center;
-        temppos.x -= DistanceOfInstructions;
-        temppos.y += 10;
-        LeftCanvas.transform.position = temppos;
-
-        temppos = AllTracks[2].GetComponent<MeshRenderer>().bounds.center;
-        temppos.x += DistanceOfInstructions;
-        temppos.y += 10;
-        RightCanvas.transform.position = temppos;
     }
     #endregion
 
 
     public void UpdatePlanes()
     {
-        StartCoroutine(UpdatePlanesOnRuntime());
+       StartCoroutine(UpdatePlanesOnRuntime());
     }
 
      IEnumerator UpdatePlanesOnRuntime()
     {
         yield return new WaitForSeconds(1.5f);
-        Vector3 UpdatedLRPosition;
-        NextDeviation = new Vector2(Random.Range(LRDeviation.x, LRDeviation.y), Random.Range(FwdDeviation.x, FwdDeviation.y));
-
-        if (LeftOrRight == 1)
+        if (GameManager.GameManagerInstance.isPlaying)
         {
-            LatestPoint.x = -NextDeviation.x;
-            LeftOrRight = -1;
+            Vector3 UpdatedLRPosition;
+            NextDeviation = new Vector2(Random.Range(LRDeviation.x, LRDeviation.y), Random.Range(FwdDeviation.x, FwdDeviation.y));
+
+            if (LeftOrRight == 1)
+            {
+                LatestPoint.x = -NextDeviation.x;
+                LeftOrRight = -1;
+            }
+            else
+            {
+                LatestPoint.x = NextDeviation.x;
+                LeftOrRight = 1;
+            }
+
+            LatestPoint.y += NextDeviation.y;
+
+            TurnSegments.Add(LatestPoint);
+
+            UpdatedLRPosition = TurnSegments[TurnSegments.Count - 1];
+            UpdatedLRPosition.x -= Width;
+            AllVertices.Add(UpdatedLRPosition);
+
+            UpdatedLRPosition = TurnSegments[TurnSegments.Count - 1];
+            UpdatedLRPosition.x += Width;
+            AllVertices.Add(UpdatedLRPosition);
+
+            List<Vector3> Verts = new List<Vector3>();
+
+            for (int i = 0; i < 4; i++)
+            {
+                Verts.Add(AllVertices[AllVertices.Count - 1 - i]);
+            }
+
+            AllMeshes[0].vertices = Verts.ToArray();
+            AllMeshes[0].triangles = triangles;
+            AllMeshes[0].RecalculateBounds();
+
+            AllMeshes.Add(AllMeshes[0]);
+            AllMeshes.RemoveAt(0);
+
+            AllTracks[0].GetComponent<MeshCollider>().sharedMesh = AllMeshes[AllMeshes.Count - 1];
+
+
+            AllTracks.Add(AllTracks[0]);
+            AllTracks.RemoveAt(0);
         }
-        else
-        {
-            LatestPoint.x = NextDeviation.x;
-            LeftOrRight = 1;
-        }
-
-        LatestPoint.y += NextDeviation.y;
-
-        TurnPositions.Add(LatestPoint);
-
-        UpdatedLRPosition = TurnPositions[TurnPositions.Count-1];
-        UpdatedLRPosition.x -= Width;
-        AllVertices.Add(UpdatedLRPosition);
-
-        UpdatedLRPosition = TurnPositions[TurnPositions.Count - 1];
-        UpdatedLRPosition.x += Width;
-        AllVertices.Add(UpdatedLRPosition);
-
-        List<Vector3> Verts = new List<Vector3>();
-
-        for(int i = 0; i < 4; i++)
-        {
-            Verts.Add(AllVertices[AllVertices.Count - 1 - i]);
-        }
-
-        AllMeshes[0].vertices = Verts.ToArray();
-        AllMeshes[0].triangles = triangles;
-        AllMeshes[0].RecalculateBounds();
-       
-        AllMeshes.Add(AllMeshes[0]);
-        AllMeshes.RemoveAt(0);
-
-        AllTracks[0].GetComponent<MeshCollider>().sharedMesh = AllMeshes[AllMeshes.Count-1];
-
-
-        AllTracks.Add(AllTracks[0]);
-        AllTracks.RemoveAt(0);
-
     }
 
     public void ResetWorld()
@@ -242,10 +228,8 @@ public class WorldGenerator : MonoBehaviour
         AllTracks.Clear();
         AllVertices.Clear();
         AllMeshes.Clear();
-        TurnPositions.Clear();
+        TurnSegments.Clear();
         GenerateStartingWorld();
-
-
     }
 
 

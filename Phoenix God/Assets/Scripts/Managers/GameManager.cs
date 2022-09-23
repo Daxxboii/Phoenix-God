@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Gameplay")]
     [SerializeField] public Transform Scene;
-    [HideInInspector] public bool isPlaying;
+     public bool isPlaying;
     [SerializeField, HideInInspector] public int Score, MaxScore;
     [SerializeField] private string MaxScoreSaveName;
     [SerializeField] public Vector3 SceneStartPos;
@@ -50,9 +50,9 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        MenuManager.Instance.GameOver();
-      
+
         isPlaying = false;
+        MenuManager.Instance.GameOver();
         PlayerPrefs.SetInt(MaxScoreSaveName,MaxScore);
         PlayerPrefs.Save();
     }

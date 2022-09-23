@@ -11,11 +11,13 @@ public class MenuManager : MonoBehaviour
     public Color DefaultColor;
     [Header("Menu Panels")]
     [SerializeField] private GameObject TitlePanel;
+    [SerializeField] private GameObject TitleCanvas;
     [SerializeField] private GameObject MainMenuPanel;
     [SerializeField] private GameObject PauseMenuPanel;
     [SerializeField] private GameObject GamePlayPanel;
     [SerializeField] private GameObject GameOverPanel;
-    [SerializeField] private GameObject SettingsPanel;
+    [SerializeField] private Image GameOverBlack;
+   
 
     [SerializeField, Range(0.1f, 2f)] private float TransitionSpeed;
     [SerializeField] private TranslucentImageSource translucentImageSource;
@@ -45,7 +47,7 @@ public class MenuManager : MonoBehaviour
         MainMenuPanel.SetActive(false);
         CanvasGroup TitleAlpha = TitlePanel.GetComponent<CanvasGroup>();
         DOVirtual.Float(100f, 0f, 3f, v => { source.Strength = v; TitleAlpha.alpha = v / 100; }).OnComplete(() => { MainMenuPanel.SetActive(true);TitlePanel.SetActive(false);
-        translucentImageSource.enabled = false;});
+            TitleCanvas.SetActive(true); translucentImageSource.enabled = false;});
        
     }
 
@@ -99,27 +101,7 @@ public class MenuManager : MonoBehaviour
         });
     }
 
-    public void BackToMenu()
-    {
-        GameManager.GameManagerInstance.Score = 0;
-        DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>
-        {
-            translucentImageSource.enabled = false;
-            SettingsPanel.SetActive(false);
-            GameManager.GameManagerInstance.Scene.transform.position = GameManager.GameManagerInstance.SceneStartPos;
-
-            WorldGenerator.Singleton.ResetWorld();
-            GameOverPanel.SetActive(false);
-            PauseMenuPanel.SetActive(false);
-            MainMenuPanel.SetActive(true);
-            MainMenuPanel.transform.DOScale(1, TransitionSpeed);
-
-            Player.Singleton.transform.DOMove(PlayerPos, 1f);
-            Player.Singleton.Start();
-
-        });
-        
-    }
+   
 
     public void Quit()
     {
@@ -129,9 +111,32 @@ public class MenuManager : MonoBehaviour
     public void GameOver()
     {
         GamePlayPanel.SetActive(false);
-        GameOverPanel.SetActive(true);
-        YourScoreNumberText.text = (GameManager.GameManagerInstance.Score).ToString();
-        HighScoreNumberText.text = (GameManager.GameManagerInstance.MaxScore).ToString();
+        GameOverBlack.DOFade(1f, 1f).OnComplete(()=> { GameOverBlack.DOFade(0f, 1f); });
+        ResetGame();
+        Tutorial.instance.Reset();
+        
+    }
+
+    public void ResetGame()
+    {
+        GameManager.GameManagerInstance.Score = 0;
+        WorldGenerator.Singleton.ResetWorld();
+        Player.Singleton.Start();
+        Player.Singleton.transform.DOMove(PlayerPos, 1f);
+
+
+        DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>
+        {
+            translucentImageSource.enabled = false;
+            GameManager.GameManagerInstance.Scene.transform.position = GameManager.GameManagerInstance.SceneStartPos;
+
+
+            GameOverPanel.SetActive(false);
+            PauseMenuPanel.SetActive(false);
+            MainMenuPanel.SetActive(true);
+            MainMenuPanel.transform.DOScale(1, TransitionSpeed);
+        });
+
     }
 
     public void Retry()
@@ -144,30 +149,6 @@ public class MenuManager : MonoBehaviour
 
         GameOverPanel.SetActive(false);
         Continue();
-    }
-
-    public void Settings()
-    {
-        MainMenuPanel.SetActive(false);
-        translucentImageSource.enabled = true;
-        DOVirtual.Float(0f, 100f, 3f, v => { source.Strength = v; }).OnComplete(()=> { SettingsPanel.SetActive(true); });
-    }
-
-    int ColorIndex;
-
-    public void ChangeColor()
-    {
-        ColorIndex++;
-        if (ColorIndex > 5) { ColorIndex = 0; }
-
-        if (ColorIndex == 0) RenderSettings.fogColor = DefaultColor;
-        if (ColorIndex == 1) RenderSettings.fogColor = Color.blue;
-        if (ColorIndex == 2) RenderSettings.fogColor = Color.red;
-        if (ColorIndex == 3) RenderSettings.fogColor = Color.green;
-        if (ColorIndex == 4) RenderSettings.fogColor = Color.gray;
-        if (ColorIndex == 5) RenderSettings.fogColor = Color.white;
-        if (ColorIndex == 5) RenderSettings.fogColor = Color.magenta;
-
     }
 
     private void UpdateText()
