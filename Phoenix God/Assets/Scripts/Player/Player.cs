@@ -51,13 +51,15 @@ public class Player : MonoBehaviour
 
     public void Update()
     {
-        if (_GameManager.isPlaying) { Move(); CheckForTrack(); }
+        if (_GameManager.isPlaying) { Move(); CheckForTrack();  }
+        else Player_Animator.SetBool("Gliding", false);
     }
 
     #region Movement
 
     void Move()
     {
+        Player_Animator.SetBool("Gliding", true);
         transform.Translate(Vector3.forward * Time.deltaTime * ForwardPlayerSpeed);
         if (_InputManager.RecievingInput)
         {
