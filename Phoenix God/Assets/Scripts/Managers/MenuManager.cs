@@ -111,7 +111,7 @@ public class MenuManager : MonoBehaviour
     public void GameOver()
     {
         GamePlayPanel.SetActive(false);
-        GameOverBlack.DOFade(1f, 1f).OnComplete(()=> { GameOverBlack.DOFade(0f, 1f); });
+        GameOverBlack.DOFade(1f, 0.1f).OnComplete(()=> { GameOverBlack.DOFade(0f, 5f).SetEase(Ease.InQuad); });
         ResetGame();
         Tutorial.instance.Reset();
         

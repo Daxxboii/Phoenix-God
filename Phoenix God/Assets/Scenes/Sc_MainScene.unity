@@ -1043,8 +1043,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.025142765, y: 4.3731885e-25, z: 1.0998882e-26, w: 0.99968386}
-  m_LocalPosition: {x: 0, y: -5.6100006, z: -42.093697}
+  m_LocalRotation: {x: -0.02188428, y: -0.000000017202263, z: -3.7654926e-10, w: 0.99976057}
+  m_LocalPosition: {x: 0, y: -9.039999, z: -36.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 394095826}
@@ -1214,7 +1214,7 @@ MonoBehaviour:
     ModeOverride: 2
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 0.5629742, y: 1}
+    m_SensorSize: {x: 0.56206894, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1230,8 +1230,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333120469}
-  m_LocalRotation: {x: -0.025142765, y: 4.3731885e-25, z: 1.0998882e-26, w: 0.99968386}
-  m_LocalPosition: {x: 0, y: -5.6100006, z: -42.093697}
+  m_LocalRotation: {x: -0.02188428, y: -0.000000017202263, z: -3.7654926e-10, w: 0.99976057}
+  m_LocalPosition: {x: 0, y: -9.039999, z: -36.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 611505652}
@@ -1461,7 +1461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 010dd26b333edd241a3a236cd3ada29a, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 4294967295
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 010dd26b333edd241a3a236cd3ada29a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1473,7 +1473,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 010dd26b333edd241a3a236cd3ada29a, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 19.65
+      value: 3.9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 010dd26b333edd241a3a236cd3ada29a, type: 3}
       propertyPath: m_LocalRotation.x
@@ -1979,7 +1979,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 22.51, z: -43.51}
+  m_FollowOffset: {x: 0, y: 22.51, z: -50}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -2171,7 +2171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740721052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -28.12, z: 1.4163}
+  m_LocalPosition: {x: 0, y: -31.55, z: 13.58}
   m_LocalScale: {x: 0.5446, y: 0.5446, z: 0.5446}
   m_Children:
   - {fileID: 7133390137152221312}
@@ -2331,8 +2331,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: 'Things Left To Do:
-
-    - This Phoenix is a dummy , not real
 
     -Render promo video
 
@@ -2603,10 +2601,9 @@ MonoBehaviour:
   audioSource: {fileID: 1134722289}
   Level: 0
   LevelSprites:
-  - {fileID: 21300000, guid: 5b842f6aec60c7a4f8cce36ca3e39f0b, type: 3}
+  - {fileID: 21300000, guid: 0eeb34835927bca43b1f4d7e13fb0ab6, type: 3}
   - {fileID: 21300000, guid: d86b41ca00bf6ae4691b5f0aad5937c0, type: 3}
   - {fileID: 21300000, guid: 5afb25458a2eaa9438fd9f6134587bcd, type: 3}
-  - {fileID: 21300000, guid: 3d5c3a26fefe66645869512bdf4e33f0, type: 3}
   LevelButtons:
   - {fileID: 1156212857}
   - {fileID: 1422784679}
@@ -2947,7 +2944,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d86b41ca00bf6ae4691b5f0aad5937c0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0eeb34835927bca43b1f4d7e13fb0ab6, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3130,7 +3127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1220806612
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7737,7 +7734,7 @@ MonoBehaviour:
   Width: 10.5
   Height: -31
   LRDeviation: {x: 3, y: 30}
-  FwdDeviation: {x: 71.57, y: 230.12796}
+  FwdDeviation: {x: 50, y: 180}
   MaxNumberOfTurns: 6
   RunUpDistance: 200
   Track_Material: {fileID: 2100000, guid: 75f4e85908352394fb73ef25201c494d, type: 2}

@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            Level = 3;
+            Level = 2;
             PlayerPrefs.SetInt("Volume", Level);
             PlayerPrefs.Save();
         }
@@ -29,14 +29,14 @@ public class AudioManager : MonoBehaviour
         {
             image.sprite = LevelSprites[Level];
         }
-        audioSource.volume = ((float)Level / 4);
+        audioSource.volume = ((float)Level / 3);
     }
 
     public void UpdateVolume()
     {
         Level++;
 
-        if(Level > 3)
+        if(Level > 2)
         {
             Level = 0;
         }
@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
             image.sprite = LevelSprites[Level];
         }
 
-        audioSource.volume = ((float)Level / 3);
+        audioSource.volume = ((float)Level / 2);
         PlayerPrefs.SetInt("Volume", Level);
         PlayerPrefs.Save();
     }

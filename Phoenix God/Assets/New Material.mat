@@ -103,7 +103,7 @@ Material:
     - _Contrast: 2.41
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
-    - _DistortionAmount: 0.849
+    - _DistortionAmount: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
