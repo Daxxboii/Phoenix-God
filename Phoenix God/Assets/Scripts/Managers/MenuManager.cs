@@ -11,7 +11,6 @@ public class MenuManager : MonoBehaviour
     public Color DefaultColor;
     [Header("Menu Panels")]
     [SerializeField] private GameObject TitlePanel;
-    [SerializeField] private GameObject TitleCanvas;
     [SerializeField] private GameObject MainMenuPanel;
     [SerializeField] private GameObject PauseMenuPanel;
     [SerializeField] private GameObject GamePlayPanel;
@@ -47,7 +46,7 @@ public class MenuManager : MonoBehaviour
         MainMenuPanel.SetActive(false);
         CanvasGroup TitleAlpha = TitlePanel.GetComponent<CanvasGroup>();
         DOVirtual.Float(100f, 0f, 3f, v => { source.Strength = v; TitleAlpha.alpha = v / 100; }).OnComplete(() => { MainMenuPanel.SetActive(true);TitlePanel.SetActive(false);
-            TitleCanvas.SetActive(true); translucentImageSource.enabled = false;});
+            });
        
     }
 
@@ -73,6 +72,9 @@ public class MenuManager : MonoBehaviour
             GamePlayPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
             GameManager.GameManagerInstance.isPlaying = true;
+            Player.Singleton.AIMove();
+            AudioManager.instance.currentVolume = 0.1f;
+            AudioManager.instance.MakeWindLouder();
         });
     }
 
@@ -110,11 +112,14 @@ public class MenuManager : MonoBehaviour
 
     public void GameOver()
     {
+        Player.Singleton.SetMeshVis(false);
         GamePlayPanel.SetActive(false);
-        GameOverBlack.DOFade(1f, 0.1f).OnComplete(()=> { GameOverBlack.DOFade(0f, 5f).SetEase(Ease.InQuad); });
-        ResetGame();
-        Tutorial.instance.Reset();
+        GameOverBlack.DOFade(1f, 1f).OnComplete(()=> { GameOverBlack.DOFade(0f, 5f).SetEase(Ease.InQuad); ResetGame(); });
         
+        Tutorial.instance.Reset();
+        AudioManager.instance.MakeWindLouder();
+
+
     }
 
     public void ResetGame()
@@ -122,7 +127,7 @@ public class MenuManager : MonoBehaviour
         GameManager.GameManagerInstance.Score = 0;
         WorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
-        Player.Singleton.transform.DOMove(PlayerPos, 1f);
+        Player.Singleton.transform.DOMove(PlayerPos, 1f).OnComplete(() => { Player.Singleton.SetMeshVis(true); });
 
 
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>

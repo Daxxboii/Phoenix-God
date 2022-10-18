@@ -211,6 +211,16 @@ public class WorldGenerator : MonoBehaviour
 
             AllTracks.Add(AllTracks[0]);
             AllTracks.RemoveAt(0);
+
+            Debug.Log("called");
+        }
+    }
+
+    public void Recalculate()
+    {
+        foreach(var track in AllMeshes)
+        {
+            track.RecalculateBounds();
         }
     }
 

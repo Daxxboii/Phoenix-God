@@ -37,6 +37,7 @@ public class Tutorial : MonoBehaviour
     {
         ImageIndex = 0;
         TutorialImage.sprite = Tutorial_Images[0];
+        TutorialImage.gameObject.SetActive(true);
         Player.PlanesHaveChanged += NextImage;
     }
 }
