@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    public delegate void Recieved();
+    public static Recieved OnRecieved;
+
     public float TouchInputX;
     public bool RecievingInput;
     Touch touch;
 
-    private void Update()
+    void Update()
     {
         GetInputTouches();
     }
@@ -19,16 +22,21 @@ public class InputManager : MonoBehaviour
     {
 
 #if UNITY_EDITOR
-        if (Input.GetMouseButton(0))
+     /*   if (Input.GetMouseButtonDown(0))
         {
             RecievingInput = true;
             TouchInputX = Input.mousePosition.x;
+            OnRecieved.Invoke();
+           
+           // Debug.Log("Touch Started");
         }
         //Reset Input
-        else if (Input.GetMouseButtonUp(0))
+        else
         {
             RecievingInput = false;
-        }
+          //  Debug.Log("Touch Ended");
+
+        }*/
 #endif
 
 #if UNITY_ANDROID || UNITY_IOS
@@ -36,7 +44,14 @@ public class InputManager : MonoBehaviour
         {
             RecievingInput = true;
             touch = Input.GetTouch(0);
-            if(touch.position.y<(Screen.height/0.5f))TouchInputX = touch.position.x;
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (touch.position.y < (Screen.height / 0.5f)) TouchInputX = touch.position.x;
+
+                OnRecieved.Invoke();
+            }
+          
+           
         }
         else
         {

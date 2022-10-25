@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     {
         if (isPlaying)
         {
-            Scene.Translate(Vector3.forward * Time.deltaTime * Player.Singleton.ForwardPlayerSpeed);
+          //  Scene.Translate(Vector3.forward * Time.deltaTime * Player.Singleton.ForwardPlayerSpeed);
             PlayerPosition = PlayerGameObject.transform.position;
         }
     }

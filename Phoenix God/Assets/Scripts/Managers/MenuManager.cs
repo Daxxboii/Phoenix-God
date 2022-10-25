@@ -72,7 +72,7 @@ public class MenuManager : MonoBehaviour
             GamePlayPanel.SetActive(true);
             MainMenuPanel.SetActive(false);
             GameManager.GameManagerInstance.isPlaying = true;
-            Player.Singleton.AIMove();
+           // Player.Singleton.AIMove();
             AudioManager.instance.currentVolume = 0.1f;
             AudioManager.instance.MakeWindLouder();
         });
@@ -128,12 +128,13 @@ public class MenuManager : MonoBehaviour
         WorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
         Player.Singleton.transform.DOMove(PlayerPos, 1f).OnComplete(() => { Player.Singleton.SetMeshVis(true); });
+        
 
 
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>
         {
             translucentImageSource.enabled = false;
-            GameManager.GameManagerInstance.Scene.transform.position = GameManager.GameManagerInstance.SceneStartPos;
+           // GameManager.GameManagerInstance.Scene.transform.position = GameManager.GameManagerInstance.SceneStartPos;
 
 
             GameOverPanel.SetActive(false);
@@ -147,10 +148,10 @@ public class MenuManager : MonoBehaviour
     public void Retry()
     {
         //Play Video
-        Vector3 ResetPosition = Player.Singleton.CurrentPlane.GetComponent<MeshRenderer>().bounds.center;
-        ResetPosition.y = Player.Singleton.transform.position.y;
+      //  Vector3 ResetPosition = Player.Singleton.CurrentPlane.GetComponent<MeshRenderer>().bounds.center;
+     //   ResetPosition.y = Player.Singleton.transform.position.y;
 
-        Player.Singleton.transform.DOMove(ResetPosition,1f);
+       // Player.Singleton.transform.DOMove(ResetPosition,1f);
 
         GameOverPanel.SetActive(false);
         Continue();
