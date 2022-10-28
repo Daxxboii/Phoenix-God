@@ -92,7 +92,6 @@ public class Player : MonoBehaviour
                     Handheld.Vibrate();
                     GameManager.GameManagerInstance.GameOver();
                 }
-               
             }
 
             else
@@ -101,9 +100,7 @@ public class Player : MonoBehaviour
                 {
                     Handheld.Vibrate();
                     GameManager.GameManagerInstance.GameOver();
-                   // Debug.Log("Misclick Right Tap");
                 }
-               
             }
             LRIndex++;
 
@@ -111,28 +108,6 @@ public class Player : MonoBehaviour
         }
     }
     #endregion
-
-    void CheckForTrack()
-    {
-       
-       // ray.origin = transform.position;
-       // ray.direction = transform.TransformDirection(Vector3.down);
-        
-       // //if (!Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out RayCastHit, Mathf.Infinity))
-       // {
-      ////    GiveUserControls = false;
-       //   GameManager.GameManagerInstance.GameOver();
-         // Debug.Log("NoTilesOverMe");
-      //         
-      //  }
-       /* else
-        {
-            CurrentPlane = RayCastHit.transform.gameObject;
-            if (CurrentPlane != previousPlane) { PlanesHaveChanged.Invoke(); UpdateSpeed(); }
-            previousPlane = RayCastHit.transform.gameObject;
-           
-        }*/
-    }
 
     public void SetMeshVis(bool value)
     {

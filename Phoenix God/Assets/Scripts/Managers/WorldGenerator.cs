@@ -5,7 +5,14 @@ using DG.Tweening;
 
 public class WorldGenerator : MonoBehaviour
 {
-    
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 10, 150, 100), "I am a button"))
+        {
+            print("You clicked the button!");
+        }
+    }
+
     [Header("Procedural Generation")]
     //Getting Both Width And Length of floor planes
     [SerializeField, Range(0f, 100f)] public float Width;
