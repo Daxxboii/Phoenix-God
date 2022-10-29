@@ -50,7 +50,7 @@ public class Player : MonoBehaviour
         ScreenHalfWidth = Screen.width / 2f;
         Player_Animator.SetBool("Gliding", false);
         PlanesHaveChanged += ResetSun;
-        InputManager.OnRecieved += Move;
+        
         AllowedToTap = true;
     }
 
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
 
     #region Movement
 
-    void Move()
+    public void Move()
     {
         // if (GiveUserControls == true&&_GameManager.isPlaying)
         if (_GameManager.isPlaying&&AllowedToTap)
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
             
             Player_Animator.SetBool("Gliding", true);
             AllowedToTap = false;
-            transform.DOMove(WorldGenerator.Singleton.AllTrackers[1].transform.position,0.05f).OnComplete(()=> { PlanesHaveChanged.Invoke();AllowedToTap = true;});
+          //  transform.DOMove(WorldGenerator.Singleton.AllTrackers[1].transform.position,0.05f).OnComplete(()=> { PlanesHaveChanged.Invoke();AllowedToTap = true;});
 
            
 

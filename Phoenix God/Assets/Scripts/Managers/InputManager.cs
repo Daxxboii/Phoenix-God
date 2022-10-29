@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    public delegate void Recieved();
-    public static Recieved OnRecieved;
+    public Player playerScript;
 
     public float TouchInputX;
     public bool RecievingInput;
@@ -48,7 +47,7 @@ public class InputManager : MonoBehaviour
             {
                 if (touch.position.y < (Screen.height / 0.5f)) TouchInputX = touch.position.x;
 
-                OnRecieved.Invoke();
+                playerScript.Move();
             }
           
            
