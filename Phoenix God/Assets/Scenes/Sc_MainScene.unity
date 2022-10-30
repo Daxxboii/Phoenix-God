@@ -7508,14 +7508,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5080ea3c96b21d4fa6d24759efcb20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxNumberOfTurns: 150
-  L: {fileID: 3013957273360417798, guid: 07acaaf20c096d14096247a65f0f6037, type: 3}
-  R: {fileID: 6644561255918914036, guid: d4c2b35ca01a65048b3fb231db7c53a4, type: 3}
-  StartPos: {fileID: 944965974}
-  SizeModifier: 10
-  TurnPoints: []
-  Tracks: []
-  AllDirections: 
+  Width: 9.8
+  Height: -4.6
+  LRDeviation: {x: 14.81529, y: 34.12529}
+  FwdDeviation: {x: 47.03651, y: 139.82652}
+  MaxNumberOfTurns: 5
+  RunUpDistance: 48
+  Track_Material: {fileID: 2100000, guid: a00013af81304728b2be1f4309ee2433, type: 2}
+  TurnPositions: []
+  ParentRotation: {x: 90, y: 0, z: 0}
+  AllTracks: []
+  AllVertices: []
 --- !u!114 &1973508443
 MonoBehaviour:
   m_ObjectHideFlags: 0

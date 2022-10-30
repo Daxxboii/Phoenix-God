@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
             }
             if (LRIndex != 0)
             {
-                transform.position = Vector3.Lerp(transform.position, GeneratorScript.TurnPoints[LRIndex], Time.deltaTime * ForwardPlayerSpeed);
+              //  transform.position = Vector3.Lerp(transform.position, GeneratorScript.TurnPoints[LRIndex], Time.deltaTime * ForwardPlayerSpeed);
             }
 
         }
