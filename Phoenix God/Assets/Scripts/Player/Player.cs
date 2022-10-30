@@ -10,46 +10,40 @@ public class Player : MonoBehaviour
 
     public static Player Singleton;
 
-    private float ScreenHalfWidth;
-
     [SerializeField,Range(0, 100)] public float ForwardPlayerSpeed;
-    [SerializeField,Range(-50f, 10f)] private float FlightHeight;
+    
     [SerializeField] private Animator Player_Animator;
     [SerializeField] private bool is_Gliding;
-    [SerializeField] private LayerMask WhatIsGround;
+    
 
     [SerializeField] private InputManager _InputManager;
     [SerializeField] private GameManager _GameManager;
 
-    [SerializeField, Range(0, 100)] private float SpeedIncreasePercentage;
+    
+
+    
 
     [SerializeField] private SkinnedMeshRenderer Renderer;
 
     public int LRIndex;
-    
-
-   // bool GiveUserControls = false;
 
     bool AllowedToTap=true;
 
     public GameObject Sun;
-
-    float Sun_multiplier;
-
     Tween SunShrink;
+    public Color Black, yellow;
 
-  
+    public WorldGenerator GeneratorScript;
 
-   
+    public Vector3 SunUpPosition, SunDownPosition;
+    [Range(0f,1f)]public float SunSpeed;
 
-
-
-    private void Awake()
+    void Awake()
     {
         if (Singleton == null) Singleton = this;
-        ScreenHalfWidth = Screen.width / 2f;
+        
         Player_Animator.SetBool("Gliding", false);
-        PlanesHaveChanged += ResetSun;
+      //  PlanesHaveChanged += ResetSun;
         
         AllowedToTap = true;
     }
@@ -57,52 +51,49 @@ public class Player : MonoBehaviour
     public void Start()
     {
         LRIndex = 0;
-        Sun_multiplier = 1;
-        Sun.transform.DOScale(184f, 0.1f);
-
-
     }
 
     void ResetSun()
     {
-        SunShrink.Kill();
-        Sun.transform.DOScale(184f, 0.1f).OnComplete(() => {
-            SunShrink = Sun.transform.DOScale(0f, 5f).OnComplete(() => { GameManager.GameManagerInstance.GameOver();  });
-        });
+        Sun.transform.localPosition = Vector3.Slerp(Sun.transform.localPosition, SunUpPosition, Time.deltaTime * SunSpeed*50);
+        RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, yellow, Time.deltaTime * SunSpeed*50);
+    }
+
+    void Update()
+    {
+        if (_GameManager.isPlaying) 
+        {
+            Sun.transform.localPosition = Vector3.Slerp(Sun.transform.localPosition, SunDownPosition, Time.deltaTime * SunSpeed);
+            RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, Black, Time.deltaTime * SunSpeed);
+
+            if (Sun.transform.localPosition == SunDownPosition)
+            {
+                _GameManager.GameOver();
+            }
+            if (LRIndex != 0)
+            {
+                transform.position = Vector3.Lerp(transform.position, GeneratorScript.TurnPoints[LRIndex], Time.deltaTime * ForwardPlayerSpeed);
+            }
+
+        }
     }
 
     #region Movement
 
     public void Move()
     {
-        // if (GiveUserControls == true&&_GameManager.isPlaying)
         if (_GameManager.isPlaying&&AllowedToTap)
         {
-            
             Player_Animator.SetBool("Gliding", true);
-            AllowedToTap = false;
-          //  transform.DOMove(WorldGenerator.Singleton.AllTrackers[1].transform.position,0.05f).OnComplete(()=> { PlanesHaveChanged.Invoke();AllowedToTap = true;});
+            
 
+            
            
-
-            if ( WorldGenerator.Singleton.AllDirections[LRIndex]==true) 
-            {
-                if (_InputManager.TouchInputX < Screen.width/2)
-                {
-                    Handheld.Vibrate();
-                    GameManager.GameManagerInstance.GameOver();
-                }
-            }
-
-            else
-            {
-                if (_InputManager.TouchInputX > Screen.width/2)
-                {
-                    Handheld.Vibrate();
-                    GameManager.GameManagerInstance.GameOver();
-                }
-            }
             LRIndex++;
+
+          //  GeneratorScript.UpdatePlanes();
+            PlanesHaveChanged.Invoke();
+            ResetSun();
 
 
         }
