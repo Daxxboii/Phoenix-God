@@ -14,23 +14,15 @@ public class Player : MonoBehaviour
     
     [SerializeField] private Animator Player_Animator;
     [SerializeField] private bool is_Gliding;
-    
-
-    [SerializeField] private InputManager _InputManager;
     [SerializeField] private GameManager _GameManager;
-
-    
-
-    
 
     [SerializeField] private SkinnedMeshRenderer Renderer;
 
     public int LRIndex;
 
-    bool AllowedToTap=true;
+   
 
     public GameObject Sun;
-    Tween SunShrink;
     public Color Black, yellow;
 
     public WorldGenerator GeneratorScript;
@@ -38,19 +30,24 @@ public class Player : MonoBehaviour
     public Vector3 SunUpPosition, SunDownPosition;
     [Range(0f,1f)]public float SunSpeed;
 
+    bool NextMove;
+     public bool PerformedStep;
+
+    public GameObject Phoenix;
+
     void Awake()
     {
         if (Singleton == null) Singleton = this;
-        
-        Player_Animator.SetBool("Gliding", false);
-      //  PlanesHaveChanged += ResetSun;
-        
-        AllowedToTap = true;
     }
 
     public void Start()
     {
         LRIndex = 0;
+        Sun.transform.localPosition = SunUpPosition;
+        RenderSettings.fogColor = yellow;
+        NextMove = GeneratorScript.AllDirections[2];
+        Player_Animator.SetBool("Gliding", false);
+        Phoenix.transform.rotation = Quaternion.identity;
     }
 
     void ResetSun()
@@ -66,15 +63,14 @@ public class Player : MonoBehaviour
             Sun.transform.localPosition = Vector3.Slerp(Sun.transform.localPosition, SunDownPosition, Time.deltaTime * SunSpeed);
             RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, Black, Time.deltaTime * SunSpeed);
 
-            if (Sun.transform.localPosition == SunDownPosition)
+            if (Sun.transform.localPosition.y <= SunDownPosition.y+10)
             {
+               
                 _GameManager.GameOver();
             }
-            if (LRIndex != 0)
-            {
-              //  transform.position = Vector3.Lerp(transform.position, GeneratorScript.TurnPoints[LRIndex], Time.deltaTime * ForwardPlayerSpeed);
-            }
-
+            
+                transform.position = Vector3.Lerp(transform.position, GeneratorScript.AllTrackers[1].transform.position, Time.deltaTime * ForwardPlayerSpeed);
+            
         }
     }
 
@@ -82,21 +78,44 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
-        if (_GameManager.isPlaying&&AllowedToTap)
+        if (_GameManager.isPlaying)
         {
-            Player_Animator.SetBool("Gliding", true);
-            
+            if (PerformedStep == NextMove)
+            {
+                TurnPlayer(PerformedStep);
+                Player_Animator.SetBool("Gliding", true);
 
+                GeneratorScript.UpdatePlanes();
+
+
+                PlanesHaveChanged.Invoke();
+                ResetSun();
+                LRIndex++;
+                NextMove = GeneratorScript.AllDirections[LRIndex + 2];
+            }
+            else
+            {
+                  _GameManager.GameOver();
+            }
             
            
-            LRIndex++;
-
-          //  GeneratorScript.UpdatePlanes();
-            PlanesHaveChanged.Invoke();
-            ResetSun();
 
 
         }
+    }
+
+    public void TurnPlayer(bool value)
+    {
+        if (value)
+        {
+            Phoenix.transform.rotation = transform.rotation * Quaternion.Euler(0, 30, 0);
+        }
+        else
+        {
+            Phoenix.transform.rotation = transform.rotation * Quaternion.Euler(0, -30, 0);
+        }
+
+        
     }
     #endregion
 

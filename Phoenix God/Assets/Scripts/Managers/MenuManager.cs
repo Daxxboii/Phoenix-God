@@ -26,6 +26,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ScoreText,MaxScoreText,CountDownText;
     [SerializeField] private TextMeshProUGUI YourScoreNumberText;
     [SerializeField] private TextMeshProUGUI HighScoreNumberText;
+    [SerializeField] private TextMeshProUGUI OnPlayCountDownText;
 
 
     public static MenuManager Instance;
@@ -68,13 +69,18 @@ public class MenuManager : MonoBehaviour
         UpdateText();
         GameManager.GameManagerInstance.Score = 0;
 
-        MainMenuPanel.transform.DOScale(1.5f, TransitionSpeed).OnComplete(()=> {
-            GamePlayPanel.SetActive(true);
-            MainMenuPanel.SetActive(false);
-            GameManager.GameManagerInstance.isPlaying = true;
-           // Player.Singleton.AIMove();
-            AudioManager.instance.currentVolume = 0.1f;
-            AudioManager.instance.MakeWindLouder();
+        DOVirtual.Float(4, 0, 4, v => { source.Strength = v; OnPlayCountDownText.gameObject.SetActive(true); OnPlayCountDownText.text = ((int)v).ToString(); }).OnComplete(() =>
+        {
+            OnPlayCountDownText.gameObject.SetActive(false);
+            MainMenuPanel.transform.DOScale(1.5f, TransitionSpeed).OnComplete(() =>
+            {
+                GamePlayPanel.SetActive(true);
+                MainMenuPanel.SetActive(false);
+                GameManager.GameManagerInstance.isPlaying = true;
+                // Player.Singleton.AIMove();
+                AudioManager.instance.currentVolume = 0.1f;
+                AudioManager.instance.MakeWindLouder();
+            });
         });
     }
 

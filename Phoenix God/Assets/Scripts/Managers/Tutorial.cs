@@ -16,7 +16,7 @@ public class Tutorial : MonoBehaviour
     {
         if (instance == null) instance = this;
         TutorialImage.sprite = Tutorial_Images[0];
-        Player.PlanesHaveChanged += NextImage;
+      //  Player.PlanesHaveChanged += NextImage;
       
     }
     public void NextImage()
@@ -25,7 +25,7 @@ public class Tutorial : MonoBehaviour
         if (ImageIndex >= 3)
         {
             TutorialImage.gameObject.SetActive(false);
-            Player.PlanesHaveChanged -= NextImage;
+          //  Player.PlanesHaveChanged -= NextImage;
         }
         else
         {
@@ -38,6 +38,6 @@ public class Tutorial : MonoBehaviour
         ImageIndex = 0;
         TutorialImage.sprite = Tutorial_Images[0];
         TutorialImage.gameObject.SetActive(true);
-        Player.PlanesHaveChanged += NextImage;
+       // Player.PlanesHaveChanged += NextImage;
     }
 }

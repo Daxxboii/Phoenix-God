@@ -45,12 +45,16 @@ public class InputManager : MonoBehaviour
             touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
             {
-                if (touch.position.y < (Screen.height / 0.5f)) TouchInputX = touch.position.x;
+                if (touch.position.y < (Screen.height / 2f))
+                {
+                    TouchInputX = touch.position.x;
 
-                playerScript.Move();
+                    if (TouchInputX > Screen.width / 2f) playerScript.PerformedStep = true;
+                    else playerScript.PerformedStep = false;
+                   
+                    playerScript.Move();
+                }
             }
-          
-           
         }
         else
         {

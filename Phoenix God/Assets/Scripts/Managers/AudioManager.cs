@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
         Player.PlanesHaveChanged += MakeWindLouder;
        
 
-        Level = PlayerPrefs.GetFloat("Volume",2);
+        Level = PlayerPrefs.GetFloat("Volume",1);
         PlayerPrefs.SetFloat("Volume", Level);
         PlayerPrefs.Save();
         
@@ -34,7 +34,7 @@ public class AudioManager : MonoBehaviour
             image.sprite = LevelSprites[(int)Level];
         }
 
-        MaxVolume = (Level / 2);
+        MaxVolume = (Level);
 
         audioSource.volume = MaxVolume;
     }
@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour
     {
         Level++;
 
-        if(Level > 2)
+        if(Level > 1)
         {
             Level = 0;
         }
@@ -52,7 +52,7 @@ public class AudioManager : MonoBehaviour
             image.sprite = LevelSprites[(int)Level];
         }
 
-        MaxVolume = (Level / 2);
+        MaxVolume = (Level);
 
         MakeWindLouder();
 
