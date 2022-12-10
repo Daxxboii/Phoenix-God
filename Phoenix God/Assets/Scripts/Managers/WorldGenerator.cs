@@ -21,7 +21,7 @@ public class WorldGenerator : MonoBehaviour
 
     //Number Of Turns
     [SerializeField, Range(2, 30)] private int MaxNumberOfTurns;
-    
+
     //Material for the path
     [SerializeField] private Material Track_Material;
 
@@ -41,7 +41,7 @@ public class WorldGenerator : MonoBehaviour
     [HideInInspector] public List<GameObject> AllTracks = new List<GameObject>();
 
     //List of All Trackers
-     public List<GameObject> AllTrackers = new List<GameObject>();
+    public List<GameObject> AllTrackers = new List<GameObject>();
 
     //List Of Directions
     public List<bool> AllDirections = new List<bool>();
@@ -119,7 +119,7 @@ public class WorldGenerator : MonoBehaviour
             Tracker.transform.position = turn;
             Tracker.transform.SetParent(Trackers.transform);
 
-           if(index!=0) AllTrackers.Add(Tracker);
+            if (index != 0) AllTrackers.Add(Tracker);
             index++;
         }
         //AllTrackers.RemoveAt(1);
@@ -181,7 +181,7 @@ public class WorldGenerator : MonoBehaviour
     #endregion
 
 
-    public void UpdatePlanes()
+    public void SpawnMorePlanes()
     {
         StartCoroutine(UpdatePlanesOnRuntime());
     }

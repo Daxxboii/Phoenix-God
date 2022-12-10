@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using LeTai.Asset.TranslucentImage;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class MenuManager : MonoBehaviour
 {
-    public Color DefaultColor;
+    // public Color DefaultColor;
     [Header("Menu Panels")]
     [SerializeField] private GameObject TitlePanel;
     [SerializeField] private GameObject MainMenuPanel;
@@ -16,17 +17,21 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject GamePlayPanel;
     [SerializeField] private GameObject GameOverPanel;
     [SerializeField] private Image GameOverBlack;
-   
+    [SerializeField] private Image GameOverRetryPanelBlack;
+
 
     [SerializeField, Range(0.1f, 2f)] private float TransitionSpeed;
     [SerializeField] private TranslucentImageSource translucentImageSource;
     private ScalableBlurConfig source;
 
     [Header("Text")]
-    [SerializeField] private TextMeshProUGUI ScoreText,MaxScoreText,CountDownText;
+    [SerializeField] private TextMeshProUGUI ScoreText, MaxScoreText, CountDownText;
     [SerializeField] private TextMeshProUGUI YourScoreNumberText;
     [SerializeField] private TextMeshProUGUI HighScoreNumberText;
     [SerializeField] private TextMeshProUGUI OnPlayCountDownText;
+    [SerializeField] private TextMeshProUGUI RetryButtonCount;
+    public GameObject TitleName;
+    public GameObject PauseMenuButton;
 
 
     public static MenuManager Instance;
@@ -34,53 +39,78 @@ public class MenuManager : MonoBehaviour
     [Header("Player")]
     public Vector3 PlayerPos;
 
+    public Button ResetButton, PowerUpButton;
+
+    [Header("Buttons")]
+    public Color DisabledColor;
+    public Color ActivatedColor;
+
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
         UpdateText();
+        ResetButton.image.color = ActivatedColor;
+        RetryButtonCount.color = ActivatedColor;
+        RetryButtonCount.text = "x1";
+        PowerUpButton.interactable = false;
+        PowerUpButton.image.color = DisabledColor;
+        TitleName.gameObject.SetActive(false);
 
         Player.PlanesHaveChanged += UpdateText;
+        Player.ResetWorld += UpdateRetryButton;
 
         //Intro Screen
         MainMenuPanel.SetActive(false);
         CanvasGroup TitleAlpha = TitlePanel.GetComponent<CanvasGroup>();
-        DOVirtual.Float(100f, 0f, 3f, v => { source.Strength = v; TitleAlpha.alpha = v / 100; }).OnComplete(() => { MainMenuPanel.SetActive(true);TitlePanel.SetActive(false);
-            });
-       
+        DOVirtual.Float(100f, 0f, 3f, v =>
+        {
+            source.Strength = v;
+            TitleAlpha.alpha = v / 100;
+            if (v <= 30) TitleName.gameObject.SetActive(true);
+        }).OnComplete(() =>
+        {
+            MainMenuPanel.SetActive(true); TitlePanel.SetActive(false);
+        });
+
     }
 
     public void Pause()
     {
         GameManager.GameManagerInstance.isPlaying = false;
-        translucentImageSource.enabled = true;
-        DOVirtual.Float(0, 100, TransitionSpeed, v =>
-        {
-            source.Strength = v;
-            PauseMenuPanel.SetActive(true);
-            GamePlayPanel.SetActive(false);
-        });
+        PauseMenuPanel.SetActive(true);
+        PauseMenuButton.SetActive(false);
+        Player.Singleton.Player_Animator.SetBool("Gliding", false);
+        Player.Singleton.Phoenix.transform.rotation = Quaternion.identity;
     }
 
     //When play button is pressed
     public void Play()
     {
+
         UpdateText();
         GameManager.GameManagerInstance.Score = 0;
-
-        DOVirtual.Float(4, 0, 4, v => { source.Strength = v; OnPlayCountDownText.gameObject.SetActive(true); OnPlayCountDownText.text = ((int)v).ToString(); }).OnComplete(() =>
+        OnPlayCountDownText.gameObject.SetActive(false);
+        MainMenuPanel.transform.DOScale(1.5f, TransitionSpeed).OnComplete(() =>
         {
-            OnPlayCountDownText.gameObject.SetActive(false);
-            MainMenuPanel.transform.DOScale(1.5f, TransitionSpeed).OnComplete(() =>
+            GamePlayPanel.SetActive(true);
+            MainMenuPanel.SetActive(false);
+            GameManager.GameManagerInstance.isPlaying = true;
+            AudioManager.instance.currentVolume = 0.1f;
+            AudioManager.instance.MakeWindLouder();
+        });
+
+        DOVirtual.Float(0, 1, 1f, x => { }).OnComplete(() =>
+        {
+            Player.Singleton.PerformedStep = false;
+            Player.Singleton.Move();
+            DOVirtual.Float(0, 1, 1f, x => { }).OnComplete(() =>
             {
-                GamePlayPanel.SetActive(true);
-                MainMenuPanel.SetActive(false);
-                GameManager.GameManagerInstance.isPlaying = true;
-                // Player.Singleton.AIMove();
-                AudioManager.instance.currentVolume = 0.1f;
-                AudioManager.instance.MakeWindLouder();
+                Player.Singleton.PerformedStep = true;
+                Player.Singleton.Move(); InputManager.CanReceiveInput = true;
             });
+
         });
     }
 
@@ -94,22 +124,18 @@ public class MenuManager : MonoBehaviour
     {
         CountDownText.gameObject.SetActive(true);
         PauseMenuPanel.SetActive(false);
-        translucentImageSource.enabled = true;
-        DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() => 
-        {
-            translucentImageSource.enabled = false;
-            CountDownText.gameObject.SetActive(true);
-            DOVirtual.Float(4, 0, 3, x => { CountDownText.text = ((int)x).ToString(); }).OnComplete(() =>
-             {
-                 CountDownText.transform.gameObject.SetActive(false);
-                 GameManager.GameManagerInstance.isPlaying = true;
-                 GamePlayPanel.SetActive(true);
-             });
-             
-        });
+        CountDownText.gameObject.SetActive(true);
+        DOVirtual.Float(4, 0, 3, x => { CountDownText.text = ((int)x).ToString(); }).OnComplete(() =>
+         {
+             CountDownText.transform.gameObject.SetActive(false);
+             GameManager.GameManagerInstance.isPlaying = true;
+             GamePlayPanel.SetActive(true);
+             Player.Singleton.Player_Animator.SetBool("Gliding", true);
+             PauseMenuButton.SetActive(true);
+         });
     }
 
-   
+
 
     public void Quit()
     {
@@ -120,29 +146,26 @@ public class MenuManager : MonoBehaviour
     {
         Player.Singleton.SetMeshVis(false);
         GamePlayPanel.SetActive(false);
-        GameOverBlack.DOFade(1f, 1f).OnComplete(()=> { GameOverBlack.DOFade(0f, 5f).SetEase(Ease.InQuad); ResetGame(); });
-        
+        GameOverBlack.DOFade(1f, 1f).OnComplete(() => { GameOverBlack.DOFade(0f, 5f).SetEase(Ease.InQuad); ResetGame(); });
+
         Tutorial.instance.Reset();
         AudioManager.instance.MakeWindLouder();
-
-
     }
 
     public void ResetGame()
     {
+        RetryButtonCount.color = ActivatedColor;
+        RetryButtonCount.text = "x1";
         GameManager.GameManagerInstance.Score = 0;
-        WorldGenerator.Singleton.ResetWorld();
+        AlternateWorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
         Player.Singleton.transform.DOMove(PlayerPos, 1f).OnComplete(() => { Player.Singleton.SetMeshVis(true); });
-        
+
 
 
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>
         {
             translucentImageSource.enabled = false;
-           // GameManager.GameManagerInstance.Scene.transform.position = GameManager.GameManagerInstance.SceneStartPos;
-
-
             GameOverPanel.SetActive(false);
             PauseMenuPanel.SetActive(false);
             MainMenuPanel.SetActive(true);
@@ -151,16 +174,34 @@ public class MenuManager : MonoBehaviour
 
     }
 
+
+    public void UpdateRetryButton()
+    {
+        GameManager.GameManagerInstance.isPlaying = false;
+        RetryButtonCount.color = ActivatedColor;
+        //GameOverRetryPanelBlack.DOFade(1f, 2f).OnComplete(() => { Retry(); });
+        Retry();
+
+    }
     public void Retry()
     {
-        //Play Video
-      //  Vector3 ResetPosition = Player.Singleton.CurrentPlane.GetComponent<MeshRenderer>().bounds.center;
-     //   ResetPosition.y = Player.Singleton.transform.position.y;
+        GameOverRetryPanelBlack.DOFade(0f, 1f);
+        Player.Singleton.ResetSunInstantly();
+        Player.ResetEnabled = false;
 
-       // Player.Singleton.transform.DOMove(ResetPosition,1f);
+        PauseMenuPanel.SetActive(false);
+        CountDownText.gameObject.SetActive(true);
+        DOVirtual.Float(4, 0, 3, x => { CountDownText.text = ((int)x).ToString(); }).OnComplete(() =>
+     {
+         CountDownText.transform.gameObject.SetActive(false);
+         GameManager.GameManagerInstance.isPlaying = true;
+         GamePlayPanel.SetActive(true);
 
-        GameOverPanel.SetActive(false);
-        Continue();
+         RetryButtonCount.color = DisabledColor;
+         RetryButtonCount.text = "x0";
+         ResetButton.image.color = DisabledColor;
+     });
+
     }
 
     private void UpdateText()
@@ -169,4 +210,19 @@ public class MenuManager : MonoBehaviour
         MaxScoreText.text = ((int)GameManager.GameManagerInstance.MaxScore).ToString();
     }
 
+    public void ActivateSunButton()
+    {
+        PowerUpButton.interactable = true;
+        PowerUpButton.image.color = ActivatedColor;
+    }
+    public void _SunPowerUp()
+    {
+        Player.Singleton._SunPowerUp();
+        DisableSunButton();
+    }
+    public void DisableSunButton()
+    {
+        PowerUpButton.interactable = false;
+        PowerUpButton.image.color = DisabledColor;
+    }
 }

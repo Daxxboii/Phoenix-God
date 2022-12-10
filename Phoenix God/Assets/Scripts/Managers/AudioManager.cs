@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
     public float Level;
 
     [HideInInspector] public float MaxVolume;
-    [HideInInspector]public float currentVolume;
+    [HideInInspector] public float currentVolume;
 
     public Sprite[] LevelSprites;
 
@@ -23,12 +23,12 @@ public class AudioManager : MonoBehaviour
         instance = this;
 
         Player.PlanesHaveChanged += MakeWindLouder;
-       
 
-        Level = PlayerPrefs.GetFloat("Volume",1);
+
+        Level = PlayerPrefs.GetFloat("Volume", 1);
         PlayerPrefs.SetFloat("Volume", Level);
         PlayerPrefs.Save();
-        
+
         foreach (Image image in LevelButtons)
         {
             image.sprite = LevelSprites[(int)Level];
@@ -43,7 +43,7 @@ public class AudioManager : MonoBehaviour
     {
         Level++;
 
-        if(Level > 1)
+        if (Level > 1)
         {
             Level = 0;
         }
@@ -56,7 +56,7 @@ public class AudioManager : MonoBehaviour
 
         MakeWindLouder();
 
-        PlayerPrefs.SetFloat("Volume",Level);
+        PlayerPrefs.SetFloat("Volume", Level);
         PlayerPrefs.Save();
     }
     public void MakeWindLouder()
@@ -66,5 +66,5 @@ public class AudioManager : MonoBehaviour
         currentVolume = Mathf.Clamp(currentVolume, 0.01f, MaxVolume);
         audioSource.volume = currentVolume;
     }
-    
+
 }

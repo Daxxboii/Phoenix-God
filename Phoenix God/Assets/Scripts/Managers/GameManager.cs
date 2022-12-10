@@ -14,15 +14,13 @@ public class GameManager : MonoBehaviour
     [SerializeField, HideInInspector] public int Score, MaxScore;
     [SerializeField] private string MaxScoreSaveName;
 
-   
-
 
     public void Awake()
     {
-        if(GameManagerInstance == null)GameManagerInstance = this; //Singleton
+        if (GameManagerInstance == null) GameManagerInstance = this; //Singleton
 
         //Load High Score
-        if(PlayerPrefs.HasKey(MaxScoreSaveName)) MaxScore = (int)PlayerPrefs.GetInt(MaxScoreSaveName);
+        if (PlayerPrefs.HasKey(MaxScoreSaveName)) MaxScore = (int)PlayerPrefs.GetInt(MaxScoreSaveName);
         Player.PlanesHaveChanged += UpdateScore;
     }
 
@@ -31,7 +29,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = false;
         MenuManager.Instance.GameOver();
-        PlayerPrefs.SetInt(MaxScoreSaveName,MaxScore);
+        PlayerPrefs.SetInt(MaxScoreSaveName, MaxScore);
         PlayerPrefs.Save();
     }
 
@@ -40,5 +38,5 @@ public class GameManager : MonoBehaviour
         Score++;
         if (Score > MaxScore) MaxScore = Score;
     }
-   
+
 }
