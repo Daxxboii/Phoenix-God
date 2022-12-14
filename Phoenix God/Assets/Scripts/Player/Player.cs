@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
 
     void ResetSun()
     {
-        Sun.transform.localPosition = Vector3.Lerp(Sun.transform.localPosition, new Vector3(Sun.transform.localPosition.x, Sun.transform.localPosition.y + SunUpFactor, Sun.transform.localPosition.z), Time.deltaTime * SunSpeed * 2);
+        Sun.transform.localPosition = Vector3.Lerp(Sun.transform.localPosition, new Vector3(Sun.transform.localPosition.x, Sun.transform.localPosition.y + SunUpFactor, Sun.transform.localPosition.z), Time.deltaTime * SunSpeed * 5);
         ClampedSunPos = Sun.transform.localPosition;
         ClampedSunPos.y = Mathf.Clamp(ClampedSunPos.y, SunDownPosition.y, SunUpPosition.y);
         Sun.transform.localPosition = ClampedSunPos;
@@ -93,7 +93,11 @@ public class Player : MonoBehaviour
             if (!UsedUpSunPower)
             {
                 timer += Time.deltaTime;
-                HourglassProgress = SunUpPosition.y / Sun.transform.localPosition.y;
+                // HourglassProgress = SunUpPosition.y / Sun.transform.localPosition.y;
+
+                HourglassProgress = mapOneRangeToAnother(Sun.transform.localPosition.y, SunUpPosition.y, SunDownPosition.y, 1, 0, 2);
+                Debug.Log(HourglassProgress);
+
                 if (!IsSunButtonEnabled) HourGlassOuter.fillAmount = HourglassProgress;
 
                 if (HourglassProgress > 0.93f && timer > 2f)
@@ -185,7 +189,7 @@ public class Player : MonoBehaviour
     IEnumerator SunDown()
     {
         ResettingSun = true;
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.2f);
         ResettingSun = false;
     }
 
@@ -241,4 +245,15 @@ public class Player : MonoBehaviour
         });
 
     }
+
+    public float mapOneRangeToAnother(float sourceNumber, float fromA, float fromB, float toA, float toB, int decimalPrecision ) {
+    float deltaA = fromB - fromA;
+    float deltaB = toB - toA;
+        float scale  = deltaB / deltaA;
+        float negA   = -1 * fromA;
+        float offset = (negA * scale) + toA;
+    float finalNumber = (sourceNumber * scale) + offset;
+    int calcScale = (int) Mathf.Pow(10, decimalPrecision);
+    return (float) Mathf.Round(finalNumber * calcScale) / calcScale;
+}
 }

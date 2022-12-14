@@ -39,7 +39,7 @@ public class MenuManager : MonoBehaviour
     [Header("Player")]
     public Vector3 PlayerPos;
 
-    public Button ResetButton, PowerUpButton;
+    public Button RetryButtom, PowerUpButton;
 
     [Header("Buttons")]
     public Color DisabledColor;
@@ -51,10 +51,9 @@ public class MenuManager : MonoBehaviour
         if (Instance == null) Instance = this;
         source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
         UpdateText();
-        ResetButton.image.color = ActivatedColor;
+        RetryButtom.image.color = DisabledColor;
         RetryButtonCount.color = ActivatedColor;
-        RetryButtonCount.text = "x1";
-        PowerUpButton.interactable = false;
+        RetryButtonCount.text = "1x";
         PowerUpButton.image.color = DisabledColor;
         TitleName.gameObject.SetActive(false);
 
@@ -155,7 +154,8 @@ public class MenuManager : MonoBehaviour
     public void ResetGame()
     {
         RetryButtonCount.color = ActivatedColor;
-        RetryButtonCount.text = "x1";
+        RetryButtonCount.text = "1x";
+        PowerUpButton.image.color = DisabledColor;
         GameManager.GameManagerInstance.Score = 0;
         AlternateWorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
@@ -188,6 +188,7 @@ public class MenuManager : MonoBehaviour
         GameOverRetryPanelBlack.DOFade(0f, 1f);
         Player.Singleton.ResetSunInstantly();
         Player.ResetEnabled = false;
+        RetryButtom.image.color = ActivatedColor;
 
         PauseMenuPanel.SetActive(false);
         CountDownText.gameObject.SetActive(true);
@@ -198,8 +199,8 @@ public class MenuManager : MonoBehaviour
          GamePlayPanel.SetActive(true);
 
          RetryButtonCount.color = DisabledColor;
-         RetryButtonCount.text = "x0";
-         ResetButton.image.color = DisabledColor;
+         RetryButtonCount.text = "0x";
+         RetryButtom.image.color = DisabledColor;
      });
 
     }
@@ -212,8 +213,9 @@ public class MenuManager : MonoBehaviour
 
     public void ActivateSunButton()
     {
-        PowerUpButton.interactable = true;
+      //  PowerUpButton.interactable = true;
         PowerUpButton.image.color = ActivatedColor;
+        _SunPowerUp();
     }
     public void _SunPowerUp()
     {
@@ -222,7 +224,7 @@ public class MenuManager : MonoBehaviour
     }
     public void DisableSunButton()
     {
-        PowerUpButton.interactable = false;
+      //  PowerUpButton.interactable = false;
         PowerUpButton.image.color = DisabledColor;
     }
 }

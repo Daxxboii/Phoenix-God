@@ -178,7 +178,7 @@ public class AlternateWorldGenerator : MonoBehaviour
             Decide = false;
 
         //Debug.Log(randomNumber);
-        if (AllDirections[AllDirections.Count - 1] == AllDirections[AllDirections.Count - 2]&& AllDirections[AllDirections.Count - 2]==Decide)
+        if ((AllDirections[AllDirections.Count - 1] == AllDirections[AllDirections.Count - 2])&&( AllDirections[AllDirections.Count - 2] == Decide) && (AllDirections[AllDirections.Count-3]==Decide))
         {
             return LorR();
         }
