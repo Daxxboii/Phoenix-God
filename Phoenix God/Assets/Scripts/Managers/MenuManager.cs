@@ -15,9 +15,10 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject MainMenuPanel;
     [SerializeField] private GameObject PauseMenuPanel;
     [SerializeField] private GameObject GamePlayPanel;
-    [SerializeField] private GameObject GameOverPanel;
+    
     [SerializeField] private Image GameOverBlack;
     [SerializeField] private Image GameOverRetryPanelBlack;
+
 
 
     [SerializeField, Range(0.1f, 2f)] private float TransitionSpeed;
@@ -28,7 +29,6 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI ScoreText, MaxScoreText, CountDownText;
     [SerializeField] private TextMeshProUGUI YourScoreNumberText;
     [SerializeField] private TextMeshProUGUI HighScoreNumberText;
-    [SerializeField] private TextMeshProUGUI OnPlayCountDownText;
     [SerializeField] private TextMeshProUGUI RetryButtonCount;
     public GameObject TitleName;
     public GameObject PauseMenuButton;
@@ -39,7 +39,7 @@ public class MenuManager : MonoBehaviour
     [Header("Player")]
     public Vector3 PlayerPos;
 
-    public Button RetryButtom, PowerUpButton;
+    public Image RetryButtom, PowerUpButton;
 
     [Header("Buttons")]
     public Color DisabledColor;
@@ -50,15 +50,18 @@ public class MenuManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
+
         UpdateText();
-        RetryButtom.image.color = DisabledColor;
+        RetryButtom.color = DisabledColor;
         RetryButtonCount.color = ActivatedColor;
         RetryButtonCount.text = "1x";
-        PowerUpButton.image.color = DisabledColor;
+        PowerUpButton.color = DisabledColor;
         TitleName.gameObject.SetActive(false);
 
         Player.PlanesHaveChanged += UpdateText;
         Player.ResetWorld += UpdateRetryButton;
+
+       
 
         //Intro Screen
         MainMenuPanel.SetActive(false);
@@ -75,6 +78,9 @@ public class MenuManager : MonoBehaviour
 
     }
 
+    
+
+
     public void Pause()
     {
         GameManager.GameManagerInstance.isPlaying = false;
@@ -90,7 +96,6 @@ public class MenuManager : MonoBehaviour
 
         UpdateText();
         GameManager.GameManagerInstance.Score = 0;
-        OnPlayCountDownText.gameObject.SetActive(false);
         MainMenuPanel.transform.DOScale(1.5f, TransitionSpeed).OnComplete(() =>
         {
             GamePlayPanel.SetActive(true);
@@ -145,7 +150,9 @@ public class MenuManager : MonoBehaviour
     {
         Player.Singleton.SetMeshVis(false);
         GamePlayPanel.SetActive(false);
-        GameOverBlack.DOFade(1f, 1f).OnComplete(() => { GameOverBlack.DOFade(0f, 5f).SetEase(Ease.InQuad); ResetGame(); });
+        GameOverBlack.DOFade(1f, 1f).OnComplete(() => { 
+            GameOverBlack.DOFade(0f, 5f).SetEase(Ease.InQuad); 
+            ResetGame(); });
 
         Tutorial.instance.Reset();
         AudioManager.instance.MakeWindLouder();
@@ -155,7 +162,7 @@ public class MenuManager : MonoBehaviour
     {
         RetryButtonCount.color = ActivatedColor;
         RetryButtonCount.text = "1x";
-        PowerUpButton.image.color = DisabledColor;
+        PowerUpButton.color = DisabledColor;
         GameManager.GameManagerInstance.Score = 0;
         AlternateWorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
@@ -166,7 +173,6 @@ public class MenuManager : MonoBehaviour
         DOVirtual.Float(100, 0, TransitionSpeed, v => { source.Strength = v; }).OnComplete(() =>
         {
             translucentImageSource.enabled = false;
-            GameOverPanel.SetActive(false);
             PauseMenuPanel.SetActive(false);
             MainMenuPanel.SetActive(true);
             MainMenuPanel.transform.DOScale(1, TransitionSpeed);
@@ -188,7 +194,7 @@ public class MenuManager : MonoBehaviour
         GameOverRetryPanelBlack.DOFade(0f, 1f);
         Player.Singleton.ResetSunInstantly();
         Player.ResetEnabled = false;
-        RetryButtom.image.color = ActivatedColor;
+        RetryButtom.color = ActivatedColor;
 
         PauseMenuPanel.SetActive(false);
         CountDownText.gameObject.SetActive(true);
@@ -200,7 +206,7 @@ public class MenuManager : MonoBehaviour
 
          RetryButtonCount.color = DisabledColor;
          RetryButtonCount.text = "0x";
-         RetryButtom.image.color = DisabledColor;
+         RetryButtom.color = DisabledColor;
      });
 
     }
@@ -213,8 +219,7 @@ public class MenuManager : MonoBehaviour
 
     public void ActivateSunButton()
     {
-      //  PowerUpButton.interactable = true;
-        PowerUpButton.image.color = ActivatedColor;
+        PowerUpButton.color = ActivatedColor;
         _SunPowerUp();
     }
     public void _SunPowerUp()
@@ -224,7 +229,6 @@ public class MenuManager : MonoBehaviour
     }
     public void DisableSunButton()
     {
-      //  PowerUpButton.interactable = false;
-        PowerUpButton.image.color = DisabledColor;
+        PowerUpButton.color = DisabledColor;
     }
 }
