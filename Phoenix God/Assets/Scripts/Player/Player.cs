@@ -1,49 +1,81 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
+
 public class Player : MonoBehaviour
 {
     public delegate void ChangedPlanes();
-    public static ChangedPlanes PlanesHaveChanged;
-    public static ChangedPlanes ResetWorld;
 
+    public static ChangedPlanes PlanesHaveChanged;
+
+    public static ChangedPlanes ResetWorld;
 
     public static Player Singleton;
 
-    [SerializeField, Range(0, 100)] public float ForwardPlayerSpeed;
+    [SerializeField, Range(0, 100)]
+    public float ForwardPlayerSpeed;
 
-    [SerializeField] public Animator Player_Animator;
-    [SerializeField] private bool is_Gliding;
-    [SerializeField] private GameManager _GameManager;
-    [Range(0f, 100f)] public float SunUpFactor;
+    [SerializeField]
+    public Animator Player_Animator;
 
-    [SerializeField] private SkinnedMeshRenderer Renderer;
+    [SerializeField]
+    private bool is_Gliding;
+
+    [SerializeField]
+    private GameManager _GameManager;
+
+    [Range(0f, 100f)]
+    public float SunUpFactor;
+
+    [SerializeField]
+    private SkinnedMeshRenderer Renderer;
 
     public int LRIndex;
 
-    bool ResettingSun, IsSunPoweredUp;
+    bool
+
+            ResettingSun,
+            IsSunPoweredUp;
 
     public GameObject Sun;
-    public Color Black, yellow;
+
+    public Color
+
+            Black,
+            yellow;
 
     public AlternateWorldGenerator GeneratorScript;
 
-    public Vector3 SunUpPosition, SunDownPosition;
-    [Range(0f, 1f)] public float SunSpeed;
+    public Vector3
+
+            SunUpPosition,
+            SunDownPosition;
+
+    [Range(0f, 1f)]
+    public float SunSpeed;
 
     bool NextMove;
+
     public bool PerformedStep;
 
     public GameObject Phoenix;
 
-    public static bool ResetEnabled, IsSunButtonEnabled;
+    public static bool
+
+            ResetEnabled,
+            IsSunButtonEnabled;
 
     float HourglassProgress;
 
-    public Image HourGlassOuter, HourGlassInner;
+    public Image
+
+            HourGlassOuter,
+            HourGlassInner;
+
     float timer;
+
     public bool UsedUpSunPower;
 
     private Vector3 ClampedSunPos;
@@ -79,11 +111,22 @@ public class Player : MonoBehaviour
 
     void ResetSun()
     {
-        Sun.transform.localPosition = Vector3.Lerp(Sun.transform.localPosition, new Vector3(Sun.transform.localPosition.x, Sun.transform.localPosition.y + SunUpFactor, Sun.transform.localPosition.z), Time.deltaTime * SunSpeed * 5);
+        Sun.transform.localPosition =
+            Vector3
+                .Lerp(Sun.transform.localPosition,
+                new Vector3(Sun.transform.localPosition.x,
+                    Sun.transform.localPosition.y + SunUpFactor,
+                    Sun.transform.localPosition.z),
+                Time.deltaTime * SunSpeed * 5);
         ClampedSunPos = Sun.transform.localPosition;
-        ClampedSunPos.y = Mathf.Clamp(ClampedSunPos.y, SunDownPosition.y, SunUpPosition.y);
+        ClampedSunPos.y =
+            Mathf.Clamp(ClampedSunPos.y, SunDownPosition.y, SunUpPosition.y);
         Sun.transform.localPosition = ClampedSunPos;
-        RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, yellow, Time.deltaTime * SunSpeed * 50);
+        RenderSettings.fogColor =
+            Color
+                .Lerp(RenderSettings.fogColor,
+                yellow,
+                Time.deltaTime * SunSpeed * 50);
     }
 
     void Update()
@@ -93,12 +136,19 @@ public class Player : MonoBehaviour
             if (!UsedUpSunPower)
             {
                 timer += Time.deltaTime;
+
                 // HourglassProgress = SunUpPosition.y / Sun.transform.localPosition.y;
+                HourglassProgress =
+                    mapOneRangeToAnother(Sun.transform.localPosition.y,
+                    SunUpPosition.y,
+                    SunDownPosition.y,
+                    1,
+                    0,
+                    2);
+                Debug.Log (HourglassProgress);
 
-                HourglassProgress = mapOneRangeToAnother(Sun.transform.localPosition.y, SunUpPosition.y, SunDownPosition.y, 1, 0, 2);
-                Debug.Log(HourglassProgress);
-
-                if (!IsSunButtonEnabled) HourGlassOuter.fillAmount = HourglassProgress;
+                if (!IsSunButtonEnabled)
+                    HourGlassOuter.fillAmount = HourglassProgress;
 
                 if (HourglassProgress > 0.93f && timer > 2f)
                 {
@@ -111,8 +161,16 @@ public class Player : MonoBehaviour
             {
                 if (!ResettingSun && !IsSunPoweredUp)
                 {
-                    Sun.transform.localPosition = Vector3.Lerp(Sun.transform.localPosition, SunDownPosition, Time.deltaTime * SunSpeed);
-                    RenderSettings.fogColor = Color.Lerp(RenderSettings.fogColor, Black, Time.deltaTime * SunSpeed);
+                    Sun.transform.localPosition =
+                        Vector3
+                            .Lerp(Sun.transform.localPosition,
+                            SunDownPosition,
+                            Time.deltaTime * SunSpeed);
+                    RenderSettings.fogColor =
+                        Color
+                            .Lerp(RenderSettings.fogColor,
+                            Black,
+                            Time.deltaTime * SunSpeed);
                 }
                 else
                 {
@@ -130,12 +188,16 @@ public class Player : MonoBehaviour
                     }
                 }
             }
-            transform.position = Vector3.Lerp(transform.position, GeneratorScript.TurnPositions[LRIndex], Time.deltaTime * ForwardPlayerSpeed);
-
+            transform.position =
+                Vector3
+                    .Lerp(transform.position,
+                    GeneratorScript.TurnPositions[LRIndex],
+                    Time.deltaTime * ForwardPlayerSpeed);
         }
     }
 
-    #region Movement
+
+#region Movement
 
     public void Move()
     {
@@ -143,7 +205,7 @@ public class Player : MonoBehaviour
         {
             if (PerformedStep == NextMove)
             {
-                TurnPlayer(PerformedStep);
+                TurnPlayer (PerformedStep);
                 Player_Animator.SetBool("Gliding", true);
                 GeneratorScript.SpawnMorePlanes();
                 PlanesHaveChanged.Invoke();
@@ -170,17 +232,18 @@ public class Player : MonoBehaviour
     {
         if (value)
         {
-            Phoenix.transform.rotation = transform.rotation * Quaternion.Euler(0, 30, 0);
+            Phoenix.transform.rotation =
+                transform.rotation * Quaternion.Euler(0, 30, 0);
         }
         else
         {
-            Phoenix.transform.rotation = transform.rotation * Quaternion.Euler(0, -30, 0);
+            Phoenix.transform.rotation =
+                transform.rotation * Quaternion.Euler(0, -30, 0);
         }
-
-
     }
-    #endregion
-   
+#endregion
+
+
     public void SetMeshVis(bool value)
     {
         Renderer.enabled = value;
@@ -219,12 +282,16 @@ public class Player : MonoBehaviour
         alphaKey[1].alpha = 1.0f;
         alphaKey[1].time = 1.0f;
 
-        gradient.SetKeys(colorKey, alphaKey);
+        gradient.SetKeys (colorKey, alphaKey);
 
-        DOVirtual.Float(1, 0, 2, v =>
-        {
-            RenderSettings.fogColor = gradient.Evaluate(v);
-        });
+        DOVirtual
+            .Float(1,
+            0,
+            2,
+            v =>
+            {
+                RenderSettings.fogColor = gradient.Evaluate(v);
+            });
     }
 
     public void _SunPowerUp()
@@ -233,27 +300,43 @@ public class Player : MonoBehaviour
         UsedUpSunPower = true;
         KillTween = true;
 
-        DOVirtual.Float(1, 0.2f, 30, x => { if (KillTween) HourGlassInner.fillAmount = x; }).OnComplete(() =>
-        {
-            if (KillTween)
+        DOVirtual
+            .Float(1,
+            0.2f,
+            30,
+            x =>
             {
-                IsSunPoweredUp = false;
-                MenuManager.Instance.DisableSunButton();
-                HourGlassInner.fillAmount = 1;
-                HourGlassInner.color = new Color(0.7f, 0.7f, 0.7f);
-            }
-        });
-
+                if (KillTween) HourGlassInner.fillAmount = x;
+            })
+            .OnComplete(() =>
+            {
+                if (KillTween)
+                {
+                    IsSunPoweredUp = false;
+                    MenuManager.Instance.DisableSunButton();
+                    HourGlassInner.fillAmount = 1;
+                    HourGlassInner.color = new Color(0.7f, 0.7f, 0.7f);
+                }
+            });
     }
 
-    public float mapOneRangeToAnother(float sourceNumber, float fromA, float fromB, float toA, float toB, int decimalPrecision ) {
-    float deltaA = fromB - fromA;
-    float deltaB = toB - toA;
-        float scale  = deltaB / deltaA;
-        float negA   = -1 * fromA;
+    public float
+    mapOneRangeToAnother(
+        float sourceNumber,
+        float fromA,
+        float fromB,
+        float toA,
+        float toB,
+        int decimalPrecision
+    )
+    {
+        float deltaA = fromB - fromA;
+        float deltaB = toB - toA;
+        float scale = deltaB / deltaA;
+        float negA = -1 * fromA;
         float offset = (negA * scale) + toA;
-    float finalNumber = (sourceNumber * scale) + offset;
-    int calcScale = (int) Mathf.Pow(10, decimalPrecision);
-    return (float) Mathf.Round(finalNumber * calcScale) / calcScale;
-}
+        float finalNumber = (sourceNumber * scale) + offset;
+        int calcScale = (int) Mathf.Pow(10, decimalPrecision);
+        return (float) Mathf.Round(finalNumber * calcScale) / calcScale;
+    }
 }
