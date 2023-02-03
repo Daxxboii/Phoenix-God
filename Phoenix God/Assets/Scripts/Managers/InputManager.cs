@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +7,11 @@ public class InputManager : MonoBehaviour
     public Player playerScript;
 
     public float TouchInputX;
+
     public bool RecievingInput;
+
     public static bool CanReceiveInput;
+
     Touch touch;
 
     void Update()
@@ -17,11 +20,9 @@ public class InputManager : MonoBehaviour
     }
 
     //Inputs
-    #region Events
+#region Events
     private void GetInputTouches()
     {
-
-#if UNITY_ANDROID || UNITY_IOS
         if (CanReceiveInput)
         {
             if (Input.touchCount > 0)
@@ -34,21 +35,38 @@ public class InputManager : MonoBehaviour
                     {
                         TouchInputX = touch.position.x;
 
-                        if (TouchInputX > Screen.width / 2f) playerScript.PerformedStep = true;
-                        else playerScript.PerformedStep = false;
+                        if (TouchInputX > Screen.width / 2f)
+                            playerScript.PerformedStep = true;
+                        else
+                            playerScript.PerformedStep = false;
 
                         playerScript.Move();
                     }
                 }
             }
+
+           /* if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+            {
+                RecievingInput = true;
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    playerScript.PerformedStep = false;
+                }
+                else
+                {
+                    playerScript.PerformedStep = true;
+                 }
+                 playerScript.Move();
+                //Debug.Log("Touch");
+            }*/
             else
             {
                 RecievingInput = false;
             }
         }
-#endif
     }
 
-    #endregion
+
+#endregion
 
 }

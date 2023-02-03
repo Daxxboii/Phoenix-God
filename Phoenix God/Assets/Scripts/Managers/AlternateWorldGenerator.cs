@@ -34,9 +34,10 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     bool Dir;
 
+
     public static AlternateWorldGenerator Singleton;
 
-    void Awake()
+    void Start()
     {
         if (Singleton == null) Singleton = this;
         Parent = new GameObject("Parent");
@@ -221,6 +222,6 @@ public class AlternateWorldGenerator : MonoBehaviour
         TurnPositions.Clear();
         NextSpawn = Vector3.zero;
         LastDir = false;
-        Awake();
+        Start();
     }
 }

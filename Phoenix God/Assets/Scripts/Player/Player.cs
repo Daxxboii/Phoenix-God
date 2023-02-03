@@ -6,81 +6,100 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    public static Player Singleton;
+
+
+#region Callbacks
     public delegate void ChangedPlanes();
 
     public static ChangedPlanes PlanesHaveChanged;
 
     public static ChangedPlanes ResetWorld;
 
-    public static Player Singleton;
 
+#endregion
+
+
+    [Header("Float Values")]
     [SerializeField, Range(0, 100)]
     public float ForwardPlayerSpeed;
-
-    [SerializeField]
-    public Animator Player_Animator;
-
-    [SerializeField]
-    private bool is_Gliding;
-
-    [SerializeField]
-    private GameManager _GameManager;
 
     [Range(0f, 100f)]
     public float SunUpFactor;
 
-    [SerializeField]
-    private SkinnedMeshRenderer Renderer;
+    [Range(0f, 1f)]
+    public float SunSpeed;
 
+    float HourglassProgress;
+
+    float timer;
+
+    [HideInInspector]
     public int LRIndex;
 
-    bool
+    [Header("Colors")]
+    public Color Black;
 
-            ResettingSun,
-            IsSunPoweredUp;
+    public Color yellow;
 
-    public GameObject Sun;
-
-    public Color
-
-            Black,
-            yellow;
-
-    public AlternateWorldGenerator GeneratorScript;
-
+    [Header("Vectors")]
     public Vector3
 
             SunUpPosition,
             SunDownPosition;
 
-    [Range(0f, 1f)]
-    public float SunSpeed;
+    private Vector3 ClampedSunPos;
 
-    bool NextMove;
+    Collider[] hitColliders;
 
+    [Header("Booleans")]
+    public bool UsedUpSunPower;
+
+    public bool KillTween = false;
+
+    [HideInInspector]
     public bool PerformedStep;
 
-    public GameObject Phoenix;
+    [SerializeField]
+    private bool is_Gliding;
 
     public static bool
 
             ResetEnabled,
             IsSunButtonEnabled;
 
-    float HourglassProgress;
+    bool
+
+            ResettingSun,
+            IsSunPoweredUp;
+
+    bool NextMove;
+
+    [Header("References")]
+    public GameObject Phoenix;
 
     public Image
 
             HourGlassOuter,
             HourGlassInner;
 
-    float timer;
+    [SerializeField]
+    public Animator Player_Animator;
 
-    public bool UsedUpSunPower;
+    [SerializeField]
+    private GameManager _GameManager;
 
-    private Vector3 ClampedSunPos;
+    [SerializeField]
+    private SkinnedMeshRenderer Renderer;
 
-    public bool KillTween = false;
+    public GameObject Sun;
+
+    public AlternateWorldGenerator GeneratorScript;
+
+    public Material
+
+            FadePath,
+            FullPath;
 
     void Awake()
     {
@@ -91,7 +110,7 @@ public class Player : MonoBehaviour
     {
         ResetSun();
         LRIndex = 0;
-        Sun.transform.localPosition = new Vector3(0, -45, 745.8f);
+        Sun.transform.localPosition = new Vector3(0, 118, 745.8f);
         RenderSettings.fogColor = yellow;
         NextMove = GeneratorScript.AllDirections[0];
         Player_Animator.SetBool("Gliding", false);
@@ -118,10 +137,12 @@ public class Player : MonoBehaviour
                     Sun.transform.localPosition.y + SunUpFactor,
                     Sun.transform.localPosition.z),
                 Time.deltaTime * SunSpeed * 5);
+
         ClampedSunPos = Sun.transform.localPosition;
         ClampedSunPos.y =
             Mathf.Clamp(ClampedSunPos.y, SunDownPosition.y, SunUpPosition.y);
         Sun.transform.localPosition = ClampedSunPos;
+
         RenderSettings.fogColor =
             Color
                 .Lerp(RenderSettings.fogColor,
@@ -133,6 +154,15 @@ public class Player : MonoBehaviour
     {
         if (_GameManager.isPlaying)
         {
+            hitColliders = Physics.OverlapSphere(transform.position, 5f);
+
+            if (hitColliders != null)
+            {
+                hitColliders[0]
+                    .gameObject
+                    .GetComponent<MeshRenderer>()
+                    .sharedMaterial = FadePath;
+            }
             if (!UsedUpSunPower)
             {
                 timer += Time.deltaTime;
@@ -145,8 +175,8 @@ public class Player : MonoBehaviour
                     1,
                     0,
                     2);
-                Debug.Log (HourglassProgress);
 
+                              Debug.Log (HourglassProgress);
                 if (!IsSunButtonEnabled)
                     HourGlassOuter.fillAmount = HourglassProgress;
 
@@ -211,6 +241,7 @@ public class Player : MonoBehaviour
                 PlanesHaveChanged.Invoke();
                 LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex];
+
                 if (Tutorial.TutorialOver) StartCoroutine(SunDown());
             }
             else
@@ -320,6 +351,9 @@ public class Player : MonoBehaviour
             });
     }
 
+
+#region Mapping
+
     public float
     mapOneRangeToAnother(
         float sourceNumber,
@@ -339,4 +373,7 @@ public class Player : MonoBehaviour
         int calcScale = (int) Mathf.Pow(10, decimalPrecision);
         return (float) Mathf.Round(finalNumber * calcScale) / calcScale;
     }
+
+
+#endregion
 }
