@@ -24,6 +24,9 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0, 100)]
     public float ForwardPlayerSpeed;
 
+    [Range(0f, 5f)]
+    public float FlyHeight;
+
     [Range(0f, 100f)]
     public float SunUpFactor;
 
@@ -37,6 +40,8 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public int LRIndex;
 
+    private int PlaneIndex;
+
     [Header("Colors")]
     public Color Black;
 
@@ -49,6 +54,8 @@ public class Player : MonoBehaviour
             SunDownPosition;
 
     private Vector3 ClampedSunPos;
+
+    private Vector3 UpdatedPlayerPos;
 
     Collider[] hitColliders;
 
@@ -110,7 +117,8 @@ public class Player : MonoBehaviour
     {
         ResetSun();
         LRIndex = 0;
-        Sun.transform.localPosition = new Vector3(0, 118, 745.8f);
+        PlaneIndex = 0;
+        Sun.transform.localPosition = new Vector3(0, -15f, 745.8f);
         RenderSettings.fogColor = yellow;
         NextMove = GeneratorScript.AllDirections[0];
         Player_Animator.SetBool("Gliding", false);
@@ -154,7 +162,7 @@ public class Player : MonoBehaviour
     {
         if (_GameManager.isPlaying)
         {
-            hitColliders = Physics.OverlapSphere(transform.position, 5f);
+            /* hitColliders = Physics.OverlapSphere(transform.position, 5f);
 
             if (hitColliders != null)
             {
@@ -162,7 +170,7 @@ public class Player : MonoBehaviour
                     .gameObject
                     .GetComponent<MeshRenderer>()
                     .sharedMaterial = FadePath;
-            }
+            }*/
             if (!UsedUpSunPower)
             {
                 timer += Time.deltaTime;
@@ -176,11 +184,11 @@ public class Player : MonoBehaviour
                     0,
                     2);
 
-                              Debug.Log (HourglassProgress);
+                // Debug.Log (HourglassProgress);
                 if (!IsSunButtonEnabled)
                     HourGlassOuter.fillAmount = HourglassProgress;
 
-                if (HourglassProgress > 0.93f && timer > 2f)
+                if (HourglassProgress > 0.97f && timer > 2f)
                 {
                     MenuManager.Instance.ActivateSunButton();
                     HourGlassOuter.fillAmount = 1;
@@ -218,11 +226,15 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+            UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
+            UpdatedPlayerPos.y += FlyHeight;
             transform.position =
                 Vector3
                     .Lerp(transform.position,
-                    GeneratorScript.TurnPositions[LRIndex],
+                    UpdatedPlayerPos,
                     Time.deltaTime * ForwardPlayerSpeed);
+
+            // Debug.Log(transform.position);
         }
     }
 
@@ -241,6 +253,17 @@ public class Player : MonoBehaviour
                 PlanesHaveChanged.Invoke();
                 LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex];
+
+               /* DOVirtual
+                    .Float(0,
+                    1,
+                    0.2f,
+                    x =>
+                    {*/
+                       
+                   // });
+
+                   StartCoroutine(Fading());
 
                 if (Tutorial.TutorialOver) StartCoroutine(SunDown());
             }
@@ -285,6 +308,18 @@ public class Player : MonoBehaviour
         ResettingSun = true;
         yield return new WaitForSeconds(0.2f);
         ResettingSun = false;
+    }
+
+    IEnumerator Fading(){
+          yield return new WaitForSeconds(0.1f);
+           GeneratorScript
+                            .AllPlanes[PlaneIndex]
+                            .GetComponent<MeshRenderer>()
+                            .material = FadePath;
+
+                        PlaneIndex++;
+
+
     }
 
     public void ResetSunInstantly()
@@ -344,7 +379,8 @@ public class Player : MonoBehaviour
                 if (KillTween)
                 {
                     IsSunPoweredUp = false;
-                    MenuManager.Instance.DisableSunButton();
+
+                    //  MenuManager.Instance.DisableSunButton();
                     HourGlassInner.fillAmount = 1;
                     HourGlassInner.color = new Color(0.7f, 0.7f, 0.7f);
                 }

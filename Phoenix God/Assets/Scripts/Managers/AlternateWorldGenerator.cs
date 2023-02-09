@@ -15,8 +15,14 @@ public class AlternateWorldGenerator : MonoBehaviour
     [HideInInspector]
     public List<bool> AllDirections = new List<bool>();
 
+    [HideInInspector]
+    public List<GameObject> AllPlanes = new List<GameObject>();
+
     [Range(0, 50)]
     public int NumberOfPlanes;
+
+    [Range(-4.6f,14f)]
+    public float Y_Offset;
 
     [Range(0, 50)]
     public float
@@ -49,9 +55,11 @@ public class AlternateWorldGenerator : MonoBehaviour
     {
         AllDirections.Add(false);
         AllDirections.Add(true);
+        AllDirections.Add(true);
 
-        NextSpawn = new Vector3(0f, -4.6f, 0f);
+        NextSpawn = new Vector3(0f, Y_Offset, 0f);
         TurnPositions.Add (NextSpawn);
+
         var _PlaneL = Instantiate(PlaneL, NextSpawn, Quaternion.identity);
         _PlaneL.transform.eulerAngles = Rotation;
         _PlaneL.transform.localScale =
@@ -59,8 +67,9 @@ public class AlternateWorldGenerator : MonoBehaviour
                 _PlaneL.transform.localScale.y * PlaneScaleZ,
                 _PlaneL.transform.localScale.z * PlaneScaleZ);
         _PlaneL.transform.SetParent(Parent.transform);
+        AllPlanes.Add(_PlaneL);
 
-        NextSpawn = new Vector3(-3f * PlaneScaleX, -4.6f, 3f * PlaneScaleZ);
+        NextSpawn = new Vector3(-3f * PlaneScaleX, Y_Offset, 3f * PlaneScaleZ);
         TurnPositions.Add (NextSpawn);
 
         var _PlaneR = Instantiate(PlaneR, NextSpawn, Quaternion.identity);
@@ -71,10 +80,25 @@ public class AlternateWorldGenerator : MonoBehaviour
                 _PlaneR.transform.localScale.z * PlaneScaleZ);
 
         _PlaneR.transform.SetParent(Parent.transform);
+        AllPlanes.Add(_PlaneR);
+
+
+        NextSpawn = new Vector3(0f,Y_Offset,6f*PlaneScaleZ);
+        TurnPositions.Add (NextSpawn);
+
+         var __PlaneR = Instantiate(PlaneR, NextSpawn, Quaternion.identity);
+        __PlaneR.transform.eulerAngles = Rotation;
+        __PlaneR.transform.localScale =
+            new Vector3(__PlaneR.transform.localScale.x * PlaneScaleX,
+                __PlaneR.transform.localScale.y * PlaneScaleZ,
+                __PlaneR.transform.localScale.z * PlaneScaleZ);
+
+        __PlaneR.transform.SetParent(Parent.transform);
+        AllPlanes.Add(__PlaneR);
 
         LastDir = true;
 
-        for (int i = 0; i < NumberOfPlanes - 2; i++)
+        for (int i = 0; i < NumberOfPlanes - 3; i++)
         {
             NextSpawn.z += 3 * PlaneScaleZ;
             Dir = LorR();
@@ -112,6 +136,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                         plane.transform.localScale.y * PlaneScaleZ,
                         plane.transform.localScale.z * PlaneScaleZ);
                 plane.transform.SetParent(Parent.transform);
+                AllPlanes.Add(plane);
             }
             else
             {
@@ -122,6 +147,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                         plane.transform.localScale.y * PlaneScaleZ,
                         plane.transform.localScale.z * PlaneScaleZ);
                 plane.transform.SetParent(Parent.transform);
+                AllPlanes.Add(plane);
             }
 
             TurnPositions.Add (NextSpawn);
@@ -168,6 +194,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                     plane.transform.localScale.y * PlaneScaleZ,
                     plane.transform.localScale.z * PlaneScaleZ);
             plane.transform.SetParent(Parent.transform);
+            AllPlanes.Add(plane);
         }
         else
         {
@@ -178,6 +205,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                     plane.transform.localScale.y * PlaneScaleZ,
                     plane.transform.localScale.z * PlaneScaleZ);
             plane.transform.SetParent(Parent.transform);
+            AllPlanes.Add(plane);
         }
 
         TurnPositions.Add (NextSpawn);
@@ -220,6 +248,7 @@ public class AlternateWorldGenerator : MonoBehaviour
         }
         AllDirections.Clear();
         TurnPositions.Clear();
+        AllPlanes.Clear();
         NextSpawn = Vector3.zero;
         LastDir = false;
         Start();

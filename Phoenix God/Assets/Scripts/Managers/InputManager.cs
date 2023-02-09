@@ -45,7 +45,7 @@ public class InputManager : MonoBehaviour
                 }
             }
 
-           /* if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
             {
                 RecievingInput = true;
                 if (Input.GetKeyDown(KeyCode.A))
@@ -58,7 +58,7 @@ public class InputManager : MonoBehaviour
                  }
                  playerScript.Move();
                 //Debug.Log("Touch");
-            }*/
+            }
             else
             {
                 RecievingInput = false;

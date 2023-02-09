@@ -83,7 +83,6 @@ public class MenuManager : MonoBehaviour
         RetryButtom.color = DisabledColor;
         RetryButtonCount.color = ActivatedColor;
         RetryButtonCount.text = "1x";
-        PowerUpButton.color = DisabledColor;
         TitleName.gameObject.SetActive(false);
 
         Player.PlanesHaveChanged += UpdateText;
@@ -100,7 +99,7 @@ public class MenuManager : MonoBehaviour
             {
                 source.Strength = v;
                 TitleAlpha.alpha = v / 100;
-                if (v <= 30) TitleName.gameObject.SetActive(true);
+                if (v <= 10) TitleName.gameObject.SetActive(true);
             })
             .OnComplete(() =>
             {
@@ -109,19 +108,20 @@ public class MenuManager : MonoBehaviour
             });
     }
 
-    public void Pause()
+    /*public void Pause()
     {
         GameManager.GameManagerInstance.isPlaying = false;
         PauseMenuPanel.SetActive(true);
         PauseMenuButton.SetActive(false);
         Player.Singleton.Player_Animator.SetBool("Gliding", false);
         Player.Singleton.Phoenix.transform.rotation = Quaternion.identity;
-    }
+    }*/
 
     //When play button is pressed
     public void Play()
     {
         UpdateText();
+        TitleName.SetActive(false);
         GameManager.GameManagerInstance.Score = 0;
         MainMenuPanel
             .transform
@@ -191,10 +191,10 @@ public class MenuManager : MonoBehaviour
             });
     }
 
-    public void Quit()
+  /*  public void Quit()
     {
         Application.Quit();
-    }
+    }*/
 
     public void GameOver()
     {
@@ -216,7 +216,6 @@ public class MenuManager : MonoBehaviour
     {
         RetryButtonCount.color = ActivatedColor;
         RetryButtonCount.text = "1x";
-        PowerUpButton.color = DisabledColor;
         GameManager.GameManagerInstance.Score = 0;
         AlternateWorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
@@ -239,6 +238,7 @@ public class MenuManager : MonoBehaviour
             })
             .OnComplete(() =>
             {
+                TitleName.SetActive(true);
                 translucentImageSource.enabled = false;
                 PauseMenuPanel.SetActive(false);
                 MainMenuPanel.SetActive(true);
@@ -294,18 +294,14 @@ public class MenuManager : MonoBehaviour
 
     public void ActivateSunButton()
     {
-        PowerUpButton.color = ActivatedColor;
         _SunPowerUp();
     }
 
     public void _SunPowerUp()
     {
         Player.Singleton._SunPowerUp();
-        DisableSunButton();
+        
     }
 
-    public void DisableSunButton()
-    {
-        PowerUpButton.color = DisabledColor;
-    }
+  
 }

@@ -26,7 +26,7 @@ public class GUIManager : MonoBehaviour
 
     void Start()
     {
-        if (!PlayerPrefs.HasKey("Horizontal"))
+       /* if (!PlayerPrefs.HasKey("Horizontal"))
         {
             DefaultX = generator.PlaneScaleX;
             DefaultY = generator.PlaneScaleZ;
@@ -47,12 +47,12 @@ public class GUIManager : MonoBehaviour
         PlayerPrefs.Save();
 
         hSbarValue = Horizontal;
-        vSbarValue = Vertical;
+        vSbarValue = Vertical;*/
     }
 
     void OnGUI()
     {
-        GUILayout.BeginArea(new Rect(10, 150, 300, 700));
+      /*  GUILayout.BeginArea(new Rect(10, 150, 300, 700));
 
         if (DevSettings)
         {
@@ -105,6 +105,6 @@ public class GUIManager : MonoBehaviour
             }
         }
 
-        GUILayout.EndArea();
+        GUILayout.EndArea();*/
     }
 }
