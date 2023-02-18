@@ -82,7 +82,7 @@ public class MenuManager : MonoBehaviour
         UpdateText();
         RetryButtom.color = DisabledColor;
         RetryButtonCount.color = ActivatedColor;
-        RetryButtonCount.text = "1x";
+        RetryButtonCount.text = "2x";
         TitleName.gameObject.SetActive(false);
 
         Player.PlanesHaveChanged += UpdateText;
@@ -215,7 +215,7 @@ public class MenuManager : MonoBehaviour
     public void ResetGame()
     {
         RetryButtonCount.color = ActivatedColor;
-        RetryButtonCount.text = "1x";
+        RetryButtonCount.text = "2x";
         GameManager.GameManagerInstance.Score = 0;
         AlternateWorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
@@ -250,8 +250,7 @@ public class MenuManager : MonoBehaviour
     {
         GameManager.GameManagerInstance.isPlaying = false;
         RetryButtonCount.color = ActivatedColor;
-
-        //GameOverRetryPanelBlack.DOFade(1f, 2f).OnComplete(() => { Retry(); });
+       
         Retry();
     }
 
@@ -259,7 +258,7 @@ public class MenuManager : MonoBehaviour
     {
         GameOverRetryPanelBlack.DOFade(0f, 1f);
         Player.Singleton.ResetSunInstantly();
-        Player.ResetEnabled = false;
+        Player.ResetIndex--;
         RetryButtom.color = ActivatedColor;
 
         PauseMenuPanel.SetActive(false);
@@ -279,7 +278,7 @@ public class MenuManager : MonoBehaviour
                 GamePlayPanel.SetActive(true);
 
                 RetryButtonCount.color = DisabledColor;
-                RetryButtonCount.text = "0x";
+                RetryButtonCount.text = Player.ResetIndex.ToString()+"x";
                 RetryButtom.color = DisabledColor;
             });
     }
@@ -292,16 +291,6 @@ public class MenuManager : MonoBehaviour
             ((int) GameManager.GameManagerInstance.MaxScore).ToString();
     }
 
-    public void ActivateSunButton()
-    {
-        _SunPowerUp();
-    }
-
-    public void _SunPowerUp()
-    {
-        Player.Singleton._SunPowerUp();
-        
-    }
-
+ 
   
 }

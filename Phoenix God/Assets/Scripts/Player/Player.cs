@@ -33,9 +33,9 @@ public class Player : MonoBehaviour
     [Range(0f, 1f)]
     public float SunSpeed;
 
-    float HourglassProgress;
+   // float HourglassProgress;
 
-    float timer;
+   // float timer;
 
     [HideInInspector]
     public int LRIndex;
@@ -60,9 +60,9 @@ public class Player : MonoBehaviour
     Collider[] hitColliders;
 
     [Header("Booleans")]
-    public bool UsedUpSunPower;
+   // public bool UsedUpSunPower;
 
-    public bool KillTween = false;
+   // public bool KillTween = false;
 
     [HideInInspector]
     public bool PerformedStep;
@@ -70,10 +70,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool is_Gliding;
 
-    public static bool
+    public static int
 
-            ResetEnabled,
-            IsSunButtonEnabled;
+            ResetIndex;
 
     bool
 
@@ -85,10 +84,10 @@ public class Player : MonoBehaviour
     [Header("References")]
     public GameObject Phoenix;
 
-    public Image
+   /* public Image
 
             HourGlassOuter,
-            HourGlassInner;
+            HourGlassInner;*/
 
     [SerializeField]
     public Animator Player_Animator;
@@ -123,17 +122,17 @@ public class Player : MonoBehaviour
         NextMove = GeneratorScript.AllDirections[0];
         Player_Animator.SetBool("Gliding", false);
         Phoenix.transform.rotation = Quaternion.identity;
-        ResetEnabled = true;
-        IsSunButtonEnabled = false;
-        UsedUpSunPower = false;
+        ResetIndex = 2;
+       // IsSunButtonEnabled = false;
+       // UsedUpSunPower = false;
         IsSunPoweredUp = false;
         ResettingSun = false;
-        timer = 0;
+      //  timer = 0;
         InputManager.CanReceiveInput = false;
-        KillTween = false;
+       // KillTween = false;
 
-        HourGlassInner.fillAmount = 1;
-        HourGlassInner.color = Color.white;
+       /* HourGlassInner.fillAmount = 1;
+        HourGlassInner.color = Color.white;*/
     }
 
     void ResetSun()
@@ -171,7 +170,7 @@ public class Player : MonoBehaviour
                     .GetComponent<MeshRenderer>()
                     .sharedMaterial = FadePath;
             }*/
-            if (!UsedUpSunPower)
+          /*  if (!UsedUpSunPower)
             {
                 timer += Time.deltaTime;
 
@@ -194,7 +193,7 @@ public class Player : MonoBehaviour
                     HourGlassOuter.fillAmount = 1;
                     IsSunButtonEnabled = true;
                 }
-            }
+            }*/
             if (Tutorial.TutorialOver)
             {
                 if (!ResettingSun && !IsSunPoweredUp)
@@ -216,7 +215,7 @@ public class Player : MonoBehaviour
                 }
                 if (Sun.transform.localPosition.y <= SunDownPosition.y + 10)
                 {
-                    if (ResetEnabled)
+                    if (ResetIndex==1 || ResetIndex ==2)
                     {
                         ResetWorld.Invoke();
                     }
@@ -269,10 +268,10 @@ public class Player : MonoBehaviour
             }
             else
             {
-                if (ResetEnabled)
+                if (ResetIndex == 1 || ResetIndex == 2)
                 {
                     ResetWorld.Invoke();
-                    timer = 0;
+                    //timer = 0;
                 }
                 else
                 {
@@ -360,56 +359,4 @@ public class Player : MonoBehaviour
             });
     }
 
-    public void _SunPowerUp()
-    {
-        IsSunPoweredUp = true;
-        UsedUpSunPower = true;
-        KillTween = true;
-
-        DOVirtual
-            .Float(1,
-            0.2f,
-            30,
-            x =>
-            {
-                if (KillTween) HourGlassInner.fillAmount = x;
-            })
-            .OnComplete(() =>
-            {
-                if (KillTween)
-                {
-                    IsSunPoweredUp = false;
-
-                    //  MenuManager.Instance.DisableSunButton();
-                    HourGlassInner.fillAmount = 1;
-                    HourGlassInner.color = new Color(0.7f, 0.7f, 0.7f);
-                }
-            });
-    }
-
-
-#region Mapping
-
-    public float
-    mapOneRangeToAnother(
-        float sourceNumber,
-        float fromA,
-        float fromB,
-        float toA,
-        float toB,
-        int decimalPrecision
-    )
-    {
-        float deltaA = fromB - fromA;
-        float deltaB = toB - toA;
-        float scale = deltaB / deltaA;
-        float negA = -1 * fromA;
-        float offset = (negA * scale) + toA;
-        float finalNumber = (sourceNumber * scale) + offset;
-        int calcScale = (int) Mathf.Pow(10, decimalPrecision);
-        return (float) Mathf.Round(finalNumber * calcScale) / calcScale;
-    }
-
-
-#endregion
 }

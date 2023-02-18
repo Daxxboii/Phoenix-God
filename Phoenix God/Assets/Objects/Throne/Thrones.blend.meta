@@ -117,6 +117,8 @@ ModelImporter:
     7400002: Sun|SunAction
     7400004: Camera|CameraAction.001
     7400006: Camera|SunAction
+    7400008: Sun|CameraAction
+    7400010: Camera|CameraAction
     9500000: //RootNode
     10800000: Sun
     2186277476908879412: ImportLogs
