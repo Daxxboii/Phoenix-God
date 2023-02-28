@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
         //Load High Score
         if (PlayerPrefs.HasKey(MaxScoreSaveName))
-            MaxScore = (int) PlayerPrefs.GetInt(MaxScoreSaveName);
+            MaxScore = (int)PlayerPrefs.GetInt(MaxScoreSaveName);
         Player.PlanesHaveChanged += UpdateScore;
     }
 
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = false;
         MenuManager.Instance.GameOver();
-        PlayerPrefs.SetInt (MaxScoreSaveName, MaxScore);
+        PlayerPrefs.SetInt(MaxScoreSaveName, MaxScore);
         PlayerPrefs.Save();
     }
 

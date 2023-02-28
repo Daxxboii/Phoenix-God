@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     public static Player Singleton;
 
 
-#region Callbacks
+    #region Callbacks
     public delegate void ChangedPlanes();
 
     public static ChangedPlanes PlanesHaveChanged;
@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public static ChangedPlanes ResetWorld;
 
 
-#endregion
+    #endregion
 
 
     [Header("Float Values")]
@@ -33,9 +33,9 @@ public class Player : MonoBehaviour
     [Range(0f, 1f)]
     public float SunSpeed;
 
-   // float HourglassProgress;
+    // float HourglassProgress;
 
-   // float timer;
+    // float timer;
 
     [HideInInspector]
     public int LRIndex;
@@ -60,9 +60,9 @@ public class Player : MonoBehaviour
     Collider[] hitColliders;
 
     [Header("Booleans")]
-   // public bool UsedUpSunPower;
+    // public bool UsedUpSunPower;
 
-   // public bool KillTween = false;
+    // public bool KillTween = false;
 
     [HideInInspector]
     public bool PerformedStep;
@@ -84,10 +84,10 @@ public class Player : MonoBehaviour
     [Header("References")]
     public GameObject Phoenix;
 
-   /* public Image
+    /* public Image
 
-            HourGlassOuter,
-            HourGlassInner;*/
+             HourGlassOuter,
+             HourGlassInner;*/
 
     [SerializeField]
     public Animator Player_Animator;
@@ -104,8 +104,10 @@ public class Player : MonoBehaviour
 
     public Material
 
-            FadePath,
-            FullPath;
+            FadePath;
+    // FullPath;
+
+    private GameObject PreviousPlane;
 
     void Awake()
     {
@@ -122,17 +124,17 @@ public class Player : MonoBehaviour
         NextMove = GeneratorScript.AllDirections[0];
         Player_Animator.SetBool("Gliding", false);
         Phoenix.transform.rotation = Quaternion.identity;
-        ResetIndex = 2;
-       // IsSunButtonEnabled = false;
-       // UsedUpSunPower = false;
+        ResetIndex = 1;
+        // IsSunButtonEnabled = false;
+        // UsedUpSunPower = false;
         IsSunPoweredUp = false;
         ResettingSun = false;
-      //  timer = 0;
+        //  timer = 0;
         InputManager.CanReceiveInput = false;
-       // KillTween = false;
+        // KillTween = false;
 
-       /* HourGlassInner.fillAmount = 1;
-        HourGlassInner.color = Color.white;*/
+        /* HourGlassInner.fillAmount = 1;
+         HourGlassInner.color = Color.white;*/
     }
 
     void ResetSun()
@@ -170,30 +172,30 @@ public class Player : MonoBehaviour
                     .GetComponent<MeshRenderer>()
                     .sharedMaterial = FadePath;
             }*/
-          /*  if (!UsedUpSunPower)
-            {
-                timer += Time.deltaTime;
+            /*  if (!UsedUpSunPower)
+              {
+                  timer += Time.deltaTime;
 
-                // HourglassProgress = SunUpPosition.y / Sun.transform.localPosition.y;
-                HourglassProgress =
-                    mapOneRangeToAnother(Sun.transform.localPosition.y,
-                    SunUpPosition.y,
-                    SunDownPosition.y,
-                    1,
-                    0,
-                    2);
+                  // HourglassProgress = SunUpPosition.y / Sun.transform.localPosition.y;
+                  HourglassProgress =
+                      mapOneRangeToAnother(Sun.transform.localPosition.y,
+                      SunUpPosition.y,
+                      SunDownPosition.y,
+                      1,
+                      0,
+                      2);
 
-                // Debug.Log (HourglassProgress);
-                if (!IsSunButtonEnabled)
-                    HourGlassOuter.fillAmount = HourglassProgress;
+                  // Debug.Log (HourglassProgress);
+                  if (!IsSunButtonEnabled)
+                      HourGlassOuter.fillAmount = HourglassProgress;
 
-                if (HourglassProgress > 0.97f && timer > 2f)
-                {
-                    MenuManager.Instance.ActivateSunButton();
-                    HourGlassOuter.fillAmount = 1;
-                    IsSunButtonEnabled = true;
-                }
-            }*/
+                  if (HourglassProgress > 0.97f && timer > 2f)
+                  {
+                      MenuManager.Instance.ActivateSunButton();
+                      HourGlassOuter.fillAmount = 1;
+                      IsSunButtonEnabled = true;
+                  }
+              }*/
             if (Tutorial.TutorialOver)
             {
                 if (!ResettingSun && !IsSunPoweredUp)
@@ -215,7 +217,7 @@ public class Player : MonoBehaviour
                 }
                 if (Sun.transform.localPosition.y <= SunDownPosition.y + 10)
                 {
-                    if (ResetIndex==1 || ResetIndex ==2)
+                    if (ResetIndex == 1 || ResetIndex == 2)
                     {
                         ResetWorld.Invoke();
                     }
@@ -238,7 +240,7 @@ public class Player : MonoBehaviour
     }
 
 
-#region Movement
+    #region Movement
 
     public void Move()
     {
@@ -246,23 +248,23 @@ public class Player : MonoBehaviour
         {
             if (PerformedStep == NextMove)
             {
-                TurnPlayer (PerformedStep);
+                TurnPlayer(PerformedStep);
                 Player_Animator.SetBool("Gliding", true);
                 GeneratorScript.SpawnMorePlanes();
                 PlanesHaveChanged.Invoke();
                 LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex];
 
-               /* DOVirtual
-                    .Float(0,
-                    1,
-                    0.2f,
-                    x =>
-                    {*/
-                       
-                   // });
+                /* DOVirtual
+                     .Float(0,
+                     1,
+                     0.2f,
+                     x =>
+                     {*/
 
-                   StartCoroutine(Fading());
+                // });
+
+                StartCoroutine(Fading());
 
                 if (Tutorial.TutorialOver) StartCoroutine(SunDown());
             }
@@ -294,7 +296,7 @@ public class Player : MonoBehaviour
                 transform.rotation * Quaternion.Euler(0, -30, 0);
         }
     }
-#endregion
+    #endregion
 
 
     public void SetMeshVis(bool value)
@@ -309,14 +311,18 @@ public class Player : MonoBehaviour
         ResettingSun = false;
     }
 
-    IEnumerator Fading(){
-          yield return new WaitForSeconds(0.1f);
-           GeneratorScript
-                            .AllPlanes[PlaneIndex]
-                            .GetComponent<MeshRenderer>()
-                            .material = FadePath;
+    IEnumerator Fading()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if(PreviousPlane!=null)PreviousPlane.SetActive(false);
 
-                        PlaneIndex++;
+        PreviousPlane = GeneratorScript
+                         .AllPlanes[PlaneIndex];
+
+        PreviousPlane.GetComponent<MeshRenderer>()
+                          .material = FadePath;
+
+        PlaneIndex++;
 
 
     }
@@ -347,7 +353,7 @@ public class Player : MonoBehaviour
         alphaKey[1].alpha = 1.0f;
         alphaKey[1].time = 1.0f;
 
-        gradient.SetKeys (colorKey, alphaKey);
+        gradient.SetKeys(colorKey, alphaKey);
 
         DOVirtual
             .Float(1,

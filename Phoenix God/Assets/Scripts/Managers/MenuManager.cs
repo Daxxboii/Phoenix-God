@@ -55,6 +55,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI RetryButtonCount;
 
+    [SerializeField]private TextMeshProUGUI TitleTextBackGround;
+
     public GameObject TitleName;
 
     public GameObject PauseMenuButton;
@@ -74,6 +76,10 @@ public class MenuManager : MonoBehaviour
 
     public Color ActivatedColor;
 
+    public Color[] TitleTextOutlines;
+
+    private int TitleTextColorIndex;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -81,8 +87,8 @@ public class MenuManager : MonoBehaviour
 
         UpdateText();
         RetryButtom.color = DisabledColor;
-        RetryButtonCount.color = ActivatedColor;
-        RetryButtonCount.text = "2x";
+        RetryButtonCount.color = DisabledColor;
+        RetryButtonCount.text = "1x";
         TitleName.gameObject.SetActive(false);
 
         Player.PlanesHaveChanged += UpdateText;
@@ -121,7 +127,7 @@ public class MenuManager : MonoBehaviour
     public void Play()
     {
         UpdateText();
-        TitleName.SetActive(false);
+        TitleName.gameObject.SetActive(false);
         GameManager.GameManagerInstance.Score = 0;
         MainMenuPanel
             .transform
@@ -161,7 +167,6 @@ public class MenuManager : MonoBehaviour
                     });
             });
     }
-
     //When Continue Button is Pressed From Pause Menu
     public void Continue()
     {
@@ -214,8 +219,10 @@ public class MenuManager : MonoBehaviour
 
     public void ResetGame()
     {
+        UpdateTitleColor();
+        SwapSprites.instance.StartCoroutine("UpdateSprite");
         RetryButtonCount.color = ActivatedColor;
-        RetryButtonCount.text = "2x";
+        RetryButtonCount.text = Player.ResetIndex.ToString() + "x";
         GameManager.GameManagerInstance.Score = 0;
         AlternateWorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
@@ -238,7 +245,7 @@ public class MenuManager : MonoBehaviour
             })
             .OnComplete(() =>
             {
-                TitleName.SetActive(true);
+                TitleName.gameObject.SetActive(true);
                 translucentImageSource.enabled = false;
                 PauseMenuPanel.SetActive(false);
                 MainMenuPanel.SetActive(true);
@@ -289,6 +296,21 @@ public class MenuManager : MonoBehaviour
             ((int) GameManager.GameManagerInstance.Score).ToString();
         MaxScoreText.text =
             ((int) GameManager.GameManagerInstance.MaxScore).ToString();
+    }
+
+
+    public void UpdateTitleColor()
+    {
+        TitleTextBackGround.color = TitleTextOutlines[TitleTextColorIndex];
+
+        if (TitleTextColorIndex == TitleTextOutlines.Length - 1)
+        {
+            TitleTextColorIndex = 0;
+        }
+        else
+        {
+            TitleTextColorIndex++;
+        }
     }
 
  
