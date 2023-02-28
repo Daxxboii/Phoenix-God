@@ -1,0 +1,257 @@
+2023-02-28 22:23:12 +0000  Initial pipeline context: <IDEDistributionProcessingPipelineContext: 0x7fe779b445d0; archive(resolved)="<IDEArchive: 0x7fe7be28c310>", distributionTask(resolved)="2", distributionDestination(resolved)="1", distributionMethod(resolved)="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team(resolved)="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	Chain (14, self inclusive):
+	<IDEDistributionProcessingPipelineContext: 0x7fe779b445d0; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionProcessingPipelineContext: 0x7fe7be250d80; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x7fe779b17900; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x7fe7bd35f160; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x7fe7796d9070; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x7fe779b30ab0; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x7fe7795a3340; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x7fe7bd35bdd0; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x7fe779b2c270; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="<IDEProvisioningDisambiguatableBasicTeam: 0x7fe7bbb5dd40; teamID='4DN979Q3WG', teamName='Daksh Dhakad', teamType='Individual', username='dhakaddaksh123@gmail.com', isFreeProvisioningTeam='0'>">
+	<IDEDistributionContext: 0x7fe779b25ec0; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="(null)">
+	<IDEDistributionContext: 0x7fe779d46b70; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="(null)">
+	<IDEDistributionContext: 0x7fe7d7c72b50; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="(null)">
+	<IDEDistributionContext: 0x7fe7794f6550; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="<IDEDistributionMethodDevelopmentSigned: 0x7fe7bd52a680>", team="(null)">
+	<IDEDistributionContext: 0x7fe7bf047370; archive = "<IDEArchive: 0x7fe7be28c310>", distributionMethod="(null)", team="(null)">
+</IDEDistributionProcessingPipelineContext: 0x7fe779b445d0>
+2023-02-28 22:23:12 +0000  Processing step: IDEDistributionCreateDestRootStep
+2023-02-28 22:23:12 +0000  Processing step: IDEDistributionCopyItemStep
+2023-02-28 22:23:12 +0000  Running /usr/bin/ditto '-V' '/Users/dakshdhakad/Library/Developer/Xcode/Archives/2023-03-01/Unity-iPhone 3-1-23, 3.52 AM.xcarchive/Products/Applications/PhoenixGod-eSportsTournament.app' '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app'
+2023-02-28 22:23:12 +0000  >>> Copying /Users/dakshdhakad/Library/Developer/Xcode/Archives/2023-03-01/Unity-iPhone 3-1-23, 3.52 AM.xcarchive/Products/Applications/PhoenixGod-eSportsTournament.app 
+2023-02-28 22:23:12 +0000  copying file ./_CodeSignature/CodeResources ... 
+2023-02-28 22:23:12 +0000  12343 bytes for ./_CodeSignature/CodeResources
+2023-02-28 22:23:12 +0000  copying file ./AppIcon20x20@2x.png ... 
+2023-02-28 22:23:12 +0000  3322 bytes for ./AppIcon20x20@2x.png
+2023-02-28 22:23:12 +0000  copying file ./LaunchScreen-iPhonePortrait.png ... 
+2023-02-28 22:23:12 +0000  138 bytes for ./LaunchScreen-iPhonePortrait.png
+2023-02-28 22:23:12 +0000  copying file ./LaunchScreen-iPhoneLandscape.png ... 
+2023-02-28 22:23:12 +0000  138 bytes for ./LaunchScreen-iPhoneLandscape.png
+2023-02-28 22:23:12 +0000  copying file ./AppIcon20x20@3x.png ... 
+2023-02-28 22:23:12 +0000  6454 bytes for ./AppIcon20x20@3x.png
+2023-02-28 22:23:12 +0000  copying file ./AppIcon29x29.png ... 
+2023-02-28 22:23:12 +0000  1970 bytes for ./AppIcon29x29.png
+2023-02-28 22:23:12 +0000  copying file ./AppIcon60x60@2x.png ... 
+2023-02-28 22:23:12 +0000  22110 bytes for ./AppIcon60x60@2x.png
+2023-02-28 22:23:12 +0000  copying file ./AppIcon29x29@2x.png ... 
+2023-02-28 22:23:12 +0000  6092 bytes for ./AppIcon29x29@2x.png
+copying file ./AppIcon40x40@3x.png ... 
+2023-02-28 22:23:12 +0000  22110 bytes for ./AppIcon40x40@3x.png
+copying file ./AppIcon40x40@2x.png ... 
+2023-02-28 22:23:12 +0000  10684 bytes for ./AppIcon40x40@2x.png
+2023-02-28 22:23:12 +0000  copying file ./AppIcon29x29@3x.png ... 
+2023-02-28 22:23:12 +0000  12323 bytes for ./AppIcon29x29@3x.png
+copying file ./AppIcon60x60@3x.png ... 
+2023-02-28 22:23:12 +0000  48311 bytes for ./AppIcon60x60@3x.png
+2023-02-28 22:23:12 +0000  copying file ./PhoenixGod-eSportsTournament ... 
+2023-02-28 22:23:14 +0000  385584240 bytes for ./PhoenixGod-eSportsTournament
+2023-02-28 22:23:14 +0000  copying file ./Assets.car ... 
+2023-02-28 22:23:14 +0000  1593576 bytes for ./Assets.car
+copying file ./LaunchScreen-iPhone.storyboardc/UIViewController-UnityLaunchScreen-ViewController.nib ... 
+934 bytes for ./LaunchScreen-iPhone.storyboardc/UIViewController-UnityLaunchScreen-ViewController.nib
+copying file ./LaunchScreen-iPhone.storyboardc/UnityLaunchScreen-ViewController-view-UnityLaunchScreen-RootView.nib ... 
+2023-02-28 22:23:14 +0000  2425 bytes for ./LaunchScreen-iPhone.storyboardc/UnityLaunchScreen-ViewController-view-UnityLaunchScreen-RootView.nib
+copying file ./LaunchScreen-iPhone.storyboardc/Info.plist ... 
+2023-02-28 22:23:14 +0000  333 bytes for ./LaunchScreen-iPhone.storyboardc/Info.plist
+copying file ./embedded.mobileprovision ... 
+2023-02-28 22:23:14 +0000  22603 bytes for ./embedded.mobileprovision
+2023-02-28 22:23:14 +0000  copying file ./Data/Managed/Resources/mscorlib.dll-resources.dat ... 
+2023-02-28 22:23:14 +0000  337563 bytes for ./Data/Managed/Resources/mscorlib.dll-resources.dat
+copying file ./Data/Managed/mono/2.0/machine.config ... 
+2023-02-28 22:23:14 +0000  27625 bytes for ./Data/Managed/mono/2.0/machine.config
+2023-02-28 22:23:14 +0000  copying file ./Data/Managed/mono/4.0/machine.config ... 
+2023-02-28 22:23:14 +0000  33648 bytes for ./Data/Managed/mono/4.0/machine.config
+copying file ./Data/Managed/Metadata/global-metadata.dat ... 
+2023-02-28 22:23:14 +0000  2837856 bytes for ./Data/Managed/Metadata/global-metadata.dat
+2023-02-28 22:23:14 +0000  copying file ./Data/sharedassets0.resource ... 
+2023-02-28 22:23:14 +0000  781664 bytes for ./Data/sharedassets0.resource
+2023-02-28 22:23:14 +0000  copying file ./Data/globalgamemanagers ... 
+2023-02-28 22:23:14 +0000  56352 bytes for ./Data/globalgamemanagers
+2023-02-28 22:23:14 +0000  copying file ./Data/boot.config ... 
+2023-02-28 22:23:14 +0000  146 bytes for ./Data/boot.config
+2023-02-28 22:23:14 +0000  copying file ./Data/resources.assets ... 
+2023-02-28 22:23:14 +0000  811024 bytes for ./Data/resources.assets
+2023-02-28 22:23:14 +0000  copying file ./Data/Resources/unity_builtin_extra ... 
+2023-02-28 22:23:14 +0000  667392 bytes for ./Data/Resources/unity_builtin_extra
+2023-02-28 22:23:14 +0000  copying file ./Data/unity default resources ... 
+2023-02-28 22:23:14 +0000  6277916 bytes for ./Data/unity default resources
+copying file ./Data/sharedassets0.assets.resS ... 
+2023-02-28 22:23:14 +0000  79957956 bytes for ./Data/sharedassets0.assets.resS
+2023-02-28 22:23:14 +0000  copying file ./Data/sharedassets0.assets ... 
+2023-02-28 22:23:14 +0000  10875520 bytes for ./Data/sharedassets0.assets
+2023-02-28 22:23:14 +0000  copying file ./Data/globalgamemanagers.assets.resS ... 
+2023-02-28 22:23:14 +0000  640000 bytes for ./Data/globalgamemanagers.assets.resS
+2023-02-28 22:23:14 +0000  copying file ./Data/level0.resS ... 
+2023-02-28 22:23:14 +0000  6140 bytes for ./Data/level0.resS
+2023-02-28 22:23:14 +0000  copying file ./Data/level0 ... 
+2023-02-28 22:23:14 +0000  183468 bytes for ./Data/level0
+copying file ./Data/resources.assets.resS ... 
+2023-02-28 22:23:14 +0000  1184512 bytes for ./Data/resources.assets.resS
+2023-02-28 22:23:14 +0000  copying file ./Data/globalgamemanagers.assets ... 
+2023-02-28 22:23:14 +0000  81276 bytes for ./Data/globalgamemanagers.assets
+2023-02-28 22:23:14 +0000  copying file ./Info.plist ... 
+2023-02-28 22:23:14 +0000  1633 bytes for ./Info.plist
+copying file ./PkgInfo ... 
+2023-02-28 22:23:14 +0000  8 bytes for ./PkgInfo
+2023-02-28 22:23:14 +0000  /usr/bin/ditto exited with 0
+2023-02-28 22:23:14 +0000  Processing step: IDEDistributionEmbedProfileStep
+2023-02-28 22:23:14 +0000  Processing step: IDEDistributionInfoPlistStep
+2023-02-28 22:23:14 +0000  Skipping step: IDEDistributionInfoPlistStep because it said so
+2023-02-28 22:23:14 +0000  Processing step: IDEDistributionAppThinningPlistStep
+2023-02-28 22:23:14 +0000  Skipping step: IDEDistributionAppThinningPlistStep because it said so
+2023-02-28 22:23:14 +0000  Processing step: IDEDistributionCompileBitcodeStep
+2023-02-28 22:23:14 +0000  Skipping step: IDEDistributionCompileBitcodeStep because it said so
+2023-02-28 22:23:14 +0000  Processing step: IDEDistributionCodeSlimmingStep
+2023-02-28 22:23:15 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app/PhoenixGod-eSportsTournament' '-r' '-keep_cs' '-o' '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app/PhoenixGod-eSportsTournament'
+2023-02-28 22:23:16 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/bitcode_strip exited with 0
+2023-02-28 22:23:16 +0000  Processing step: IDEDistributionCopyBCSymbolMapsStep
+2023-02-28 22:23:16 +0000  Skipping step: IDEDistributionCopyBCSymbolMapsStep because it said so
+2023-02-28 22:23:16 +0000  Processing step: IDEDistributionSymbolsStep
+2023-02-28 22:23:16 +0000  Skipping step: IDEDistributionSymbolsStep because it said so
+2023-02-28 22:23:16 +0000  Processing step: IDEDistributionAppThinningStep
+2023-02-28 22:23:16 +0000  Skipping step: IDEDistributionAppThinningStep because it said so
+2023-02-28 22:23:16 +0000  Processing step: IDEDistributionArchThinningStep
+2023-02-28 22:23:16 +0000  Running /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app/PhoenixGod-eSportsTournament' '-verify_arch' 'arm64e'
+2023-02-28 22:23:16 +0000  /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo exited with 1
+2023-02-28 22:23:16 +0000  Skipping architecture thinning for item "PhoenixGod-eSportsTournament" because arch "arm64e" wasn't found
+2023-02-28 22:23:16 +0000  Processing step: IDEDistributionODRStep
+2023-02-28 22:23:16 +0000  Processing step: IDEDistributionStripXattrsStep
+2023-02-28 22:23:16 +0000  Running /usr/bin/xattr '-crs' '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app'
+2023-02-28 22:23:17 +0000  /usr/bin/xattr exited with 0
+2023-02-28 22:23:17 +0000  Processing step: IDEDistributionCodesignStep
+2023-02-28 22:23:17 +0000  Entitlements for <IDEDistributionItem: 0x7fe7bd312080; bundleID='com.LoneWolfStudioss.PhoenixGod-eSportsTournament', path='<DVTFilePath:0x7fe7be28d8f0:'/Users/dakshdhakad/Library/Developer/Xcode/Archives/2023-03-01/Unity-iPhone 3-1-23, 3.52 AM.xcarchive/Products/Applications/PhoenixGod-eSportsTournament.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x7fe7d7cd77a0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x7fe7794f7b10; name='Apple Development: Daksh Dhakad (GQ7KV7XVZ9)', hash='7E315CCF9DE4351C9A7DD7869C993D9FE92B3D36', serialNumber='48CC2AF0A0DB5ABB19395AE6BB4F94F0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-02 00:00:23 +0000''>', entitlements='{
+    "application-identifier" = "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament";
+    "com.apple.developer.team-identifier" = 4DN979Q3WG;
+    "get-task-allow" = 1;
+    "keychain-access-groups" =     (
+        "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament"
+    );
+}', teamID='4DN979Q3WG', identifier='com.LoneWolfStudioss.PhoenixGod-eSportsTournament', executablePath='<DVTFilePath:0x7fe7796c9bb0:'/Users/dakshdhakad/Library/Developer/Xcode/Archives/2023-03-01/Unity-iPhone 3-1-23, 3.52 AM.xcarchive/Products/Applications/PhoenixGod-eSportsTournament.app/PhoenixGod-eSportsTournament'>', hardenedRuntime='0'>'>: {
+    "application-identifier" = "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament";
+    "com.apple.developer.team-identifier" = 4DN979Q3WG;
+    "get-task-allow" = 1;
+    "keychain-access-groups" =     (
+        "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament"
+    );
+}
+2023-02-28 22:23:17 +0000  Entitlements for <IDEDistributionItem: 0x7fe7bd312080; bundleID='com.LoneWolfStudioss.PhoenixGod-eSportsTournament', path='<DVTFilePath:0x7fe7be28d8f0:'/Users/dakshdhakad/Library/Developer/Xcode/Archives/2023-03-01/Unity-iPhone 3-1-23, 3.52 AM.xcarchive/Products/Applications/PhoenixGod-eSportsTournament.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x7fe7d7cd77a0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x7fe7bf020990; name='Apple Development: Daksh Dhakad (GQ7KV7XVZ9)', hash='7E315CCF9DE4351C9A7DD7869C993D9FE92B3D36', serialNumber='48CC2AF0A0DB5ABB19395AE6BB4F94F0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-02 00:00:23 +0000''>', entitlements='{
+    "application-identifier" = "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament";
+    "com.apple.developer.team-identifier" = 4DN979Q3WG;
+    "get-task-allow" = 1;
+    "keychain-access-groups" =     (
+        "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament"
+    );
+}', teamID='4DN979Q3WG', identifier='com.LoneWolfStudioss.PhoenixGod-eSportsTournament', executablePath='<DVTFilePath:0x7fe7796c9bb0:'/Users/dakshdhakad/Library/Developer/Xcode/Archives/2023-03-01/Unity-iPhone 3-1-23, 3.52 AM.xcarchive/Products/Applications/PhoenixGod-eSportsTournament.app/PhoenixGod-eSportsTournament'>', hardenedRuntime='0'>'> are: {
+    "application-identifier" = "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament";
+    "com.apple.developer.team-identifier" = 4DN979Q3WG;
+    "get-task-allow" = 1;
+    "keychain-access-groups" =     (
+        "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament"
+    );
+}
+2023-02-28 22:23:17 +0000  Writing entitlements for <IDEDistributionItem: 0x7fe7bd312080; bundleID='com.LoneWolfStudioss.PhoenixGod-eSportsTournament', path='<DVTFilePath:0x7fe7be28d8f0:'/Users/dakshdhakad/Library/Developer/Xcode/Archives/2023-03-01/Unity-iPhone 3-1-23, 3.52 AM.xcarchive/Products/Applications/PhoenixGod-eSportsTournament.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x7fe7d7cd77a0; isSigned='1', isAdHocSigned='0', signingCertificate='<DVTSigningCertificate: 0x7fe7be25c760; name='Apple Development: Daksh Dhakad (GQ7KV7XVZ9)', hash='7E315CCF9DE4351C9A7DD7869C993D9FE92B3D36', serialNumber='48CC2AF0A0DB5ABB19395AE6BB4F94F0', certificateKinds='(
+    "1.2.840.113635.100.6.1.12",
+    "1.2.840.113635.100.6.1.2"
+), issueDate='2023-02-02 00:00:23 +0000''>', entitlements='{
+    "application-identifier" = "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament";
+    "com.apple.developer.team-identifier" = 4DN979Q3WG;
+    "get-task-allow" = 1;
+    "keychain-access-groups" =     (
+        "4DN979Q3WG.com.LoneWolfStudioss.PhoenixGod-eSportsTournament"
+    );
+}', teamID='4DN979Q3WG', identifier='com.LoneWolfStudioss.PhoenixGod-eSportsTournament', executablePath='<DVTFilePath:0x7fe7796c9bb0:'/Users/dakshdhakad/Library/Developer/Xcode/Archives/2023-03-01/Unity-iPhone 3-1-23, 3.52 AM.xcarchive/Products/Applications/PhoenixGod-eSportsTournament.app/PhoenixGod-eSportsTournament'>', hardenedRuntime='0'>'> to: /var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/entitlements~~~kLLMFr
+2023-02-28 22:23:17 +0000  Running /usr/bin/codesign '-vvv' '--force' '--sign' '7E315CCF9DE4351C9A7DD7869C993D9FE92B3D36' '--entitlements' '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/entitlements~~~kLLMFr' '--generate-entitlement-der' '--preserve-metadata=identifier,flags,runtime' '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app'
+2023-02-28 22:23:17 +0000  /var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app: replacing existing signature
+2023-02-28 22:23:20 +0000  /var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app: signed app bundle with Mach-O universal (armv7 arm64) [com.LoneWolfStudioss.PhoenixGod-eSportsTournament]
+2023-02-28 22:23:20 +0000  /usr/bin/codesign exited with 0
+2023-02-28 22:23:20 +0000  Processing step: IDEDistributionZipODRItemStep
+2023-02-28 22:23:20 +0000  Skipping step: IDEDistributionZipODRItemStep because it said so
+2023-02-28 22:23:20 +0000  Processing step: IDEDistributionCreateIPAStep
+2023-02-28 22:23:20 +0000  Running /usr/bin/ditto '-V' '-c' '-k' '--norsrc' '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root' '/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Packages/PhoenixGod-eSportsTournament.ipa'
+2023-02-28 22:23:20 +0000  >>> Copying /var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root 
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/_CodeSignature/CodeResources ... 
+2023-02-28 22:23:20 +0000  12343 bytes for ./Payload/PhoenixGod-eSportsTournament.app/_CodeSignature/CodeResources
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon20x20@2x.png ... 
+2023-02-28 22:23:20 +0000  3322 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon20x20@2x.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhonePortrait.png ... 
+2023-02-28 22:23:20 +0000  138 bytes for ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhonePortrait.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhoneLandscape.png ... 
+2023-02-28 22:23:20 +0000  138 bytes for ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhoneLandscape.png
+copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon20x20@3x.png ... 
+2023-02-28 22:23:20 +0000  6454 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon20x20@3x.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon29x29.png ... 
+2023-02-28 22:23:20 +0000  1970 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon29x29.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon60x60@2x.png ... 
+2023-02-28 22:23:20 +0000  22110 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon60x60@2x.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon29x29@2x.png ... 
+2023-02-28 22:23:20 +0000  6092 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon29x29@2x.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon40x40@3x.png ... 
+2023-02-28 22:23:20 +0000  22110 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon40x40@3x.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon40x40@2x.png ... 
+2023-02-28 22:23:20 +0000  10684 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon40x40@2x.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon29x29@3x.png ... 
+2023-02-28 22:23:20 +0000  12323 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon29x29@3x.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/AppIcon60x60@3x.png ... 
+2023-02-28 22:23:20 +0000  48311 bytes for ./Payload/PhoenixGod-eSportsTournament.app/AppIcon60x60@3x.png
+2023-02-28 22:23:20 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/PhoenixGod-eSportsTournament ... 
+2023-02-28 22:23:24 +0000  44305520 bytes for ./Payload/PhoenixGod-eSportsTournament.app/PhoenixGod-eSportsTournament
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Assets.car ... 
+2023-02-28 22:23:24 +0000  1593576 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Assets.car
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhone.storyboardc/UIViewController-UnityLaunchScreen-ViewController.nib ... 
+2023-02-28 22:23:24 +0000  934 bytes for ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhone.storyboardc/UIViewController-UnityLaunchScreen-ViewController.nib
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhone.storyboardc/UnityLaunchScreen-ViewController-view-UnityLaunchScreen-RootView.nib ... 
+2023-02-28 22:23:24 +0000  2425 bytes for ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhone.storyboardc/UnityLaunchScreen-ViewController-view-UnityLaunchScreen-RootView.nib
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhone.storyboardc/Info.plist ... 
+2023-02-28 22:23:24 +0000  333 bytes for ./Payload/PhoenixGod-eSportsTournament.app/LaunchScreen-iPhone.storyboardc/Info.plist
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/embedded.mobileprovision ... 
+2023-02-28 22:23:24 +0000  22603 bytes for ./Payload/PhoenixGod-eSportsTournament.app/embedded.mobileprovision
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/Managed/Resources/mscorlib.dll-resources.dat ... 
+2023-02-28 22:23:24 +0000  337563 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/Managed/Resources/mscorlib.dll-resources.dat
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/Managed/mono/2.0/machine.config ... 
+2023-02-28 22:23:24 +0000  27625 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/Managed/mono/2.0/machine.config
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/Managed/mono/4.0/machine.config ... 
+2023-02-28 22:23:24 +0000  33648 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/Managed/mono/4.0/machine.config
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/Managed/Metadata/global-metadata.dat ... 
+2023-02-28 22:23:24 +0000  2837856 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/Managed/Metadata/global-metadata.dat
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/sharedassets0.resource ... 
+2023-02-28 22:23:24 +0000  781664 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/sharedassets0.resource
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/globalgamemanagers ... 
+2023-02-28 22:23:24 +0000  56352 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/globalgamemanagers
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/boot.config ... 
+2023-02-28 22:23:24 +0000  146 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/boot.config
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/resources.assets ... 
+2023-02-28 22:23:24 +0000  811024 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/resources.assets
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/Resources/unity_builtin_extra ... 
+2023-02-28 22:23:24 +0000  667392 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/Resources/unity_builtin_extra
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/unity default resources ... 
+2023-02-28 22:23:24 +0000  6277916 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/unity default resources
+2023-02-28 22:23:24 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/sharedassets0.assets.resS ... 
+2023-02-28 22:23:25 +0000  79957956 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/sharedassets0.assets.resS
+2023-02-28 22:23:25 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/sharedassets0.assets ... 
+2023-02-28 22:23:25 +0000  10875520 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/sharedassets0.assets
+2023-02-28 22:23:25 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/globalgamemanagers.assets.resS ... 
+640000 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/globalgamemanagers.assets.resS
+copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/level0.resS ... 
+6140 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/level0.resS
+copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/level0 ... 
+2023-02-28 22:23:25 +0000  183468 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/level0
+2023-02-28 22:23:25 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/resources.assets.resS ... 
+2023-02-28 22:23:25 +0000  1184512 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/resources.assets.resS
+copying file ./Payload/PhoenixGod-eSportsTournament.app/Data/globalgamemanagers.assets ... 
+2023-02-28 22:23:25 +0000  81276 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Data/globalgamemanagers.assets
+2023-02-28 22:23:25 +0000  copying file ./Payload/PhoenixGod-eSportsTournament.app/Info.plist ... 
+2023-02-28 22:23:25 +0000  1633 bytes for ./Payload/PhoenixGod-eSportsTournament.app/Info.plist
+copying file ./Payload/PhoenixGod-eSportsTournament.app/PkgInfo ... 
+2023-02-28 22:23:25 +0000  8 bytes for ./Payload/PhoenixGod-eSportsTournament.app/PkgInfo
+2023-02-28 22:23:26 +0000  /usr/bin/ditto exited with 0
+2023-02-28 22:23:26 +0000  Processing step: IDEDistributionAppStoreInformationStep
+2023-02-28 22:23:26 +0000  Skipping step: IDEDistributionAppStoreInformationStep because it said so
+2023-02-28 22:23:26 +0000  Processing step: IDEDistributionGenerateProcessedDistributionItems
+2023-02-28 22:23:26 +0000  IDEDistributionItem init <DVTFilePath:0x7fe77969a670:'/var/folders/xx/kp3fl72n7zz_9rflcc0cqmlc0000gn/T/XcodeDistPipeline.~~~939Xtr/Root/Payload/PhoenixGod-eSportsTournament.app'>
+2023-02-28 22:23:26 +0000  Processing step: IDEDistributionCreateManifestStep
