@@ -59,6 +59,7 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat("Volume", Level);
         PlayerPrefs.Save();
     }
+    
     public void MakeWindLouder()
     {
         if (GameManager.GameManagerInstance.isPlaying) currentVolume += 0.03f/*Time.deltaTime * 0.0001f*/;
