@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     [Range(0f, 100f)]
     public float SunUpFactor;
 
-    [Range(0f, 1f)]
+    [Range(0f, 5f)]
     public float SunSpeed;
 
     // float HourglassProgress;
@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
                 Time.deltaTime * SunSpeed * 50);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (_GameManager.isPlaying)
         {
@@ -196,7 +196,7 @@ public class Player : MonoBehaviour
                       IsSunButtonEnabled = true;
                   }
               }*/
-            if (Tutorial.TutorialOver)
+            if (Tutorial.instance.TutorialOver)
             {
                 if (!ResettingSun && !IsSunPoweredUp)
                 {
@@ -266,7 +266,7 @@ public class Player : MonoBehaviour
 
                 StartCoroutine(Fading());
 
-                if (Tutorial.TutorialOver) StartCoroutine(SunDown());
+                if (Tutorial.instance.TutorialOver) StartCoroutine(SunDown());
             }
             else
             {
@@ -307,7 +307,7 @@ public class Player : MonoBehaviour
     IEnumerator SunDown()
     {
         ResettingSun = true;
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         ResettingSun = false;
     }
 

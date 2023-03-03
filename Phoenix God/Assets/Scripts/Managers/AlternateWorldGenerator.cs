@@ -36,6 +36,8 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     private GameObject Parent;
 
+    public GameObject CurveL, CurveR;
+
     bool LastDir = true;
 
     bool Dir;
@@ -53,6 +55,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     // Update is called once per frame
     void Spawn()
     {
+        #region LRR
         AllDirections.Add(false);
         AllDirections.Add(true);
         AllDirections.Add(true);
@@ -60,157 +63,35 @@ public class AlternateWorldGenerator : MonoBehaviour
         NextSpawn = new Vector3(0f, Y_Offset, 0f);
         TurnPositions.Add (NextSpawn);
 
-        var _PlaneL = Instantiate(PlaneL, NextSpawn, Quaternion.identity);
-        _PlaneL.transform.eulerAngles = Rotation;
-        _PlaneL.transform.localScale =
-            new Vector3(_PlaneL.transform.localScale.x * PlaneScaleX,
-                _PlaneL.transform.localScale.y * PlaneScaleZ,
-                _PlaneL.transform.localScale.z * PlaneScaleZ);
-        _PlaneL.transform.SetParent(Parent.transform);
-        AllPlanes.Add(_PlaneL);
+        InstantiatePlane(PlaneL);
+       
 
         NextSpawn = new Vector3(-3f * PlaneScaleX, Y_Offset, 3f * PlaneScaleZ);
         TurnPositions.Add (NextSpawn);
+       
+        InstantiateCurve(CurveL);
+        NextSpawn.z += PlaneScaleZ;
+        InstantiatePlane(PlaneR);
 
-        var _PlaneR = Instantiate(PlaneR, NextSpawn, Quaternion.identity);
-        _PlaneR.transform.eulerAngles = Rotation;
-        _PlaneR.transform.localScale =
-            new Vector3(_PlaneR.transform.localScale.x * PlaneScaleX,
-                _PlaneR.transform.localScale.y * PlaneScaleZ,
-                _PlaneR.transform.localScale.z * PlaneScaleZ);
-
-        _PlaneR.transform.SetParent(Parent.transform);
-        AllPlanes.Add(_PlaneR);
-
-
-        NextSpawn = new Vector3(0f,Y_Offset,6f*PlaneScaleZ);
+        NextSpawn = new Vector3(0f,Y_Offset,7f*PlaneScaleZ);
         TurnPositions.Add (NextSpawn);
 
-         var __PlaneR = Instantiate(PlaneR, NextSpawn, Quaternion.identity);
-        __PlaneR.transform.eulerAngles = Rotation;
-        __PlaneR.transform.localScale =
-            new Vector3(__PlaneR.transform.localScale.x * PlaneScaleX,
-                __PlaneR.transform.localScale.y * PlaneScaleZ,
-                __PlaneR.transform.localScale.z * PlaneScaleZ);
-
-        __PlaneR.transform.SetParent(Parent.transform);
-        AllPlanes.Add(__PlaneR);
+        InstantiatePlane(PlaneR);
+        
+        #endregion
 
         LastDir = true;
 
         for (int i = 0; i < NumberOfPlanes - 3; i++)
         {
-            NextSpawn.z += 3 * PlaneScaleZ;
-            Dir = LorR();
-
-            if (LastDir == Dir)
-            {
-                if (LastDir == false)
-                {
-                    NextSpawn.x -= 3 * PlaneScaleX;
-                }
-                else
-                {
-                    NextSpawn.x += 3 * PlaneScaleX;
-                }
-            }
-            else
-            {
-                if (LastDir == true)
-                {
-                    NextSpawn.x += 3 * PlaneScaleX;
-                }
-                else
-                {
-                    NextSpawn.x -= 3 * PlaneScaleX;
-                }
-            }
-
-            //Spawning
-            if (Dir)
-            {
-                var plane = Instantiate(PlaneR, NextSpawn, Quaternion.identity);
-                plane.transform.eulerAngles = Rotation;
-                plane.transform.localScale =
-                    new Vector3(plane.transform.localScale.x * PlaneScaleX,
-                        plane.transform.localScale.y * PlaneScaleZ,
-                        plane.transform.localScale.z * PlaneScaleZ);
-                plane.transform.SetParent(Parent.transform);
-                AllPlanes.Add(plane);
-            }
-            else
-            {
-                var plane = Instantiate(PlaneL, NextSpawn, Quaternion.identity);
-                plane.transform.eulerAngles = Rotation;
-                plane.transform.localScale =
-                    new Vector3(plane.transform.localScale.x * PlaneScaleX,
-                        plane.transform.localScale.y * PlaneScaleZ,
-                        plane.transform.localScale.z * PlaneScaleZ);
-                plane.transform.SetParent(Parent.transform);
-                AllPlanes.Add(plane);
-            }
-
-            TurnPositions.Add (NextSpawn);
-            AllDirections.Add (Dir);
-            LastDir = Dir;
+            SpawnSingle();
         }
     }
+  
 
     public void SpawnMorePlanes()
     {
-        NextSpawn.z += 3 * PlaneScaleZ;
-        Dir = LorR();
-
-        if (LastDir == Dir)
-        {
-            if (LastDir == false)
-            {
-                NextSpawn.x -= 3 * PlaneScaleX;
-            }
-            else
-            {
-                NextSpawn.x += 3 * PlaneScaleX;
-            }
-        }
-        else
-        {
-            if (LastDir == true)
-            {
-                NextSpawn.x += 3 * PlaneScaleX;
-            }
-            else
-            {
-                NextSpawn.x -= 3 * PlaneScaleX;
-            }
-        }
-
-        //Spawning
-        if (Dir)
-        {
-            var plane = Instantiate(PlaneR, NextSpawn, Quaternion.identity);
-            plane.transform.eulerAngles = Rotation;
-            plane.transform.localScale =
-                new Vector3(plane.transform.localScale.x * PlaneScaleX,
-                    plane.transform.localScale.y * PlaneScaleZ,
-                    plane.transform.localScale.z * PlaneScaleZ);
-            plane.transform.SetParent(Parent.transform);
-            AllPlanes.Add(plane);
-        }
-        else
-        {
-            var plane = Instantiate(PlaneL, NextSpawn, Quaternion.identity);
-            plane.transform.eulerAngles = Rotation;
-            plane.transform.localScale =
-                new Vector3(plane.transform.localScale.x * PlaneScaleX,
-                    plane.transform.localScale.y * PlaneScaleZ,
-                    plane.transform.localScale.z * PlaneScaleZ);
-            plane.transform.SetParent(Parent.transform);
-            AllPlanes.Add(plane);
-        }
-
-        TurnPositions.Add (NextSpawn);
-        AllDirections.Add (Dir);
-        LastDir = Dir;
+       SpawnSingle();
     }
 
     bool LorR()
@@ -253,4 +134,65 @@ public class AlternateWorldGenerator : MonoBehaviour
         LastDir = false;
         Start();
     }
+    public void InstantiatePlane(GameObject DirPlane)
+    {
+        var plane = Instantiate(DirPlane, NextSpawn, Quaternion.identity);
+        plane.transform.eulerAngles = Rotation;
+        plane.transform.localScale =
+            new Vector3(plane.transform.localScale.x * PlaneScaleX,
+                plane.transform.localScale.y * PlaneScaleZ,
+                plane.transform.localScale.z * PlaneScaleZ);
+        plane.transform.SetParent(Parent.transform);
+        AllPlanes.Add(plane);
+    }
+
+    public void SpawnSingle()
+    {
+        NextSpawn.z += 3 * PlaneScaleZ;
+        Dir = LorR();
+
+        //if last turn is same
+        if (LastDir == Dir)
+        {
+            if (LastDir == false) NextSpawn.x -= 3 * PlaneScaleX;
+            else NextSpawn.x += 3 * PlaneScaleX;
+        }
+        //if last turn is not same
+        else
+        {
+            if (LastDir == true)
+            {
+                NextSpawn.x += 3 * PlaneScaleX;
+                InstantiateCurve(CurveR);
+            }
+            else
+            {
+                NextSpawn.x -= 3 * PlaneScaleX;
+                InstantiateCurve(CurveL);
+               
+            }
+
+            NextSpawn.z +=  PlaneScaleZ;
+
+
+        }
+
+        //Spawning
+        if (Dir) InstantiatePlane(PlaneR);
+        else InstantiatePlane(PlaneL);
+
+        TurnPositions.Add(NextSpawn);
+        AllDirections.Add(Dir);
+        LastDir = Dir;
+    }
+
+    public void InstantiateCurve(GameObject Curve)
+    {
+        var curve = Instantiate(Curve, NextSpawn, Quaternion.identity);
+        curve.transform.eulerAngles += Rotation;
+        curve.transform.localScale = new Vector3(curve.transform.localScale.x * PlaneScaleX, curve.transform.localScale.y * PlaneScaleZ, curve.transform.localScale.z * PlaneScaleZ);
+        //curve.transform.localPosition = new Vector3(NextSpawn.x, NextSpawn.y, NextSpawn.z);
+        curve.transform.SetParent(Parent.transform);
+    }
+
 }

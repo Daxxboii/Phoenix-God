@@ -14,7 +14,7 @@ public class Tutorial : MonoBehaviour
 
     public int ImageIndex;
 
-    public static bool TutorialOver = true;
+    public  bool TutorialOver = false;
 
 
 
@@ -60,6 +60,6 @@ public class Tutorial : MonoBehaviour
         TutorialImage.sprite = Tutorial_Images[0];
         TutorialImage.gameObject.SetActive(true);
         Player.PlanesHaveChanged += NextImage;
-        TutorialOver = true;
+        TutorialOver = false;
     }
 }

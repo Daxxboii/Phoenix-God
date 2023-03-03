@@ -36,7 +36,10 @@ public class SwapSprites : MonoBehaviour
              phoenixImage.sprite = sprites[1];
         }
     }
-
+    public void _UpdateSprite()
+    {
+        StartCoroutine("UpdateSprite");
+    }
     IEnumerator UpdateSprite()
     {
         yield return new WaitForSeconds(0.1f);

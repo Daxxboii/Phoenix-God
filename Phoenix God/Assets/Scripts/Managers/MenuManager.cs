@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 using static UnityEngine.EventSystems.EventTrigger;
 
+
 public class MenuManager : MonoBehaviour
 {
     // public Color DefaultColor;
@@ -55,7 +56,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI RetryButtonCount;
 
-    [SerializeField]private TextMeshProUGUI TitleTextBackGround;
+    [SerializeField] private TextMeshProUGUI TitleTextBackGround;
 
     public GameObject TitleName;
 
@@ -83,11 +84,11 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        source = (ScalableBlurConfig) translucentImageSource.BlurConfig;
+        source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
 
         UpdateText();
-        RetryButtom.color = DisabledColor;
-        RetryButtonCount.color = DisabledColor;
+        //RetryButtom.color = DisabledColor;
+        //RetryButtonCount.color = DisabledColor;
         RetryButtonCount.text = "1x";
         TitleName.gameObject.SetActive(false);
 
@@ -184,7 +185,7 @@ public class MenuManager : MonoBehaviour
             3,
             x =>
             {
-                CountDownText.text = ((int) x).ToString();
+                CountDownText.text = ((int)x).ToString();
             })
             .OnComplete(() =>
             {
@@ -196,10 +197,10 @@ public class MenuManager : MonoBehaviour
             });
     }
 
-  /*  public void Quit()
-    {
-        Application.Quit();
-    }*/
+    /*  public void Quit()
+      {
+          Application.Quit();
+      }*/
 
     public void GameOver()
     {
@@ -220,7 +221,7 @@ public class MenuManager : MonoBehaviour
     public void ResetGame()
     {
         UpdateTitleColor();
-        SwapSprites.instance.StartCoroutine("UpdateSprite");
+        //SwapSprites.instance._UpdateSprite();
         RetryButtonCount.color = ActivatedColor;
         RetryButtonCount.text = Player.ResetIndex.ToString() + "x";
         GameManager.GameManagerInstance.Score = 0;
@@ -257,7 +258,7 @@ public class MenuManager : MonoBehaviour
     {
         GameManager.GameManagerInstance.isPlaying = false;
         RetryButtonCount.color = ActivatedColor;
-       
+
         Retry();
     }
 
@@ -276,7 +277,7 @@ public class MenuManager : MonoBehaviour
             3,
             x =>
             {
-                CountDownText.text = ((int) x).ToString();
+                CountDownText.text = ((int)x).ToString();
             })
             .OnComplete(() =>
             {
@@ -285,7 +286,7 @@ public class MenuManager : MonoBehaviour
                 GamePlayPanel.SetActive(true);
 
                 RetryButtonCount.color = DisabledColor;
-                RetryButtonCount.text = Player.ResetIndex.ToString()+"x";
+                RetryButtonCount.text = Player.ResetIndex.ToString() + "x";
                 RetryButtom.color = DisabledColor;
             });
     }
@@ -293,9 +294,9 @@ public class MenuManager : MonoBehaviour
     private void UpdateText()
     {
         ScoreText.text =
-            ((int) GameManager.GameManagerInstance.Score).ToString();
+            ((int)GameManager.GameManagerInstance.Score).ToString();
         MaxScoreText.text =
-            ((int) GameManager.GameManagerInstance.MaxScore).ToString();
+            ((int)GameManager.GameManagerInstance.MaxScore).ToString();
     }
 
 
@@ -313,6 +314,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
- 
-  
+
+
 }
+
