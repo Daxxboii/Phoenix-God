@@ -21,7 +21,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     [Range(0, 50)]
     public int NumberOfPlanes;
 
-    [Range(-4.6f,14f)]
+    [Range(-4.6f, 14f)]
     public float Y_Offset;
 
     [Range(0, 50)]
@@ -61,23 +61,23 @@ public class AlternateWorldGenerator : MonoBehaviour
         AllDirections.Add(true);
 
         NextSpawn = new Vector3(0f, Y_Offset, 0f);
-        TurnPositions.Add (NextSpawn);
+        TurnPositions.Add(NextSpawn);
 
         InstantiatePlane(PlaneL);
-       
+
 
         NextSpawn = new Vector3(-3f * PlaneScaleX, Y_Offset, 3f * PlaneScaleZ);
-        TurnPositions.Add (NextSpawn);
-       
+        TurnPositions.Add(NextSpawn);
+
         InstantiateCurve(CurveL);
         NextSpawn.z += PlaneScaleZ;
         InstantiatePlane(PlaneR);
 
-        NextSpawn = new Vector3(0f,Y_Offset,7f*PlaneScaleZ);
-        TurnPositions.Add (NextSpawn);
+        NextSpawn = new Vector3(0f, Y_Offset, 7f * PlaneScaleZ);
+        TurnPositions.Add(NextSpawn);
 
         InstantiatePlane(PlaneR);
-        
+
         #endregion
 
         LastDir = true;
@@ -87,11 +87,11 @@ public class AlternateWorldGenerator : MonoBehaviour
             SpawnSingle();
         }
     }
-  
+
 
     public void SpawnMorePlanes()
     {
-       SpawnSingle();
+        SpawnSingle();
     }
 
     bool LorR()
@@ -169,10 +169,10 @@ public class AlternateWorldGenerator : MonoBehaviour
             {
                 NextSpawn.x -= 3 * PlaneScaleX;
                 InstantiateCurve(CurveL);
-               
+
             }
 
-            NextSpawn.z +=  PlaneScaleZ;
+            NextSpawn.z += PlaneScaleZ;
 
 
         }

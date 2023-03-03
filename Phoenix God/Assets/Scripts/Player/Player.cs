@@ -104,10 +104,12 @@ public class Player : MonoBehaviour
 
     public Material
 
-            FadePath;
+            FadePath,Sky;
     // FullPath;
 
     private GameObject PreviousPlane;
+
+    private float SkyExposure;
 
     void Awake()
     {
@@ -157,6 +159,9 @@ public class Player : MonoBehaviour
                 .Lerp(RenderSettings.fogColor,
                 yellow,
                 Time.deltaTime * SunSpeed * 50);
+
+       // SkyExposure = Mathf.Lerp(SkyExposure, 1, Time.deltaTime * SunSpeed * 50);
+       // RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
     }
 
     void FixedUpdate()
@@ -210,6 +215,8 @@ public class Player : MonoBehaviour
                             .Lerp(RenderSettings.fogColor,
                             Black,
                             Time.deltaTime * SunSpeed);
+                   // SkyExposure = Mathf.Lerp(SkyExposure, 0.5f, Time.deltaTime * SunSpeed * 50);
+                  //  RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
                 }
                 else
                 {
