@@ -244,13 +244,16 @@ public class AlternateWorldGenerator : MonoBehaviour
     {
         foreach (Transform t in Parent.transform)
         {
-            Destroy(t.gameObject);
+          //  t.SetParent(_PoolManager.parent.transform);
+            t.position = new Vector3(0,0,-500);
         }
         AllDirections.Clear();
         TurnPositions.Clear();
         //AllPlanes.Clear();
         NextSpawn = Vector3.zero;
         LastDir = false;
+        StartSpawn = 0;
+       
         Start();
     }
     public void InstantiatePlane(List<GameObject> DirPlane, int index)

@@ -11,7 +11,7 @@ public class PoolManager : MonoBehaviour
 
     public GameObject CurveL, CurveR, LeftPlane, RightPlane;
 
-    private GameObject parent;
+    [HideInInspector]public GameObject parent;
     Vector3 PlanesScale;
 
     void Start()
