@@ -81,10 +81,19 @@ public class MenuManager : MonoBehaviour
 
     private int TitleTextColorIndex;
 
+    Material TitleTextBackGroundMaterial;
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
+        TitleTextBackGroundMaterial = TitleTextBackGround.fontSharedMaterial;
+        TitleTextBackGroundMaterial.EnableKeyword("_UnderlayColor");
+        UpdateTitleColor();
+
+
+
+
 
         UpdateText();
         //RetryButtom.color = DisabledColor;
@@ -302,7 +311,7 @@ public class MenuManager : MonoBehaviour
 
     public void UpdateTitleColor()
     {
-        TitleTextBackGround.color = TitleTextOutlines[TitleTextColorIndex];
+        TitleTextBackGroundMaterial.SetColor("_UnderlayColor", TitleTextOutlines[TitleTextColorIndex]);
 
         if (TitleTextColorIndex == TitleTextOutlines.Length - 1)
         {

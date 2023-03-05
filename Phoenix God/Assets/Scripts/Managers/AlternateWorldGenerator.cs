@@ -11,9 +11,6 @@ public class AlternateWorldGenerator : MonoBehaviour
     [HideInInspector]
     public List<bool> AllDirections = new List<bool>();
 
-
-
-
     private int NumberOfPlanes;
 
     [Range(-4.6f, 14f)]
@@ -50,6 +47,8 @@ public class AlternateWorldGenerator : MonoBehaviour
     Vector3 PlanesScale,CurveScale;
     int StartSpawn;
 
+    public Material PathMaterialWhite;
+    MeshRenderer Pathrenderer;
 
 
 
@@ -62,7 +61,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                  _PoolManager.LeftPlane.transform.localScale.z * PlaneScaleZ);
         CurveScale = new Vector3(1.5f * _PoolManager.CurveL.transform.localScale.x * PlaneScaleX, _PoolManager.CurveL.transform.localScale.y * PlaneScaleZ, _PoolManager.CurveL.transform.localScale.z * PlaneScaleZ);
 
-        NumberOfPlanes = (int)_PoolManager.PoolCount / 2;
+        NumberOfPlanes = (int)_PoolManager.PoolCount;
         NextSpawn = new Vector3(0f, Y_Offset, 0f);
         Spawn();
     }
@@ -259,10 +258,14 @@ public class AlternateWorldGenerator : MonoBehaviour
     public void InstantiatePlane(List<GameObject> DirPlane, int index)
     {
         plane = DirPlane[index];
+        plane.SetActive(true);
         plane.transform.position = NextSpawn;
         plane.transform.eulerAngles = Rotation;
         plane.transform.localScale = PlanesScale;
         plane.transform.SetParent(Parent.transform);
+
+        Pathrenderer = plane.GetComponentInChildren<MeshRenderer>();
+        Pathrenderer.sharedMaterial = PathMaterialWhite;
         // AllPlanes.Add(plane);
     }
 
@@ -274,7 +277,6 @@ public class AlternateWorldGenerator : MonoBehaviour
         curve.transform.position = NextSpawn;
         curve.transform.eulerAngles += Rotation;
         curve.transform.localScale = CurveScale;
-        //curve.transform.localPosition = new Vector3(NextSpawn.x, NextSpawn.y, NextSpawn.z);
         curve.transform.SetParent(Parent.transform);
     }
 

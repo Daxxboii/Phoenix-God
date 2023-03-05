@@ -111,6 +111,8 @@ public class Player : MonoBehaviour
 
     private float SkyExposure;
 
+    RaycastHit hit;
+
     void Awake()
     {
         if (Singleton == null) Singleton = this;
@@ -137,6 +139,7 @@ public class Player : MonoBehaviour
 
         /* HourGlassInner.fillAmount = 1;
          HourGlassInner.color = Color.white;*/
+        
     }
 
     void ResetSun()
@@ -168,39 +171,7 @@ public class Player : MonoBehaviour
     {
         if (_GameManager.isPlaying)
         {
-            /* hitColliders = Physics.OverlapSphere(transform.position, 5f);
-
-            if (hitColliders != null)
-            {
-                hitColliders[0]
-                    .gameObject
-                    .GetComponent<MeshRenderer>()
-                    .sharedMaterial = FadePath;
-            }*/
-            /*  if (!UsedUpSunPower)
-              {
-                  timer += Time.deltaTime;
-
-                  // HourglassProgress = SunUpPosition.y / Sun.transform.localPosition.y;
-                  HourglassProgress =
-                      mapOneRangeToAnother(Sun.transform.localPosition.y,
-                      SunUpPosition.y,
-                      SunDownPosition.y,
-                      1,
-                      0,
-                      2);
-
-                  // Debug.Log (HourglassProgress);
-                  if (!IsSunButtonEnabled)
-                      HourGlassOuter.fillAmount = HourglassProgress;
-
-                  if (HourglassProgress > 0.97f && timer > 2f)
-                  {
-                      MenuManager.Instance.ActivateSunButton();
-                      HourGlassOuter.fillAmount = 1;
-                      IsSunButtonEnabled = true;
-                  }
-              }*/
+           
             if (Tutorial.instance.TutorialOver)
             {
                 if (!ResettingSun && !IsSunPoweredUp)
@@ -242,7 +213,6 @@ public class Player : MonoBehaviour
                     UpdatedPlayerPos,
                     Time.deltaTime * ForwardPlayerSpeed);
 
-            // Debug.Log(transform.position);
         }
        
     }
@@ -256,6 +226,13 @@ public class Player : MonoBehaviour
         {
             if (PerformedStep == NextMove)
             {
+               
+                if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.down),out hit, 10f))
+                {
+                    if(PreviousPlane!=null)PreviousPlane.gameObject.SetActive(false);
+                    StartCoroutine(Fading(hit));
+                   
+                }
                 TurnPlayer(PerformedStep);
                 Player_Animator.SetBool("Gliding", true);
                 GeneratorScript.SpawnSingle();
@@ -272,7 +249,7 @@ public class Player : MonoBehaviour
 
                 // });
 
-                StartCoroutine(Fading());
+               
 
                 if (Tutorial.instance.TutorialOver) StartCoroutine(SunDown());
             }
@@ -319,9 +296,11 @@ public class Player : MonoBehaviour
         ResettingSun = false;
     }
 
-    IEnumerator Fading()
+    IEnumerator Fading(RaycastHit hit)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
+        PreviousPlane = hit.transform.gameObject;
+        PreviousPlane.GetComponent<MeshRenderer>().material = FadePath;
         PlaneIndex++;
     }
 
