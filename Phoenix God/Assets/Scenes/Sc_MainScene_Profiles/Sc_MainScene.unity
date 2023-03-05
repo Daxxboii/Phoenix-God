@@ -23421,6 +23421,7 @@ MonoBehaviour:
   Rotation: {x: -90, y: 0, z: 180}
   CurveL: {fileID: 5620104200792829540, guid: cc139ac111de09848aa3abed92752518, type: 3}
   CurveR: {fileID: 4340863041832362623, guid: 48d7bbeb39d36f443b7a333f149a52c6, type: 3}
+  _PoolManager: {fileID: 623604878}
 --- !u!114 &1973508443
 MonoBehaviour:
   m_ObjectHideFlags: 0

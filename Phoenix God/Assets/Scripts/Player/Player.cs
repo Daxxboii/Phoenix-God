@@ -257,7 +257,7 @@ public class Player : MonoBehaviour
             {
                 TurnPlayer(PerformedStep);
                 Player_Animator.SetBool("Gliding", true);
-                GeneratorScript.SpawnMorePlanes();
+                GeneratorScript.SpawnSingle();
                 PlanesHaveChanged.Invoke();
                 LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex];
