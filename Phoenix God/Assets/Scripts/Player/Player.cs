@@ -321,17 +321,7 @@ public class Player : MonoBehaviour
     IEnumerator Fading()
     {
         yield return new WaitForSeconds(0.1f);
-        if(PreviousPlane!=null)PreviousPlane.SetActive(false);
-
-        PreviousPlane = GeneratorScript
-                         .AllPlanes[PlaneIndex];
-
-        PreviousPlane.GetComponent<MeshRenderer>()
-                          .material = FadePath;
-
         PlaneIndex++;
-
-
     }
 
     public void ResetSunInstantly()

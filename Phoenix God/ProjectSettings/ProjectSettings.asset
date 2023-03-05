@@ -75,7 +75,7 @@ PlayerSettings:
   muteOtherAudioSources: 0
   Prepare IOS For Recording: 0
   Force IOS Speakers When Recording: 0
-  deferSystemGesturesMode: 0
+  deferSystemGesturesMode: 4
   hideHomeButton: 1
   submitAnalytics: 1
   usePlayerLog: 1
@@ -270,7 +270,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: b66db892074b50e4a8456959a1841b2e, type: 3}
+      m_Icon: {fileID: 2800000, guid: 2c6d0b0e77b83ec4b934512c35077914, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -777,7 +777,7 @@ PlayerSettings:
     27: UNITY_POST_PROCESSING_STACK_V2
     28: UNITY_POST_PROCESSING_STACK_V2
   platformArchitecture:
-    iOS: 1
+    iOS: 2
   scriptingBackend:
     Android: 0
   il2cppCompilerConfiguration: {}
@@ -789,7 +789,7 @@ PlayerSettings:
   scriptingRuntimeVersion: 1
   apiCompatibilityLevelPerPlatform:
     WebGL: 6
-    iOS: 3
+    iOS: 6
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
   metroPackageName: Template_3D

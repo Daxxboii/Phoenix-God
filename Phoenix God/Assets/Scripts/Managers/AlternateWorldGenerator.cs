@@ -15,8 +15,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     [HideInInspector]
     public List<bool> AllDirections = new List<bool>();
 
-    [HideInInspector]
-    public List<GameObject> AllPlanes = new List<GameObject>();
+  
 
     [Range(0, 50)]
     public int NumberOfPlanes;
@@ -129,7 +128,7 @@ public class AlternateWorldGenerator : MonoBehaviour
         }
         AllDirections.Clear();
         TurnPositions.Clear();
-        AllPlanes.Clear();
+        //AllPlanes.Clear();
         NextSpawn = Vector3.zero;
         LastDir = false;
         Start();
@@ -143,7 +142,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                 plane.transform.localScale.y * PlaneScaleZ,
                 plane.transform.localScale.z * PlaneScaleZ);
         plane.transform.SetParent(Parent.transform);
-        AllPlanes.Add(plane);
+       // AllPlanes.Add(plane);
     }
 
     public void SpawnSingle()
@@ -190,7 +189,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     {
         var curve = Instantiate(Curve, NextSpawn, Quaternion.identity);
         curve.transform.eulerAngles += Rotation;
-        curve.transform.localScale = new Vector3(curve.transform.localScale.x * PlaneScaleX, curve.transform.localScale.y * PlaneScaleZ, curve.transform.localScale.z * PlaneScaleZ);
+        curve.transform.localScale = new Vector3(1.5f*curve.transform.localScale.x * PlaneScaleX, curve.transform.localScale.y * PlaneScaleZ, curve.transform.localScale.z * PlaneScaleZ);
         //curve.transform.localPosition = new Vector3(NextSpawn.x, NextSpawn.y, NextSpawn.z);
         curve.transform.SetParent(Parent.transform);
     }
