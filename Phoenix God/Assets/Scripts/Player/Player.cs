@@ -244,6 +244,7 @@ public class Player : MonoBehaviour
 
             // Debug.Log(transform.position);
         }
+       
     }
 
 

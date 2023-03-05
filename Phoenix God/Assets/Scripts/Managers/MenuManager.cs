@@ -267,7 +267,7 @@ public class MenuManager : MonoBehaviour
         GameOverRetryPanelBlack.DOFade(0f, 1f);
         Player.Singleton.ResetSunInstantly();
         Player.ResetIndex--;
-        RetryButtom.color = ActivatedColor;
+        //RetryButtom.color = ActivatedColor;
 
         PauseMenuPanel.SetActive(false);
         CountDownText.gameObject.SetActive(true);
@@ -285,9 +285,9 @@ public class MenuManager : MonoBehaviour
                 GameManager.GameManagerInstance.isPlaying = true;
                 GamePlayPanel.SetActive(true);
 
-                RetryButtonCount.color = DisabledColor;
+               // RetryButtonCount.color = DisabledColor;
                 RetryButtonCount.text = Player.ResetIndex.ToString() + "x";
-                RetryButtom.color = DisabledColor;
+               // RetryButtom.color = DisabledColor;
             });
     }
 

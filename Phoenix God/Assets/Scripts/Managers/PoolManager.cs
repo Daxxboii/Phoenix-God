@@ -5,13 +5,14 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    [SerializeField, Range(1, 100)] private int PoolCount;
+    [SerializeField, Range(20, 100)] public int PoolCount;
 
-    public List<GameObject> LeftCurves, RightCurves, LeftPlanes, RightPlanes = new List<GameObject>();
+    [HideInInspector]public List<GameObject> LeftCurves, RightCurves, LeftPlanes, RightPlanes = new List<GameObject>();
 
     public GameObject CurveL, CurveR, LeftPlane, RightPlane;
 
     private GameObject parent;
+    Vector3 PlanesScale;
 
     void Start()
     {
@@ -20,15 +21,16 @@ public class PoolManager : MonoBehaviour
         Spawn(RightPlanes, RightPlane);
         Spawn(LeftCurves, CurveL);
         Spawn(RightCurves, CurveR);
+      
     }
 
     void Spawn(List<GameObject> list, GameObject gameObjectToSpawm)
     {
         for (int i = 0; i < PoolCount; i++)
         {
-            var SpawnedObject = Instantiate(gameObjectToSpawm, transform.position, Quaternion.identity);
+            GameObject SpawnedObject = Instantiate(gameObjectToSpawm, transform.position, Quaternion.identity);
             SpawnedObject.transform.SetParent(parent.transform);
-            list.Add(gameObjectToSpawm);
+            list.Add(SpawnedObject);
         }
     }
 

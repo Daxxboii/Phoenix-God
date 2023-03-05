@@ -4,21 +4,17 @@ using UnityEngine;
 
 public class AlternateWorldGenerator : MonoBehaviour
 {
-    public GameObject
 
-            PlaneR,
-            PlaneL;
-
-    [HideInInspector]
+    //[HideInInspector]
     public List<Vector3> TurnPositions = new List<Vector3>();
 
     [HideInInspector]
     public List<bool> AllDirections = new List<bool>();
 
-  
 
-    [Range(0, 50)]
-    public int NumberOfPlanes;
+
+
+    private int NumberOfPlanes;
 
     [Range(-4.6f, 14f)]
     public float Y_Offset;
@@ -35,7 +31,7 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     private GameObject Parent;
 
-    public GameObject CurveL, CurveR;
+   
 
     bool LastDir = true;
 
@@ -44,42 +40,41 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     public static AlternateWorldGenerator Singleton;
 
+    public PoolManager _PoolManager;
+
+    private int LPlaneIndex, RPlaneIndex;
+    private int LCurveIndex, RCurveIndex;
+
+
+    GameObject plane,curve;
+    Vector3 PlanesScale,CurveScale;
+    int StartSpawn;
+
+
+
+
     void Start()
     {
         if (Singleton == null) Singleton = this;
         Parent = new GameObject("Parent");
+        PlanesScale = new Vector3(_PoolManager.LeftPlane.transform.localScale.x * PlaneScaleX,
+                 _PoolManager.LeftPlane.transform.localScale.y * PlaneScaleZ,
+                 _PoolManager.LeftPlane.transform.localScale.z * PlaneScaleZ);
+        CurveScale = new Vector3(1.5f * _PoolManager.CurveL.transform.localScale.x * PlaneScaleX, _PoolManager.CurveL.transform.localScale.y * PlaneScaleZ, _PoolManager.CurveL.transform.localScale.z * PlaneScaleZ);
+
+        NumberOfPlanes = (int)_PoolManager.PoolCount / 2;
+        NextSpawn = new Vector3(0f, Y_Offset, 0f);
         Spawn();
     }
 
     // Update is called once per frame
     void Spawn()
     {
-        #region LRR
-        AllDirections.Add(false);
-        AllDirections.Add(true);
-        AllDirections.Add(true);
+        LastDir = false;
 
-        NextSpawn = new Vector3(0f, Y_Offset, 0f);
-        TurnPositions.Add(NextSpawn);
-
-        InstantiatePlane(PlaneL);
-
-
-        NextSpawn = new Vector3(-3f * PlaneScaleX, Y_Offset, 3f * PlaneScaleZ);
-        TurnPositions.Add(NextSpawn);
-
-        InstantiateCurve(CurveL);
-        NextSpawn.z += PlaneScaleZ;
-        InstantiatePlane(PlaneR);
-
-        NextSpawn = new Vector3(0f, Y_Offset, 7f * PlaneScaleZ);
-        TurnPositions.Add(NextSpawn);
-
-        InstantiatePlane(PlaneR);
-
-        #endregion
-
-        LastDir = true;
+        /*SpawnSingleWanted(false);
+        SpawnSingleWanted(true);
+        SpawnSingleWanted(true);*/
 
         for (int i = 0; i < NumberOfPlanes - 3; i++)
         {
@@ -87,11 +82,112 @@ public class AlternateWorldGenerator : MonoBehaviour
         }
     }
 
-
-    public void SpawnMorePlanes()
+    public void SpawnSingle()
     {
-        SpawnSingle();
+        if (AllDirections.Count != 0) NextSpawn.z += 3 * PlaneScaleZ;
+        Dir = LorR();
+
+        //if last turn is same
+        if (AllDirections.Count != 0)
+        {
+            if (LastDir == Dir)
+            {
+                if (LastDir == false) NextSpawn.x -= 3 * PlaneScaleX;
+                else NextSpawn.x += 3 * PlaneScaleX;
+            }
+            //if last turn is not same
+            else
+            {
+                if (LastDir == true)
+                {
+                    NextSpawn.x += 3 * PlaneScaleX;
+                    InstantiateCurve(_PoolManager.RightCurves,RCurveIndex);
+                    RCurveIndex++;
+                    if (RCurveIndex >= _PoolManager.PoolCount)
+                    {
+                        RCurveIndex = 0;
+                    }
+                }
+                else
+                {
+                    NextSpawn.x -= 3 * PlaneScaleX;
+                    InstantiateCurve(_PoolManager.LeftCurves,LCurveIndex);
+                    LCurveIndex++;
+                    if (LCurveIndex >= _PoolManager.PoolCount)
+                    {
+                        LCurveIndex = 0;
+                    }
+
+                }
+
+                NextSpawn.z += PlaneScaleZ;
+            }
+        }
+
+        //Spawning
+        if (Dir)
+        {
+            InstantiatePlane(_PoolManager.RightPlanes, RPlaneIndex);
+            RPlaneIndex++;
+            if (RPlaneIndex >= _PoolManager.PoolCount)
+            {
+                RPlaneIndex = 0;
+            }
+        }
+        else
+        {
+            InstantiatePlane(_PoolManager.LeftPlanes, LPlaneIndex);
+            LPlaneIndex++;
+            if (LPlaneIndex >= _PoolManager.PoolCount)
+            {
+                LPlaneIndex = 0;
+            }
+        }
+
+        TurnPositions.Add(NextSpawn);
+        AllDirections.Add(Dir);
+        LastDir = Dir;
     }
+
+    /* public void SpawnSingleWanted(bool WantedDir)
+     {
+         NextSpawn.z += 3 * PlaneScaleZ;
+         Dir = WantedDir;
+
+         //if last turn is same
+         if (LastDir == Dir)
+         {
+             if (LastDir == false) NextSpawn.x -= 3 * PlaneScaleX;
+             else NextSpawn.x += 3 * PlaneScaleX;
+         }
+         //if last turn is not same
+         else
+         {
+             if (LastDir == true)
+             {
+                 NextSpawn.x += 3 * PlaneScaleX;
+                 InstantiateCurve(CurveR);
+             }
+             else
+             {
+                 NextSpawn.x -= 3 * PlaneScaleX;
+                 InstantiateCurve(CurveL);
+             }
+
+             NextSpawn.z += PlaneScaleZ;
+
+
+         }
+
+         //Spawning
+         if (Dir) InstantiatePlane(_PoolManager.RightPlanes, RPlaneIndex);
+         else InstantiatePlane(_PoolManager.LeftPlanes, LPlaneIndex);
+
+         TurnPositions.Add(NextSpawn);
+         AllDirections.Add(Dir);
+         LastDir = Dir;
+     }*/
+
 
     bool LorR()
     {
@@ -103,22 +199,46 @@ public class AlternateWorldGenerator : MonoBehaviour
             Decide = false;
 
         //Debug.Log(randomNumber);
-        if (
-            (
-            AllDirections[AllDirections.Count - 1] ==
-            AllDirections[AllDirections.Count - 2]
-            ) &&
-            (AllDirections[AllDirections.Count - 2] == Decide) &&
-            (AllDirections[AllDirections.Count - 3] == Decide)
-        )
+        if (AllDirections.Count > 4)
         {
-            return LorR();
+            if (
+                (
+                AllDirections[AllDirections.Count - 1] ==
+                AllDirections[AllDirections.Count - 2]
+                ) &&
+                (AllDirections[AllDirections.Count - 2] == Decide) &&
+                (AllDirections[AllDirections.Count - 3] == Decide)
+            )
+            {
+                return LorR();
+            }
+            else
+            {
+                return Decide;
+            }
         }
         else
         {
-            return Decide;
+
+
+            switch (StartSpawn)
+            {
+                case 0:
+                    StartSpawn++;
+                    return false;
+                case 1:
+                    StartSpawn++;
+                    return true;
+
+                case 2:
+                    StartSpawn++;
+                    return true;
+                default:
+                    return true;
+            }
         }
     }
+
 
     public void ResetWorld()
     {
@@ -133,63 +253,24 @@ public class AlternateWorldGenerator : MonoBehaviour
         LastDir = false;
         Start();
     }
-    public void InstantiatePlane(GameObject DirPlane)
+    public void InstantiatePlane(List<GameObject> DirPlane, int index)
     {
-        var plane = Instantiate(DirPlane, NextSpawn, Quaternion.identity);
+        plane = DirPlane[index];
+        plane.transform.position = NextSpawn;
         plane.transform.eulerAngles = Rotation;
-        plane.transform.localScale =
-            new Vector3(plane.transform.localScale.x * PlaneScaleX,
-                plane.transform.localScale.y * PlaneScaleZ,
-                plane.transform.localScale.z * PlaneScaleZ);
+        plane.transform.localScale = PlanesScale;
         plane.transform.SetParent(Parent.transform);
-       // AllPlanes.Add(plane);
+        // AllPlanes.Add(plane);
     }
 
-    public void SpawnSingle()
+
+
+    public void InstantiateCurve(List<GameObject> DirCurve, int index)
     {
-        NextSpawn.z += 3 * PlaneScaleZ;
-        Dir = LorR();
-
-        //if last turn is same
-        if (LastDir == Dir)
-        {
-            if (LastDir == false) NextSpawn.x -= 3 * PlaneScaleX;
-            else NextSpawn.x += 3 * PlaneScaleX;
-        }
-        //if last turn is not same
-        else
-        {
-            if (LastDir == true)
-            {
-                NextSpawn.x += 3 * PlaneScaleX;
-                InstantiateCurve(CurveR);
-            }
-            else
-            {
-                NextSpawn.x -= 3 * PlaneScaleX;
-                InstantiateCurve(CurveL);
-
-            }
-
-            NextSpawn.z += PlaneScaleZ;
-
-
-        }
-
-        //Spawning
-        if (Dir) InstantiatePlane(PlaneR);
-        else InstantiatePlane(PlaneL);
-
-        TurnPositions.Add(NextSpawn);
-        AllDirections.Add(Dir);
-        LastDir = Dir;
-    }
-
-    public void InstantiateCurve(GameObject Curve)
-    {
-        var curve = Instantiate(Curve, NextSpawn, Quaternion.identity);
+        curve = DirCurve[index];
+        curve.transform.position = NextSpawn;
         curve.transform.eulerAngles += Rotation;
-        curve.transform.localScale = new Vector3(1.5f*curve.transform.localScale.x * PlaneScaleX, curve.transform.localScale.y * PlaneScaleZ, curve.transform.localScale.z * PlaneScaleZ);
+        curve.transform.localScale = CurveScale;
         //curve.transform.localPosition = new Vector3(NextSpawn.x, NextSpawn.y, NextSpawn.z);
         curve.transform.SetParent(Parent.transform);
     }
