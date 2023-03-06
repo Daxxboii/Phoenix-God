@@ -133,6 +133,7 @@ public class Player : MonoBehaviour
         // UsedUpSunPower = false;
         IsSunPoweredUp = false;
         ResettingSun = false;
+        PreviousPlane = null;
         //  timer = 0;
         InputManager.CanReceiveInput = false;
         // KillTween = false;
@@ -229,7 +230,7 @@ public class Player : MonoBehaviour
                
                 if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.down),out hit, 10f))
                 {
-                    if(PreviousPlane!=null)PreviousPlane.gameObject.SetActive(false);
+                  //  if(PreviousPlane!=null)PreviousPlane.gameObject.SetActive(false);
                     StartCoroutine(Fading(hit));
                    
                 }

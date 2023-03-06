@@ -61,8 +61,10 @@ public class AlternateWorldGenerator : MonoBehaviour
                  _PoolManager.LeftPlane.transform.localScale.z * PlaneScaleZ);
         CurveScale = new Vector3(1.5f * _PoolManager.CurveL.transform.localScale.x * PlaneScaleX, _PoolManager.CurveL.transform.localScale.y * PlaneScaleZ, _PoolManager.CurveL.transform.localScale.z * PlaneScaleZ);
 
-        NumberOfPlanes = (int)_PoolManager.PoolCount;
+        NumberOfPlanes = (int)_PoolManager.PoolCount/2;
         NextSpawn = new Vector3(0f, Y_Offset, 0f);
+        RPlaneIndex = 0;
+        LPlaneIndex = 0;
         Spawn();
     }
 
@@ -252,6 +254,7 @@ public class AlternateWorldGenerator : MonoBehaviour
         NextSpawn = Vector3.zero;
         LastDir = false;
         StartSpawn = 0;
+
        
         Start();
     }
@@ -275,7 +278,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     {
         curve = DirCurve[index];
         curve.transform.position = NextSpawn;
-        curve.transform.eulerAngles += Rotation;
+        curve.transform.eulerAngles = Rotation;
         curve.transform.localScale = CurveScale;
         curve.transform.SetParent(Parent.transform);
     }
