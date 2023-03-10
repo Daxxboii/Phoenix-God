@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4340863041832599135}
   - component: {fileID: 4340863041835499135}
   - component: {fileID: 4340863041834368191}
+  - component: {fileID: 1304098410536975627}
   m_Layer: 0
   m_Name: Curve R
-  m_TagString: Untagged
+  m_TagString: Curve
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,3 +78,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1304098410536975627
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4340863041832362623}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.021035533, y: 0.009999998, z: 0}
+  m_Center: {x: -0.0005177669, y: 0.004999999, z: 0}

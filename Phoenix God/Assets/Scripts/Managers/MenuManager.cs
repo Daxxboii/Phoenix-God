@@ -90,11 +90,6 @@ public class MenuManager : MonoBehaviour
         TitleTextBackGroundMaterial = TitleTextBackGround.fontSharedMaterial;
         TitleTextBackGroundMaterial.EnableKeyword("_UnderlayColor");
         UpdateTitleColor();
-
-
-
-
-
         UpdateText();
         //RetryButtom.color = DisabledColor;
         //RetryButtonCount.color = DisabledColor;
@@ -232,18 +227,18 @@ public class MenuManager : MonoBehaviour
         UpdateTitleColor();
         //SwapSprites.instance._UpdateSprite();
         RetryButtonCount.color = ActivatedColor;
-        RetryButtonCount.text = Player.ResetIndex.ToString() + "x";
+        RetryButtonCount.text = "1x";
         GameManager.GameManagerInstance.Score = 0;
         AlternateWorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
-        Player
+      /*  Player
             .Singleton
             .transform
             .DOMove(PlayerPos, 1f)
             .OnComplete(() =>
             {
                 Player.Singleton.SetMeshVis(true);
-            });
+            });*/
 
         DOVirtual
             .Float(100,
@@ -311,7 +306,9 @@ public class MenuManager : MonoBehaviour
 
     public void UpdateTitleColor()
     {
-        TitleTextBackGroundMaterial.SetColor("_UnderlayColor", TitleTextOutlines[TitleTextColorIndex]);
+      //  TitleTextBackGroundMaterial.SetColor("_UnderlayColor", TitleTextOutlines[TitleTextColorIndex]);
+
+        TitleTextBackGround.outlineColor = TitleTextOutlines[TitleTextColorIndex];
 
         if (TitleTextColorIndex == TitleTextOutlines.Length - 1)
         {

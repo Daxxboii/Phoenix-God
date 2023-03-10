@@ -140,7 +140,11 @@ public class Player : MonoBehaviour
 
         /* HourGlassInner.fillAmount = 1;
          HourGlassInner.color = Color.white;*/
-        
+        UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
+        UpdatedPlayerPos.y += FlyHeight;
+        transform.position = UpdatedPlayerPos;
+        SetMeshVis(true);
+
     }
 
     void ResetSun()
@@ -172,7 +176,6 @@ public class Player : MonoBehaviour
     {
         if (_GameManager.isPlaying)
         {
-           
             if (Tutorial.instance.TutorialOver)
             {
                 if (!ResettingSun && !IsSunPoweredUp)
@@ -214,7 +217,10 @@ public class Player : MonoBehaviour
                     UpdatedPlayerPos,
                     Time.deltaTime * ForwardPlayerSpeed);
 
-        }
+          
+
+
+            }
        
     }
 
@@ -230,9 +236,12 @@ public class Player : MonoBehaviour
                
                 if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.down),out hit, 10f))
                 {
-                  //  if(PreviousPlane!=null)PreviousPlane.gameObject.SetActive(false);
-                    StartCoroutine(Fading(hit));
-                   
+                    if (hit.transform.gameObject.tag != "Curve")
+                    {
+                        if (PreviousPlane != null) PreviousPlane.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+                        PreviousPlane = hit.transform.gameObject;
+                        StartCoroutine(Fading(hit));
+                    }
                 }
                 TurnPlayer(PerformedStep);
                 Player_Animator.SetBool("Gliding", true);
@@ -241,16 +250,7 @@ public class Player : MonoBehaviour
                 LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex];
 
-                /* DOVirtual
-                     .Float(0,
-                     1,
-                     0.2f,
-                     x =>
-                     {*/
-
-                // });
-
-               
+              
 
                 if (Tutorial.instance.TutorialOver) StartCoroutine(SunDown());
             }
@@ -300,8 +300,8 @@ public class Player : MonoBehaviour
     IEnumerator Fading(RaycastHit hit)
     {
         yield return new WaitForSeconds(0.05f);
-        PreviousPlane = hit.transform.gameObject;
-        PreviousPlane.GetComponent<MeshRenderer>().material = FadePath;
+       
+        PreviousPlane.GetComponent<MeshRenderer>().sharedMaterial = FadePath;
         PlaneIndex++;
     }
 

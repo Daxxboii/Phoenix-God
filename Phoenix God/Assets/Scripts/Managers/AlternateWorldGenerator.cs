@@ -11,6 +11,8 @@ public class AlternateWorldGenerator : MonoBehaviour
     [HideInInspector]
     public List<bool> AllDirections = new List<bool>();
 
+ 
+
     private int NumberOfPlanes;
 
     [Range(-4.6f, 14f)]
@@ -254,8 +256,6 @@ public class AlternateWorldGenerator : MonoBehaviour
         NextSpawn = Vector3.zero;
         LastDir = false;
         StartSpawn = 0;
-
-       
         Start();
     }
     public void InstantiatePlane(List<GameObject> DirPlane, int index)
@@ -269,6 +269,9 @@ public class AlternateWorldGenerator : MonoBehaviour
 
         Pathrenderer = plane.GetComponentInChildren<MeshRenderer>();
         Pathrenderer.sharedMaterial = PathMaterialWhite;
+        Pathrenderer.enabled = true;
+
+     
         // AllPlanes.Add(plane);
     }
 
@@ -281,6 +284,9 @@ public class AlternateWorldGenerator : MonoBehaviour
         curve.transform.eulerAngles = Rotation;
         curve.transform.localScale = CurveScale;
         curve.transform.SetParent(Parent.transform);
+
+
+        
     }
 
 }
