@@ -216,12 +216,7 @@ public class Player : MonoBehaviour
                     .Lerp(transform.position,
                     UpdatedPlayerPos,
                     Time.deltaTime * ForwardPlayerSpeed);
-
-          
-
-
             }
-       
     }
 
 
@@ -234,14 +229,15 @@ public class Player : MonoBehaviour
             if (PerformedStep == NextMove)
             {
                
-                if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.down),out hit, 10f))
+               // if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.down),out hit, 10f))
                 {
-                    if (hit.transform.gameObject.tag != "Curve")
-                    {
-                        if (PreviousPlane != null) PreviousPlane.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
-                        PreviousPlane = hit.transform.gameObject;
-                        StartCoroutine(Fading(hit));
-                    }
+                    
+                       // if (PreviousPlane != null) PreviousPlane.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
+                      if(PreviousPlane!=null)  PreviousPlane.SetActive(true);
+                      
+                        StartCoroutine(Fading());
+                         
+                    
                 }
                 TurnPlayer(PerformedStep);
                 Player_Animator.SetBool("Gliding", true);
@@ -297,12 +293,23 @@ public class Player : MonoBehaviour
         ResettingSun = false;
     }
 
-    IEnumerator Fading(RaycastHit hit)
+    IEnumerator Fading()
     {
         yield return new WaitForSeconds(0.05f);
-       
-        PreviousPlane.GetComponent<MeshRenderer>().sharedMaterial = FadePath;
-        PlaneIndex++;
+        if(GeneratorScript.AllPlanes[PlaneIndex+1].tag=="Curve") 
+        {
+            GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().enabled=false;
+            PlaneIndex++;
+           // Debug.Log("curve");
+        }
+        
+         GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().sharedMaterial=FadePath;
+
+         PreviousPlane = GeneratorScript.AllPlanes[PlaneIndex];
+         PlaneIndex++;
+
+        //PreviousPlane.GetComponent<MeshRenderer>().sharedMaterial = FadePath;
+        
     }
 
     public void ResetSunInstantly()

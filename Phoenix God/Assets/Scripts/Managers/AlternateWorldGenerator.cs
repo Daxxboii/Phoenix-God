@@ -11,6 +11,9 @@ public class AlternateWorldGenerator : MonoBehaviour
     [HideInInspector]
     public List<bool> AllDirections = new List<bool>();
 
+    //[HideInInspector]
+    public List<GameObject> AllPlanes = new List<GameObject>();
+
  
 
     private int NumberOfPlanes;
@@ -252,6 +255,7 @@ public class AlternateWorldGenerator : MonoBehaviour
         }
         AllDirections.Clear();
         TurnPositions.Clear();
+        AllPlanes.Clear();
         //AllPlanes.Clear();
         NextSpawn = Vector3.zero;
         LastDir = false;
@@ -271,6 +275,8 @@ public class AlternateWorldGenerator : MonoBehaviour
         Pathrenderer.sharedMaterial = PathMaterialWhite;
         Pathrenderer.enabled = true;
 
+        AllPlanes.Add(plane);
+
      
         // AllPlanes.Add(plane);
     }
@@ -280,10 +286,16 @@ public class AlternateWorldGenerator : MonoBehaviour
     public void InstantiateCurve(List<GameObject> DirCurve, int index)
     {
         curve = DirCurve[index];
+        curve.SetActive(true);
+        curve.GetComponentInChildren<MeshRenderer>().enabled=true;
         curve.transform.position = NextSpawn;
         curve.transform.eulerAngles = Rotation;
         curve.transform.localScale = CurveScale;
         curve.transform.SetParent(Parent.transform);
+
+        
+
+        AllPlanes.Add(curve);
 
 
         
