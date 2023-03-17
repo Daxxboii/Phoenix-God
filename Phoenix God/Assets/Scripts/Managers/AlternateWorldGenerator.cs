@@ -14,7 +14,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     //[HideInInspector]
     public List<GameObject> AllPlanes = new List<GameObject>();
 
- 
+
 
     private int NumberOfPlanes;
 
@@ -32,24 +32,17 @@ public class AlternateWorldGenerator : MonoBehaviour
     public Vector3 Rotation;
 
     private GameObject Parent;
-
-   
-
     bool LastDir = true;
 
     bool Dir;
 
 
     public static AlternateWorldGenerator Singleton;
-
     public PoolManager _PoolManager;
-
     private int LPlaneIndex, RPlaneIndex;
     private int LCurveIndex, RCurveIndex;
-
-
-    GameObject plane,curve;
-    Vector3 PlanesScale,CurveScale;
+    GameObject plane, curve;
+    Vector3 PlanesScale, CurveScale;
     int StartSpawn;
 
     public Material PathMaterialWhite;
@@ -66,7 +59,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                  _PoolManager.LeftPlane.transform.localScale.z * PlaneScaleZ);
         CurveScale = new Vector3(1.5f * _PoolManager.CurveL.transform.localScale.x * PlaneScaleX, _PoolManager.CurveL.transform.localScale.y * PlaneScaleZ, _PoolManager.CurveL.transform.localScale.z * PlaneScaleZ);
 
-        NumberOfPlanes = (int)_PoolManager.PoolCount/2;
+        NumberOfPlanes = (int)_PoolManager.PoolCount / 2;
         NextSpawn = new Vector3(0f, Y_Offset, 0f);
         RPlaneIndex = 0;
         LPlaneIndex = 0;
@@ -77,10 +70,6 @@ public class AlternateWorldGenerator : MonoBehaviour
     void Spawn()
     {
         LastDir = false;
-
-        /*SpawnSingleWanted(false);
-        SpawnSingleWanted(true);
-        SpawnSingleWanted(true);*/
 
         for (int i = 0; i < NumberOfPlanes - 3; i++)
         {
@@ -107,7 +96,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                 if (LastDir == true)
                 {
                     NextSpawn.x += 3 * PlaneScaleX;
-                    InstantiateCurve(_PoolManager.RightCurves,RCurveIndex);
+                    InstantiateCurve(_PoolManager.RightCurves, RCurveIndex);
                     RCurveIndex++;
                     if (RCurveIndex >= _PoolManager.PoolCount)
                     {
@@ -117,7 +106,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                 else
                 {
                     NextSpawn.x -= 3 * PlaneScaleX;
-                    InstantiateCurve(_PoolManager.LeftCurves,LCurveIndex);
+                    InstantiateCurve(_PoolManager.LeftCurves, LCurveIndex);
                     LCurveIndex++;
                     if (LCurveIndex >= _PoolManager.PoolCount)
                     {
@@ -155,45 +144,6 @@ public class AlternateWorldGenerator : MonoBehaviour
         LastDir = Dir;
     }
 
-    /* public void SpawnSingleWanted(bool WantedDir)
-     {
-         NextSpawn.z += 3 * PlaneScaleZ;
-         Dir = WantedDir;
-
-         //if last turn is same
-         if (LastDir == Dir)
-         {
-             if (LastDir == false) NextSpawn.x -= 3 * PlaneScaleX;
-             else NextSpawn.x += 3 * PlaneScaleX;
-         }
-         //if last turn is not same
-         else
-         {
-             if (LastDir == true)
-             {
-                 NextSpawn.x += 3 * PlaneScaleX;
-                 InstantiateCurve(CurveR);
-             }
-             else
-             {
-                 NextSpawn.x -= 3 * PlaneScaleX;
-                 InstantiateCurve(CurveL);
-             }
-
-             NextSpawn.z += PlaneScaleZ;
-
-
-         }
-
-         //Spawning
-         if (Dir) InstantiatePlane(_PoolManager.RightPlanes, RPlaneIndex);
-         else InstantiatePlane(_PoolManager.LeftPlanes, LPlaneIndex);
-
-         TurnPositions.Add(NextSpawn);
-         AllDirections.Add(Dir);
-         LastDir = Dir;
-     }*/
-
 
     bool LorR()
     {
@@ -225,8 +175,6 @@ public class AlternateWorldGenerator : MonoBehaviour
         }
         else
         {
-
-
             switch (StartSpawn)
             {
                 case 0:
@@ -250,8 +198,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     {
         foreach (Transform t in Parent.transform)
         {
-          //  t.SetParent(_PoolManager.parent.transform);
-            t.position = new Vector3(0,0,-500);
+            t.position = new Vector3(0, 0, -500);
         }
         AllDirections.Clear();
         TurnPositions.Clear();
@@ -276,9 +223,6 @@ public class AlternateWorldGenerator : MonoBehaviour
         Pathrenderer.enabled = true;
 
         AllPlanes.Add(plane);
-
-     
-        // AllPlanes.Add(plane);
     }
 
 
@@ -287,18 +231,19 @@ public class AlternateWorldGenerator : MonoBehaviour
     {
         curve = DirCurve[index];
         curve.SetActive(true);
-        curve.GetComponentInChildren<MeshRenderer>().enabled=true;
+        curve.GetComponentInChildren<MeshRenderer>().enabled = true;
+        curve.GetComponent<MeshRenderer>().enabled = true;
         curve.transform.position = NextSpawn;
         curve.transform.eulerAngles = Rotation;
         curve.transform.localScale = CurveScale;
         curve.transform.SetParent(Parent.transform);
 
-        
+
 
         AllPlanes.Add(curve);
 
 
-        
+
     }
 
 }

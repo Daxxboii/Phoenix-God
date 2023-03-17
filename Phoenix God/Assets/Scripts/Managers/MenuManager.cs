@@ -200,12 +200,6 @@ public class MenuManager : MonoBehaviour
                 PauseMenuButton.SetActive(true);
             });
     }
-
-    /*  public void Quit()
-      {
-          Application.Quit();
-      }*/
-
     public void GameOver()
     {
         Player.Singleton.SetMeshVis(false);
@@ -225,21 +219,11 @@ public class MenuManager : MonoBehaviour
     public void ResetGame()
     {
         UpdateTitleColor();
-        //SwapSprites.instance._UpdateSprite();
         RetryButtonCount.color = ActivatedColor;
         RetryButtonCount.text = "1x";
         GameManager.GameManagerInstance.Score = 0;
         AlternateWorldGenerator.Singleton.ResetWorld();
         Player.Singleton.Start();
-      /*  Player
-            .Singleton
-            .transform
-            .DOMove(PlayerPos, 1f)
-            .OnComplete(() =>
-            {
-                Player.Singleton.SetMeshVis(true);
-            });*/
-
         DOVirtual
             .Float(100,
             0,
@@ -271,8 +255,8 @@ public class MenuManager : MonoBehaviour
         GameOverRetryPanelBlack.DOFade(0f, 1f);
         Player.Singleton.ResetSunInstantly();
         Player.ResetIndex--;
-        //RetryButtom.color = ActivatedColor;
 
+        Player.Singleton.SetMeshVis(false);
         PauseMenuPanel.SetActive(false);
         CountDownText.gameObject.SetActive(true);
         DOVirtual
@@ -285,13 +269,16 @@ public class MenuManager : MonoBehaviour
             })
             .OnComplete(() =>
             {
+                Player.Singleton.SetMeshVis(true);
                 CountDownText.transform.gameObject.SetActive(false);
                 GameManager.GameManagerInstance.isPlaying = true;
                 GamePlayPanel.SetActive(true);
 
-               // RetryButtonCount.color = DisabledColor;
+                // RetryButtonCount.color = DisabledColor;
                 RetryButtonCount.text = Player.ResetIndex.ToString() + "x";
-               // RetryButtom.color = DisabledColor;
+                // RetryButtom.color = DisabledColor;
+
+                Player.Singleton.resetDifficulty();
             });
     }
 
@@ -306,8 +293,6 @@ public class MenuManager : MonoBehaviour
 
     public void UpdateTitleColor()
     {
-      //  TitleTextBackGroundMaterial.SetColor("_UnderlayColor", TitleTextOutlines[TitleTextColorIndex]);
-
         TitleTextBackGround.outlineColor = TitleTextOutlines[TitleTextColorIndex];
 
         if (TitleTextColorIndex == TitleTextOutlines.Length - 1)

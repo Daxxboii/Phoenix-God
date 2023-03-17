@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
     private GameManager _GameManager;
 
     [SerializeField]
-    private SkinnedMeshRenderer Renderer;
+    private SkinnedMeshRenderer Renderer,TailRenderer;
 
     public GameObject Sun;
 
@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
 
     public Material
 
-            FadePath,Sky;
+            FadePath, Sky;
     // FullPath;
 
     private GameObject PreviousPlane;
@@ -120,30 +120,32 @@ public class Player : MonoBehaviour
 
     public void Start()
     {
-        ResetSun();
+       
+        resetDifficulty();
+         ResetSunInstantly();
         LRIndex = 0;
         PlaneIndex = 0;
-        Sun.transform.localPosition = new Vector3(0, -15f, 745.8f);
+       // Sun.transform.localPosition = new Vector3(0, -15f, 745.8f);
         RenderSettings.fogColor = yellow;
         NextMove = GeneratorScript.AllDirections[0];
         Player_Animator.SetBool("Gliding", false);
         Phoenix.transform.rotation = Quaternion.identity;
         ResetIndex = 1;
-        // IsSunButtonEnabled = false;
-        // UsedUpSunPower = false;
         IsSunPoweredUp = false;
         ResettingSun = false;
         PreviousPlane = null;
-        //  timer = 0;
         InputManager.CanReceiveInput = false;
-        // KillTween = false;
-
-        /* HourGlassInner.fillAmount = 1;
-         HourGlassInner.color = Color.white;*/
         UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
         UpdatedPlayerPos.y += FlyHeight;
         transform.position = UpdatedPlayerPos;
         SetMeshVis(true);
+
+    }
+
+    public void resetDifficulty()
+    {
+        SunSpeed = 0.5f;
+        SunUpFactor = 40;
 
     }
 
@@ -167,56 +169,54 @@ public class Player : MonoBehaviour
                 .Lerp(RenderSettings.fogColor,
                 yellow,
                 Time.deltaTime * SunSpeed * 50);
-
-       // SkyExposure = Mathf.Lerp(SkyExposure, 1, Time.deltaTime * SunSpeed * 50);
-       // RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
+        // SkyExposure = Mathf.Lerp(SkyExposure, 1, Time.deltaTime * SunSpeed * 50);
+        // RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
     }
 
     void FixedUpdate()
     {
         if (_GameManager.isPlaying)
         {
-            if (Tutorial.instance.TutorialOver)
+
+            if (!ResettingSun && !IsSunPoweredUp)
             {
-                if (!ResettingSun && !IsSunPoweredUp)
+                Sun.transform.localPosition =
+                    Vector3
+                        .Lerp(Sun.transform.localPosition,
+                        SunDownPosition,
+                        Time.deltaTime * SunSpeed);
+                RenderSettings.fogColor =
+                    Color
+                        .Lerp(RenderSettings.fogColor,
+                        Black,
+                        Time.deltaTime * SunSpeed);
+                // SkyExposure = Mathf.Lerp(SkyExposure, 0.5f, Time.deltaTime * SunSpeed * 50);
+                //  RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
+            }
+            else
+            {
+                ResetSun();
+            }
+            if (Sun.transform.localPosition.y <= SunDownPosition.y + 10)
+            {
+                if (ResetIndex == 1 || ResetIndex == 2)
                 {
-                    Sun.transform.localPosition =
-                        Vector3
-                            .Lerp(Sun.transform.localPosition,
-                            SunDownPosition,
-                            Time.deltaTime * SunSpeed);
-                    RenderSettings.fogColor =
-                        Color
-                            .Lerp(RenderSettings.fogColor,
-                            Black,
-                            Time.deltaTime * SunSpeed);
-                   // SkyExposure = Mathf.Lerp(SkyExposure, 0.5f, Time.deltaTime * SunSpeed * 50);
-                  //  RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
+                    ResetWorld.Invoke();
                 }
                 else
                 {
-                    ResetSun();
-                }
-                if (Sun.transform.localPosition.y <= SunDownPosition.y + 10)
-                {
-                    if (ResetIndex == 1 || ResetIndex == 2)
-                    {
-                        ResetWorld.Invoke();
-                    }
-                    else
-                    {
-                        _GameManager.GameOver();
-                    }
+                    _GameManager.GameOver();
                 }
             }
-            UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
-            UpdatedPlayerPos.y += FlyHeight;
-            transform.position =
-                Vector3
-                    .Lerp(transform.position,
-                    UpdatedPlayerPos,
-                    Time.deltaTime * ForwardPlayerSpeed);
-            }
+        }
+        UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
+        UpdatedPlayerPos.y += FlyHeight;
+        transform.position =
+            Vector3
+                .Lerp(transform.position,
+                UpdatedPlayerPos,
+                Time.deltaTime * ForwardPlayerSpeed);
+
     }
 
 
@@ -228,17 +228,12 @@ public class Player : MonoBehaviour
         {
             if (PerformedStep == NextMove)
             {
-               
-               // if(Physics.Raycast(transform.position,transform.TransformDirection(Vector3.down),out hit, 10f))
-                {
-                    
-                       // if (PreviousPlane != null) PreviousPlane.gameObject.GetComponentInChildren<MeshRenderer>().enabled = false;
-                      if(PreviousPlane!=null)  PreviousPlane.SetActive(true);
-                      
-                        StartCoroutine(Fading());
-                         
-                    
-                }
+                if (SunSpeed < 4f) SunSpeed += 0.5f;
+                if (SunUpFactor > 10) SunUpFactor -= 5f;
+
+                if (PreviousPlane != null) PreviousPlane.SetActive(true);
+                StartCoroutine(Fading());
+
                 TurnPlayer(PerformedStep);
                 Player_Animator.SetBool("Gliding", true);
                 GeneratorScript.SpawnSingle();
@@ -246,16 +241,13 @@ public class Player : MonoBehaviour
                 LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex];
 
-              
-
-                if (Tutorial.instance.TutorialOver) StartCoroutine(SunDown());
+                StartCoroutine(SunDown());
             }
             else
             {
                 if (ResetIndex == 1 || ResetIndex == 2)
                 {
                     ResetWorld.Invoke();
-                    //timer = 0;
                 }
                 else
                 {
@@ -284,6 +276,7 @@ public class Player : MonoBehaviour
     public void SetMeshVis(bool value)
     {
         Renderer.enabled = value;
+        TailRenderer.enabled = value;
     }
 
     IEnumerator SunDown()
@@ -296,20 +289,20 @@ public class Player : MonoBehaviour
     IEnumerator Fading()
     {
         yield return new WaitForSeconds(0.05f);
-        if(GeneratorScript.AllPlanes[PlaneIndex+1].tag=="Curve") 
+
+        if (GameManager.GameManagerInstance.isPlaying)
         {
-            GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().enabled=false;
+            if (GeneratorScript.AllPlanes[PlaneIndex + 1].tag == "Curve")
+            {
+                GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().enabled = false;
+                PlaneIndex++;
+            }
+
+            GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().sharedMaterial = FadePath;
+
+            PreviousPlane = GeneratorScript.AllPlanes[PlaneIndex];
             PlaneIndex++;
-           // Debug.Log("curve");
         }
-        
-         GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().sharedMaterial=FadePath;
-
-         PreviousPlane = GeneratorScript.AllPlanes[PlaneIndex];
-         PlaneIndex++;
-
-        //PreviousPlane.GetComponent<MeshRenderer>().sharedMaterial = FadePath;
-        
     }
 
     public void ResetSunInstantly()
