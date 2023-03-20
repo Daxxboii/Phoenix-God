@@ -185,7 +185,7 @@ public class MenuManager : MonoBehaviour
         CountDownText.gameObject.SetActive(true);
         DOVirtual
             .Float(4,
-            0,
+            1,
             3,
             x =>
             {
@@ -261,7 +261,7 @@ public class MenuManager : MonoBehaviour
         CountDownText.gameObject.SetActive(true);
         DOVirtual
             .Float(4,
-            0,
+            1,
             3,
             x =>
             {

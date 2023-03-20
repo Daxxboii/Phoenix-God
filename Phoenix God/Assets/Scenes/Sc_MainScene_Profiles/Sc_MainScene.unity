@@ -12861,7 +12861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1064689535
 Transform:
   m_ObjectHideFlags: 0
@@ -17745,7 +17745,7 @@ MonoBehaviour:
   Black: {r: 0, g: 0, b: 0, a: 1}
   yellow: {r: 1, g: 0.7301527, b: 0.3254717, a: 1}
   SunUpPosition: {x: 0, y: -38, z: 1071}
-  SunDownPosition: {x: 0, y: -190, z: 1071}
+  SunDownPosition: {x: 0, y: -285, z: 1071}
   PerformedStep: 0
   is_Gliding: 0
   Phoenix: {fileID: 1719607929}
@@ -19655,8 +19655,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4279378737
+  m_fontColor: {r: 0.19215688, g: 0.13725491, b: 0.07058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -28957,7 +28957,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7133390137152221312
 Transform:
   m_ObjectHideFlags: 0

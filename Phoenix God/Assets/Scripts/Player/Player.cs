@@ -173,7 +173,7 @@ public class Player : MonoBehaviour
         // RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (_GameManager.isPlaying)
         {

@@ -231,7 +231,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     {
         curve = DirCurve[index];
         curve.SetActive(true);
-        curve.GetComponentInChildren<MeshRenderer>().enabled = true;
+        //curve.GetComponentInChildren<MeshRenderer>().enabled = true;
         curve.GetComponent<MeshRenderer>().enabled = true;
         curve.transform.position = NextSpawn;
         curve.transform.eulerAngles = Rotation;
