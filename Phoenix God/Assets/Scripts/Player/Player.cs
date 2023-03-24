@@ -173,7 +173,7 @@ public class Player : MonoBehaviour
         // RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (_GameManager.isPlaying)
         {
@@ -231,7 +231,7 @@ public class Player : MonoBehaviour
                 if (SunSpeed < 4f) SunSpeed += 0.5f;
                 if (SunUpFactor > 10) SunUpFactor -= 5f;
 
-                if (PreviousPlane != null) PreviousPlane.SetActive(true);
+                //if (PreviousPlane != null) PreviousPlane.SetActive(true);
                 StartCoroutine(Fading());
 
                 TurnPlayer(PerformedStep);
@@ -300,7 +300,7 @@ public class Player : MonoBehaviour
 
             GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().sharedMaterial = FadePath;
 
-            PreviousPlane = GeneratorScript.AllPlanes[PlaneIndex];
+            //PreviousPlane = GeneratorScript.AllPlanes[PlaneIndex];
             PlaneIndex++;
         }
     }

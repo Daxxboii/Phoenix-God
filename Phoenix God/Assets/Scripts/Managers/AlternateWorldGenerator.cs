@@ -46,7 +46,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     int StartSpawn;
 
     public Material PathMaterialWhite;
-    MeshRenderer Pathrenderer;
+    MeshRenderer Pathrenderer,CurveRenderer;
 
 
 
@@ -187,8 +187,9 @@ public class AlternateWorldGenerator : MonoBehaviour
                 case 2:
                     StartSpawn++;
                     return true;
+
                 default:
-                    return true;
+                    return false;
             }
         }
     }
@@ -232,7 +233,10 @@ public class AlternateWorldGenerator : MonoBehaviour
         curve = DirCurve[index];
         curve.SetActive(true);
         //curve.GetComponentInChildren<MeshRenderer>().enabled = true;
-        curve.GetComponent<MeshRenderer>().enabled = true;
+        CurveRenderer = curve.GetComponent<MeshRenderer>();
+        CurveRenderer.enabled = true;
+        
+        CurveRenderer.sharedMaterial = PathMaterialWhite;
         curve.transform.position = NextSpawn;
         curve.transform.eulerAngles = Rotation;
         curve.transform.localScale = CurveScale;
