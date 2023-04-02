@@ -51,7 +51,8 @@ public class Player : MonoBehaviour
     public Vector3
 
             SunUpPosition,
-            SunDownPosition;
+            SunDownPosition,
+            SunStartPosition;
 
     private Vector3 ClampedSunPos;
 
@@ -307,9 +308,9 @@ public class Player : MonoBehaviour
 
     public void ResetSunInstantly()
     {
-        var UpPos = SunUpPosition;
-        UpPos.y -= 10f;
-        Sun.transform.DOLocalMove(UpPos, 1f);
+        
+       
+        Sun.transform.DOLocalMove(SunStartPosition, 1f);
 
         Gradient gradient;
         GradientColorKey[] colorKey;
