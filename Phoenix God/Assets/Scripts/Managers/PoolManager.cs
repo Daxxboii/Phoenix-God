@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PoolManager : MonoBehaviour
 {
-    [SerializeField, Range(10, 100)] public int PoolCount;
+    [SerializeField, Range(3, 100)] public int PoolCount;
 
     [HideInInspector]public List<GameObject> LeftCurves, RightCurves, LeftPlanes, RightPlanes = new List<GameObject>();
 

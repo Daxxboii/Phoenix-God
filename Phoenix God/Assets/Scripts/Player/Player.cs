@@ -13,10 +13,7 @@ public class Player : MonoBehaviour
     public delegate void ChangedPlanes();
 
     public static ChangedPlanes PlanesHaveChanged;
-
     public static ChangedPlanes ResetWorld;
-
-
     #endregion
 
 
@@ -28,10 +25,10 @@ public class Player : MonoBehaviour
     public float FlyHeight;
 
     [Range(0f, 100f)]
-    public float SunUpFactor;
+    private float SunUpFactor;
 
     [Range(0f, 5f)]
-    public float SunSpeed;
+    private float SunDownFactor;
 
     // float HourglassProgress;
 
@@ -106,24 +103,23 @@ public class Player : MonoBehaviour
     public Material
 
             FadePath, Sky;
-    // FullPath;
+    
 
     private GameObject PreviousPlane;
 
     private float SkyExposure;
 
-    RaycastHit hit;
+    private RaycastHit hit;
 
     void Awake()
     {
         if (Singleton == null) Singleton = this;
     }
 
-    public void Start()
+    public void Start() 
     {
-       
         resetDifficulty();
-         ResetSunInstantly();
+        ResetSunInstantly();
         LRIndex = 0;
         PlaneIndex = 0;
        // Sun.transform.localPosition = new Vector3(0, -15f, 745.8f);
@@ -145,7 +141,7 @@ public class Player : MonoBehaviour
 
     public void resetDifficulty()
     {
-        SunSpeed = 0.5f;
+        SunDownFactor = 0.1f;
         SunUpFactor = 40;
 
     }
@@ -158,7 +154,7 @@ public class Player : MonoBehaviour
                 new Vector3(Sun.transform.localPosition.x,
                     Sun.transform.localPosition.y + SunUpFactor,
                     Sun.transform.localPosition.z),
-                Time.deltaTime * SunSpeed * 5);
+                Time.deltaTime * SunDownFactor * 5);
 
         ClampedSunPos = Sun.transform.localPosition;
         ClampedSunPos.y =
@@ -169,8 +165,8 @@ public class Player : MonoBehaviour
             Color
                 .Lerp(RenderSettings.fogColor,
                 yellow,
-                Time.deltaTime * SunSpeed * 50);
-        // SkyExposure = Mathf.Lerp(SkyExposure, 1, Time.deltaTime * SunSpeed * 50);
+                Time.deltaTime * SunDownFactor * 50);
+        // SkyExposure = Mathf.Lerp(SkyExposure, 1, Time.deltaTime * SunDownFactor * 50);
         // RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
     }
 
@@ -185,13 +181,13 @@ public class Player : MonoBehaviour
                     Vector3
                         .Lerp(Sun.transform.localPosition,
                         SunDownPosition,
-                        Time.deltaTime * SunSpeed);
+                        Time.deltaTime * SunDownFactor);
                 RenderSettings.fogColor =
                     Color
                         .Lerp(RenderSettings.fogColor,
                         Black,
-                        Time.deltaTime * SunSpeed);
-                // SkyExposure = Mathf.Lerp(SkyExposure, 0.5f, Time.deltaTime * SunSpeed * 50);
+                        Time.deltaTime * SunDownFactor);
+                // SkyExposure = Mathf.Lerp(SkyExposure, 0.5f, Time.deltaTime * SunDownFactor * 50);
                 //  RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
             }
             else
@@ -229,8 +225,8 @@ public class Player : MonoBehaviour
         {
             if (PerformedStep == NextMove)
             {
-                if (SunSpeed < 4f) SunSpeed += 0.5f;
-                if (SunUpFactor > 10) SunUpFactor -= 5f;
+                if (SunDownFactor < 1.5f) SunDownFactor += 0.5f;
+                if (SunUpFactor > 20) SunUpFactor -= 5f;
 
                 //if (PreviousPlane != null) PreviousPlane.SetActive(true);
                 StartCoroutine(Fading());
