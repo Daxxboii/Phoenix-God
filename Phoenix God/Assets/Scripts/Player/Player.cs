@@ -94,7 +94,8 @@ public class Player : MonoBehaviour
     private GameManager _GameManager;
 
     [SerializeField]
-    private SkinnedMeshRenderer Renderer,TailRenderer;
+    private SkinnedMeshRenderer Renderer;
+    [SerializeField]private MeshRenderer TailRenderer;
 
     public GameObject Sun;
 
@@ -296,6 +297,10 @@ public class Player : MonoBehaviour
             }
 
             GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().sharedMaterial = FadePath;
+            GeneratorScript.AllPlanes[PlaneIndex-1].GetComponentInChildren<MeshRenderer>().enabled = false;
+            if(GeneratorScript.AllPlanes.Count>4)GeneratorScript.AllPlanes[PlaneIndex-2].GetComponentInChildren<MeshRenderer>().enabled = false;
+           // GeneratorScript.AllPlanes[PlaneIndex-2].GetComponentInChildren<MeshRenderer>().enabled = false;
+
 
             //PreviousPlane = GeneratorScript.AllPlanes[PlaneIndex];
             PlaneIndex++;
@@ -304,8 +309,6 @@ public class Player : MonoBehaviour
 
     public void ResetSunInstantly()
     {
-        
-       
         Sun.transform.DOLocalMove(SunStartPosition, 1f);
 
         Gradient gradient;
