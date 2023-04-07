@@ -233,9 +233,10 @@ public class Player : MonoBehaviour
                 StartCoroutine(Fading());
 
                 TurnPlayer(PerformedStep);
-                Player_Animator.SetBool("Gliding", true);
-                GeneratorScript.SpawnSingle();
+
                 PlanesHaveChanged.Invoke();
+                Player_Animator.SetBool("Gliding", true);
+                
                 LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex];
 
@@ -299,6 +300,7 @@ public class Player : MonoBehaviour
             GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().sharedMaterial = FadePath;
             GeneratorScript.AllPlanes[PlaneIndex-1].GetComponentInChildren<MeshRenderer>().enabled = false;
             if(GeneratorScript.AllPlanes.Count>4)GeneratorScript.AllPlanes[PlaneIndex-2].GetComponentInChildren<MeshRenderer>().enabled = false;
+            GeneratorScript.SpawnSingle();
            // GeneratorScript.AllPlanes[PlaneIndex-2].GetComponentInChildren<MeshRenderer>().enabled = false;
 
 
