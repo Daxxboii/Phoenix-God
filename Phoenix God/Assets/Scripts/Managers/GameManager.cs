@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private string MaxScoreSaveName;
 
+    [SerializeField]public ParticleSystem[] winds;
+
     public void Awake()
     {
         if (GameManagerInstance == null) GameManagerInstance = this; //Singleton
@@ -29,6 +31,9 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey(MaxScoreSaveName))
             MaxScore = (int)PlayerPrefs.GetInt(MaxScoreSaveName);
         Player.PlanesHaveChanged += UpdateScore;
+        StartCoroutine("wind");
+
+
     }
 
     public void GameOver()
@@ -43,5 +48,12 @@ public class GameManager : MonoBehaviour
     {
         Score++;
         if (Score > MaxScore) MaxScore = Score;
+    }
+
+    IEnumerator wind(){
+        yield return new WaitForSeconds(2);
+        foreach(ParticleSystem system in winds){
+            system.Pause();
+        }
     }
 }

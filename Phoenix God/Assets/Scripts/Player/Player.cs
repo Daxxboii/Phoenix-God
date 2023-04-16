@@ -20,15 +20,19 @@ public class Player : MonoBehaviour
     [Header("Float Values")]
     [SerializeField, Range(0, 100)]
     public float ForwardPlayerSpeed;
-
     [Range(0f, 5f)]
     public float FlyHeight;
 
+    [SerializeField,Range(0,100),Header("Sun Movement")]
+    private float SunUpForceMax,SunDownSpeedMax,SunUpForceInitial,SunDownSpeedInitial;
+
+    
+
     [Range(0f, 100f)]
-    private float SunUpFactor;
+    private float SunUpForce;
 
     [Range(0f, 5f)]
-    private float SunDownFactor;
+    private float SunDownSpeed;
 
     // float HourglassProgress;
 
@@ -81,6 +85,7 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     public GameObject Phoenix;
+    public GameObject StartupPlane;
 
     /* public Image
 
@@ -112,6 +117,8 @@ public class Player : MonoBehaviour
 
     private RaycastHit hit;
 
+    private Vector3 Sunpos;
+
     void Awake()
     {
         if (Singleton == null) Singleton = this;
@@ -137,25 +144,25 @@ public class Player : MonoBehaviour
         UpdatedPlayerPos.y += FlyHeight;
         transform.position = UpdatedPlayerPos;
         SetMeshVis(true);
+        StartupPlane.SetActive(true);
 
     }
 
     public void resetDifficulty()
     {
-        SunDownFactor = 0.1f;
-        SunUpFactor = 40;
-
+        SunDownSpeed = SunDownSpeedInitial;
+        SunUpForce = SunUpForceInitial;
     }
 
     void ResetSun()
     {
+        Sunpos = Sun.transform.localPosition;
+        Sunpos.y += SunUpForce;
         Sun.transform.localPosition =
             Vector3
                 .Lerp(Sun.transform.localPosition,
-                new Vector3(Sun.transform.localPosition.x,
-                    Sun.transform.localPosition.y + SunUpFactor,
-                    Sun.transform.localPosition.z),
-                Time.deltaTime * SunDownFactor * 5);
+                Sunpos,
+                Time.deltaTime * 5);
 
         ClampedSunPos = Sun.transform.localPosition;
         ClampedSunPos.y =
@@ -166,8 +173,8 @@ public class Player : MonoBehaviour
             Color
                 .Lerp(RenderSettings.fogColor,
                 yellow,
-                Time.deltaTime * SunDownFactor * 50);
-        // SkyExposure = Mathf.Lerp(SkyExposure, 1, Time.deltaTime * SunDownFactor * 50);
+                Time.deltaTime * 50);
+        // SkyExposure = Mathf.Lerp(SkyExposure, 1, Time.deltaTime * SunDownSpeed * 50);
         // RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
     }
 
@@ -182,13 +189,13 @@ public class Player : MonoBehaviour
                     Vector3
                         .Lerp(Sun.transform.localPosition,
                         SunDownPosition,
-                        Time.deltaTime * SunDownFactor);
+                        Time.deltaTime * SunDownSpeed);
                 RenderSettings.fogColor =
                     Color
                         .Lerp(RenderSettings.fogColor,
                         Black,
-                        Time.deltaTime * SunDownFactor);
-                // SkyExposure = Mathf.Lerp(SkyExposure, 0.5f, Time.deltaTime * SunDownFactor * 50);
+                        Time.deltaTime * SunDownSpeed);
+                // SkyExposure = Mathf.Lerp(SkyExposure, 0.5f, Time.deltaTime * SunDownSpeed * 50);
                 //  RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
             }
             else
@@ -222,12 +229,13 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
+        
         if (_GameManager.isPlaying)
         {
             if (PerformedStep == NextMove)
             {
-                if (SunDownFactor < 1.5f) SunDownFactor += 0.5f;
-                if (SunUpFactor > 20) SunUpFactor -= 5f;
+                if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.1f;
+                if (SunUpForce > SunUpForceMax) SunUpForce -= 10f;
 
                 //if (PreviousPlane != null) PreviousPlane.SetActive(true);
                 StartCoroutine(Fading());
@@ -254,6 +262,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
+       // Debug.Log("DownSpeed: "+SunDownSpeed+"\n Up Factor: "+SunUpForce);
     }
 
     public void TurnPlayer(bool value)
@@ -291,6 +300,7 @@ public class Player : MonoBehaviour
 
         if (GameManager.GameManagerInstance.isPlaying)
         {
+            if(PlaneIndex==0)StartupPlane.SetActive(false);
             if (GeneratorScript.AllPlanes[PlaneIndex + 1].tag == "Curve")
             {
                 GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().enabled = false;
@@ -300,6 +310,7 @@ public class Player : MonoBehaviour
             GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().sharedMaterial = FadePath;
             GeneratorScript.AllPlanes[PlaneIndex-1].GetComponentInChildren<MeshRenderer>().enabled = false;
             if(GeneratorScript.AllPlanes.Count>4)GeneratorScript.AllPlanes[PlaneIndex-2].GetComponentInChildren<MeshRenderer>().enabled = false;
+            else GeneratorScript.AllPlanes[PlaneIndex-1].GetComponentInChildren<MeshRenderer>().enabled = false;
             GeneratorScript.SpawnSingle();
            // GeneratorScript.AllPlanes[PlaneIndex-2].GetComponentInChildren<MeshRenderer>().enabled = false;
 
