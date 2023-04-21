@@ -15,10 +15,10 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 1, g: 0.7301527, b: 0.3254717, a: 1}
+  m_FogColor: {r: 1, g: 0.7254021, b: 0.32549024, a: 1}
   m_FogMode: 1
   m_FogDensity: 0.01
-  m_LinearFogStart: -19
+  m_LinearFogStart: -48.21
   m_LinearFogEnd: 1003.9
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
@@ -391,8 +391,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 121797170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.4, y: -48.5, z: 1170.5}
-  m_LocalScale: {x: 111.73773, y: 499.99655, z: 139.5527}
+  m_LocalPosition: {x: 230.503, y: -52, z: 1170.5}
+  m_LocalScale: {x: 288.34863, y: 499.99655, z: 139.5527}
   m_Children: []
   m_Father: {fileID: 1056687362}
   m_RootOrder: 1
@@ -5674,8 +5674,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.12793812, y: -0.001555584, z: -0.0002006678, w: 0.99178094}
-  m_LocalPosition: {x: 0, y: 10.939999, z: -71.73}
+  m_LocalRotation: {x: -0.1273366, y: -0.0015556992, z: -0.00019972352, w: 0.99185836}
+  m_LocalPosition: {x: 0, y: 11.029999, z: -71.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 394095826}
@@ -5861,8 +5861,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333120469}
-  m_LocalRotation: {x: -0.12793812, y: -0.001555584, z: -0.0002006678, w: 0.99178094}
-  m_LocalPosition: {x: 0, y: 10.939999, z: -71.73}
+  m_LocalRotation: {x: -0.1273366, y: -0.0015556992, z: -0.00019972352, w: 0.99185836}
+  m_LocalPosition: {x: 0, y: 11.029999, z: -71.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 611505652}
@@ -11489,7 +11489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 13.439999, z: -71.73}
+  m_FollowOffset: {x: 0, y: 13.529999, z: -71.73}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -12517,7 +12517,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 21ac7ee718ddf2e4e811f5f8472c8cce, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -84
+      value: -78
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 21ac7ee718ddf2e4e811f5f8472c8cce, type: 3}
       propertyPath: m_LocalPosition.z
@@ -24048,12 +24048,12 @@ PrefabInstance:
     - target: {fileID: 3307843969457394268, guid: e03249cddbcb8594e914fbf4059295a5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -74
+      value: -34
       objectReference: {fileID: 0}
     - target: {fileID: 3307843969457394268, guid: e03249cddbcb8594e914fbf4059295a5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1062.6
+      value: 1003
       objectReference: {fileID: 0}
     - target: {fileID: 3307843969457394268, guid: e03249cddbcb8594e914fbf4059295a5,
         type: 3}
@@ -24098,17 +24098,17 @@ PrefabInstance:
     - target: {fileID: 3307843969457394268, guid: e03249cddbcb8594e914fbf4059295a5,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 204.42722
+      value: 161.3135
       objectReference: {fileID: 0}
     - target: {fileID: 3307843969457394268, guid: e03249cddbcb8594e914fbf4059295a5,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 204.42722
+      value: 161.3135
       objectReference: {fileID: 0}
     - target: {fileID: 3307843969457394268, guid: e03249cddbcb8594e914fbf4059295a5,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 204.4272
+      value: 161.3135
       objectReference: {fileID: 0}
     - target: {fileID: 3307843969457394270, guid: e03249cddbcb8594e914fbf4059295a5,
         type: 3}
