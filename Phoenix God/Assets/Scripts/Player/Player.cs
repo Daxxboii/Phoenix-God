@@ -234,7 +234,7 @@ public class Player : MonoBehaviour
         {
             if (PerformedStep == NextMove)
             {
-                if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.1f;
+                if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.3f;
                 if (SunUpForce > SunUpForceMax) SunUpForce -= 10f;
 
                 //if (PreviousPlane != null) PreviousPlane.SetActive(true);
