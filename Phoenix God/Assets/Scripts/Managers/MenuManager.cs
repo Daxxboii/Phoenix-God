@@ -11,6 +11,9 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class MenuManager : MonoBehaviour
 {
+    public delegate void GameState();
+
+    public static GameState GameOverTrigger;
     // public Color DefaultColor;
     [Header("Menu Panels")]
     [SerializeField]
@@ -202,6 +205,7 @@ public class MenuManager : MonoBehaviour
     }
     public void GameOver()
     {
+        GameOverTrigger.Invoke();
         Player.Singleton.SetMeshVis(false);
         GamePlayPanel.SetActive(false);
         GameOverBlack

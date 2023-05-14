@@ -48,6 +48,8 @@ public class AlternateWorldGenerator : MonoBehaviour
     public Material PathMaterialWhite;
     MeshRenderer Pathrenderer,CurveRenderer;
 
+    public GameObject Clouds;
+
 
 
     void Start()

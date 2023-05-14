@@ -2,20 +2,26 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ma_Sun
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _GLOSSYREFLECTIONS_OFF
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords:
+  - _EMISSION
+  - _GLOSSYREFLECTIONS_OFF
+  m_InvalidKeywords: []
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -75,6 +81,7 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - Vector1_5B594B8: 228.74
     - Vector1_EE5B7088: 679.9
@@ -116,11 +123,12 @@ Material:
     - Color_1C34A7E1: {r: 0.9976505, g: 1, b: 0, a: 0}
     - Color_2AB28301: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.9056604, g: 0.8707617, b: 0.23495908, a: 1}
-    - _EmissionColor: {r: 1, g: 0.9686617, b: 0.6367924, a: 1}
+    - _Color: {r: 0.90588236, g: 0.69841045, b: 0.23529409, a: 1}
+    - _EmissionColor: {r: 1, g: 0.8702851, b: 0.63529414, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SunColor1: {r: 1, g: 0, b: 0, a: 1}
     - _SunColor2: {r: 1, g: 0.8798679, b: 0, a: 1}
+  m_BuildTextureStacks: []
 --- !u!114 &3895545208483326936
 MonoBehaviour:
   m_ObjectHideFlags: 11
