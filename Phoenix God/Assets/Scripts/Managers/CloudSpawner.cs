@@ -18,7 +18,7 @@ public class CloudSpawner : MonoBehaviour
         indexer++;
         if (indexer % 3 == 0)
         {
-            var item = Instantiate(AlternateWorldGenerator.Singleton.Clouds, transform.position, Quaternion.identity);
+            var item = Instantiate(AlternateWorldGenerator.Singleton.Clouds, transform.position, transform.rotation);
             list.Add(item);
             if (list.Count > 20)
             {
