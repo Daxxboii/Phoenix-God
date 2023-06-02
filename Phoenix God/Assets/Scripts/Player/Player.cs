@@ -85,7 +85,6 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     public GameObject Phoenix;
-    public GameObject StartupPlane;
 
     /* public Image
 
@@ -144,7 +143,6 @@ public class Player : MonoBehaviour
         UpdatedPlayerPos.y += FlyHeight;
         transform.position = UpdatedPlayerPos;
         SetMeshVis(true);
-        StartupPlane.SetActive(true);
 
     }
 
@@ -300,7 +298,7 @@ public class Player : MonoBehaviour
 
         if (GameManager.GameManagerInstance.isPlaying)
         {
-            if(PlaneIndex==0)StartupPlane.SetActive(false);
+            //if(PlaneIndex==0)StartupPlane.SetActive(false);
             if (GeneratorScript.AllPlanes[PlaneIndex + 1].tag == "Curve")
             {
                 GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().enabled = false;
