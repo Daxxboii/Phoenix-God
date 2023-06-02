@@ -57,7 +57,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                  _PoolManager.LeftPlane.transform.localScale.z * PlaneScaleZ);
 
         CurveScale = new Vector3(1.5f * _PoolManager.CurveL.transform.localScale.x * PlaneScaleX,
-            _PoolManager.CurveL.transform.localScale.y * PlaneScaleZ,
+            _PoolManager.CurveL.transform.localScale.y * PlaneScaleZ* CurveZDistance,
             _PoolManager.CurveL.transform.localScale.z * PlaneScaleZ);
 
         NumberOfPlanes = (int)_PoolManager.PoolCount / 2;

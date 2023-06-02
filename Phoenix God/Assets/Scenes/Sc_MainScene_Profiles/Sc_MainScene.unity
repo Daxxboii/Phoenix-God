@@ -6660,7 +6660,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_LocalRotation: {x: -0.07402818, y: 1e-45, z: 0, w: 0.99725616}
+  m_LocalRotation: {x: -0.07402818, y: -1e-45, z: 0, w: 0.99725616}
   m_LocalPosition: {x: 0, y: 47.5, z: -54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6879,7 +6879,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 1946806433}
-  m_Follow: {fileID: 740367868}
+  m_Follow: {fileID: 501549338}
   m_Lens:
     FieldOfView: 91.97
     OrthographicSize: 483.3
@@ -6906,7 +6906,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 333120469}
-  m_LocalRotation: {x: -0.07402818, y: 1e-45, z: -0, w: 0.99725616}
+  m_LocalRotation: {x: -0.07402818, y: -1e-45, z: -0, w: 0.99725616}
   m_LocalPosition: {x: 171.30984, y: 35.580963, z: -3695.854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -7707,7 +7707,7 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 0
+  m_HDR: 1
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 1
   m_ForceIntoRT: 1
@@ -8087,6 +8087,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472285854}
   m_CullTransparentMesh: 0
+--- !u!1 &501549337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 501549338}
+  m_Layer: 0
+  m_Name: Follow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &501549338
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 501549337}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 740367868}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &502828965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14425,6 +14456,7 @@ Transform:
   - {fileID: 1839157352}
   - {fileID: 961807775}
   - {fileID: 1946806433}
+  - {fileID: 501549338}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21081,7 +21113,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 1946806433}
-  m_Follow: {fileID: 740367868}
+  m_Follow: {fileID: 501549338}
   m_Lens:
     FieldOfView: 91.97
     OrthographicSize: 483.3
@@ -21108,7 +21140,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168416884}
-  m_LocalRotation: {x: -0.07402818, y: 1e-45, z: -0, w: 0.99725616}
+  m_LocalRotation: {x: -0.07402818, y: -1e-45, z: -0, w: 0.99725616}
   m_LocalPosition: {x: 171.30984, y: 35.580963, z: -3695.854}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -25054,7 +25086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.38431373}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -29719,11 +29751,11 @@ MonoBehaviour:
   AllDirections: 
   AllPlanes: []
   Y_Offset: -4.6
-  PlaneScaleX: 25
-  PlaneScaleZ: 60
-  PlaneZDistance: 3
+  PlaneScaleX: 20.7
+  PlaneScaleZ: 15
+  PlaneZDistance: 9
   PlaneXDistance: 3
-  CurveZDistance: 1
+  CurveZDistance: 3
   PlaneRotation: {x: -90, y: 0, z: 180}
   _PoolManager: {fileID: 623604878}
   PathMaterialWhite: {fileID: 2100000, guid: 75f4e85908352394fb73ef25201c494d, type: 2}
