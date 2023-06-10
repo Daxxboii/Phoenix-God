@@ -48,6 +48,10 @@ public class Player : MonoBehaviour
 
     public Color yellow;
 
+    private Color stripcolor;
+
+    
+
     [Header("Vectors")]
     public Vector3
 
@@ -117,6 +121,11 @@ public class Player : MonoBehaviour
     private RaycastHit hit;
 
     private Vector3 Sunpos;
+    public Material Plane;
+  
+    Vector2 Offset;
+
+    public EmissionTester strip;
 
     void Awake()
     {
@@ -143,6 +152,7 @@ public class Player : MonoBehaviour
         UpdatedPlayerPos.y += FlyHeight;
         transform.position = UpdatedPlayerPos;
         SetMeshVis(true);
+       
 
     }
 
@@ -166,21 +176,13 @@ public class Player : MonoBehaviour
         ClampedSunPos.y =
             Mathf.Clamp(ClampedSunPos.y, SunDownPosition.y, SunUpPosition.y);
         Sun.transform.localPosition = ClampedSunPos;
-
-        RenderSettings.fogColor =
-            Color
-                .Lerp(RenderSettings.fogColor,
-                yellow,
-                Time.deltaTime * 50);
-        // SkyExposure = Mathf.Lerp(SkyExposure, 1, Time.deltaTime * SunDownSpeed * 50);
-        // RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
     }
 
     void FixedUpdate()
     {
         if (_GameManager.isPlaying)
         {
-
+            strip.emission = Remap(Sun.transform.localPosition.y, SunDownPosition.y, SunUpPosition.y, 0, 1);
             if (!ResettingSun && !IsSunPoweredUp)
             {
                 Sun.transform.localPosition =
@@ -188,13 +190,6 @@ public class Player : MonoBehaviour
                         .Lerp(Sun.transform.localPosition,
                         SunDownPosition,
                         Time.deltaTime * SunDownSpeed);
-                RenderSettings.fogColor =
-                    Color
-                        .Lerp(RenderSettings.fogColor,
-                        Black,
-                        Time.deltaTime * SunDownSpeed);
-                // SkyExposure = Mathf.Lerp(SkyExposure, 0.5f, Time.deltaTime * SunDownSpeed * 50);
-                //  RenderSettings.skybox.SetFloat("_Exposure", SkyExposure);
             }
             else
             {
@@ -227,9 +222,10 @@ public class Player : MonoBehaviour
 
     public void Move()
     {
-        
         if (_GameManager.isPlaying)
         {
+            ChangePlaneStars();
+
             if (PerformedStep == NextMove)
             {
                 if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.3f;
@@ -318,37 +314,51 @@ public class Player : MonoBehaviour
     public void ResetSunInstantly()
     {
         Sun.transform.DOLocalMove(SunStartPosition, 1f);
+      strip.emission = 1;
+       // stripMat.SetColor("_EmissionColor", stripcolor);
 
-        Gradient gradient;
-        GradientColorKey[] colorKey;
-        GradientAlphaKey[] alphaKey;
+        /*   Gradient gradient;
+           GradientColorKey[] colorKey;
+           GradientAlphaKey[] alphaKey;
 
-        gradient = new Gradient();
+           gradient = new Gradient();
 
-        // Populate the color keys at the relative time 0 and 1 (0 and 100%)
-        colorKey = new GradientColorKey[2];
-        colorKey[0].color = yellow;
-        colorKey[0].time = 0.0f;
-        colorKey[1].color = Color.black;
-        colorKey[1].time = 1.0f;
+           // Populate the color keys at the relative time 0 and 1 (0 and 100%)
+           colorKey = new GradientColorKey[2];
+           colorKey[0].color = yellow;
+           colorKey[0].time = 0.0f;
+           colorKey[1].color = Color.black;
+           colorKey[1].time = 1.0f;
 
-        // Populate the alpha  keys at relative time 0 and 1  (0 and 100%)
-        alphaKey = new GradientAlphaKey[2];
-        alphaKey[0].alpha = 1.0f;
-        alphaKey[0].time = 0.0f;
-        alphaKey[1].alpha = 1.0f;
-        alphaKey[1].time = 1.0f;
+           // Populate the alpha  keys at relative time 0 and 1  (0 and 100%)
+           alphaKey = new GradientAlphaKey[2];
+           alphaKey[0].alpha = 1.0f;
+           alphaKey[0].time = 0.0f;
+           alphaKey[1].alpha = 1.0f;
+           alphaKey[1].time = 1.0f;
 
-        gradient.SetKeys(colorKey, alphaKey);
+           gradient.SetKeys(colorKey, alphaKey);
 
-        DOVirtual
-            .Float(1,
-            0,
-            2,
-            v =>
-            {
-                RenderSettings.fogColor = gradient.Evaluate(v);
-            });
+           DOVirtual
+               .Float(1,
+               0,
+               2,
+               v =>
+               {
+                   RenderSettings.fogColor = gradient.Evaluate(v);
+               });*/
+    }
+    
+
+    void ChangePlaneStars()
+    {
+        Offset += new Vector2(Random.Range(0.1f, 0.3f), Random.Range(0.1f, 0.3f));
+        Plane.SetTextureOffset("_MainTex", Offset);
+    }
+
+    public float Remap(float value, float from1, float to1, float from2, float to2)
+    {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
     }
 
 }

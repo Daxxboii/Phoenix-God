@@ -11,9 +11,6 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class MenuManager : MonoBehaviour
 {
-    
-
-    
     // public Color DefaultColor;
     [Header("Menu Panels")]
     [SerializeField]
@@ -108,7 +105,7 @@ public class MenuManager : MonoBehaviour
         DOVirtual
             .Float(100f,
             0f,
-            3f,
+            0f,
             v =>
             {
                 source.Strength = v;
@@ -249,7 +246,6 @@ public class MenuManager : MonoBehaviour
     {
         GameManager.GameManagerInstance.isPlaying = false;
         RetryButtonCount.color = ActivatedColor;
-
         Retry();
     }
 

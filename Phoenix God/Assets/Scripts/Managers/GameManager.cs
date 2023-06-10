@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.HasKey(MaxScoreSaveName))
             MaxScore = (int)PlayerPrefs.GetInt(MaxScoreSaveName);
         Player.PlanesHaveChanged += UpdateScore;
-        StartCoroutine("wind");
+       // StartCoroutine("wind");
 
 
     }
