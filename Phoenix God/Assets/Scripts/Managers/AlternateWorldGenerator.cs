@@ -26,6 +26,8 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     public Transform Camera;
     public LineRenderer Planes;
+
+    public Player player;
     void Start()
     {
         if (Singleton == null) Singleton = this;
@@ -58,30 +60,30 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     public void SpawnSingle()
     {
-        Dir = LorR();
+      
+            Dir = LorR();
 
-        if (Dir)
-        {
-            NextSpawn = new Vector3(NextSpawn.x + XDistance, NextSpawn.y ,NextSpawn.z+YDistance);
-        }
-        else
-        {
-            NextSpawn = new Vector3(NextSpawn.x - XDistance, NextSpawn.y ,NextSpawn.z+YDistance);
-        }
-
-      //  Debug.Log(NextSpawn);
-
-      if(LastDir)  Camera.transform.DOMove(new Vector3(Camera.transform.position.x+XDistance, Camera.transform.position.y, Camera.transform.position.z+YDistance),0.1f);
-        else Camera.transform.DOMove(new Vector3(Camera.transform.position.x-XDistance, Camera.transform.position.y, Camera.transform.position.z + YDistance), 0.1f);
+            if (Dir)
+            {
+                NextSpawn = new Vector3(NextSpawn.x + XDistance, NextSpawn.y, NextSpawn.z + YDistance);
+            }
+            else
+            {
+                NextSpawn = new Vector3(NextSpawn.x - XDistance, NextSpawn.y, NextSpawn.z + YDistance);
+            }
 
 
-        TurnPositions.Add(NextSpawn);
-        AllDirections.Add(Dir);
 
-        Planes.positionCount = TurnPositions.Count;
-        Planes.SetPosition(TurnPositions.Count-1,NextSpawn);
 
-        LastDir = Dir;
+            TurnPositions.Add(NextSpawn);
+            AllDirections.Add(Dir);
+
+            Planes.positionCount = TurnPositions.Count;
+            Planes.SetPosition(TurnPositions.Count - 1, NextSpawn);
+
+            LastDir = Dir;
+        
+
     }
 
 
@@ -97,21 +99,17 @@ public class AlternateWorldGenerator : MonoBehaviour
         //Debug.Log(randomNumber);
         if (AllDirections.Count > 4)
         {
-            if (
-                (
-                AllDirections[AllDirections.Count - 1] ==
-                AllDirections[AllDirections.Count - 2]
-                ) &&
-                (AllDirections[AllDirections.Count - 2] == Decide) &&
-                (AllDirections[AllDirections.Count - 3] == Decide)
-            )
-            {
-                return LorR();
-            }
-            else
+            bool topValue = AllDirections[AllDirections.Count - 1];
+            bool secondValue = AllDirections[AllDirections.Count - 2];
+            if ((topValue!=secondValue))
             {
                 return Decide;
             }
+            else 
+            {
+                return !topValue;
+            }
+            
         }
         else
         {
