@@ -138,9 +138,7 @@ public class Player : MonoBehaviour
         ResetSunInstantly();
         LRIndex = 0;
         PlaneIndex = 0;
-       // Sun.transform.localPosition = new Vector3(0, -15f, 745.8f);
         RenderSettings.fogColor = yellow;
-        NextMove = GeneratorScript.AllDirections[0];
         Player_Animator.SetBool("Gliding", false);
         Phoenix.transform.rotation = Quaternion.identity;
         ResetIndex = 1;
@@ -148,9 +146,7 @@ public class Player : MonoBehaviour
         ResettingSun = false;
         PreviousPlane = null;
         InputManager.CanReceiveInput = false;
-        UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
         UpdatedPlayerPos.y += FlyHeight;
-        transform.position = UpdatedPlayerPos;
         SetMeshVis(true);
        
 
@@ -209,12 +205,13 @@ public class Player : MonoBehaviour
         }
         UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
         UpdatedPlayerPos.y += FlyHeight;
-        transform.position =
+        Phoenix.transform.position =
             Vector3
-                .Lerp(transform.position,
+                .Lerp(Phoenix.transform.position,
                 UpdatedPlayerPos,
                 Time.deltaTime * ForwardPlayerSpeed);
 
+       // Debug.Log(UpdatedPlayerPos);
     }
 
 
@@ -225,7 +222,6 @@ public class Player : MonoBehaviour
         if (_GameManager.isPlaying)
         {
             ChangePlaneStars();
-
             if (PerformedStep == NextMove)
             {
                 if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.3f;
@@ -240,6 +236,8 @@ public class Player : MonoBehaviour
                 Player_Animator.SetBool("Gliding", true);
                 
                 LRIndex++;
+
+              //  Debug.Log(LRIndex);
                 NextMove = GeneratorScript.AllDirections[LRIndex];
 
                 StartCoroutine(SunDown());
@@ -292,61 +290,17 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.05f);
 
-        if (GameManager.GameManagerInstance.isPlaying)
-        {
-            //if(PlaneIndex==0)StartupPlane.SetActive(false);
-            if (GeneratorScript.AllPlanes[PlaneIndex + 1].tag == "Curve")
-            {
-                GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().enabled = false;
-                PlaneIndex++;
-            }
-
-            GeneratorScript.AllPlanes[PlaneIndex].GetComponentInChildren<MeshRenderer>().sharedMaterial = FadePath;
-            GeneratorScript.AllPlanes[PlaneIndex-1].GetComponentInChildren<MeshRenderer>().enabled = false;
-           // if(GeneratorScript.AllPlanes.Count>4)GeneratorScript.AllPlanes[PlaneIndex-2].GetComponentInChildren<MeshRenderer>().enabled = false;
-         //   else GeneratorScript.AllPlanes[PlaneIndex-1].GetComponentInChildren<MeshRenderer>().enabled = false;
+       
             GeneratorScript.SpawnSingle();
-          
             PlaneIndex++;
-        }
+        
     }
 
     public void ResetSunInstantly()
     {
         Sun.transform.DOLocalMove(SunStartPosition, 1f);
       strip.emission = 1;
-       // stripMat.SetColor("_EmissionColor", stripcolor);
-
-        /*   Gradient gradient;
-           GradientColorKey[] colorKey;
-           GradientAlphaKey[] alphaKey;
-
-           gradient = new Gradient();
-
-           // Populate the color keys at the relative time 0 and 1 (0 and 100%)
-           colorKey = new GradientColorKey[2];
-           colorKey[0].color = yellow;
-           colorKey[0].time = 0.0f;
-           colorKey[1].color = Color.black;
-           colorKey[1].time = 1.0f;
-
-           // Populate the alpha  keys at relative time 0 and 1  (0 and 100%)
-           alphaKey = new GradientAlphaKey[2];
-           alphaKey[0].alpha = 1.0f;
-           alphaKey[0].time = 0.0f;
-           alphaKey[1].alpha = 1.0f;
-           alphaKey[1].time = 1.0f;
-
-           gradient.SetKeys(colorKey, alphaKey);
-
-           DOVirtual
-               .Float(1,
-               0,
-               2,
-               v =>
-               {
-                   RenderSettings.fogColor = gradient.Evaluate(v);
-               });*/
+      
     }
     
 

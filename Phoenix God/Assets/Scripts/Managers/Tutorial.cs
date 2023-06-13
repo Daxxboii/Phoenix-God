@@ -23,7 +23,6 @@ public class Tutorial : MonoBehaviour
         if (instance == null) instance = this;
         TutorialImage.sprite = Tutorial_Images[0];
         Player.PlanesHaveChanged += NextImage;
-      
     }
     public void NextImage()
     {
