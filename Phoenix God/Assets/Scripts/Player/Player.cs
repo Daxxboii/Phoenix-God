@@ -203,7 +203,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
+        UpdatedPlayerPos = ((GeneratorScript.TurnPositions[LRIndex]));
         UpdatedPlayerPos.y += FlyHeight;
         Phoenix.transform.position =
             Vector3

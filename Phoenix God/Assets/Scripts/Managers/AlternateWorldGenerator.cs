@@ -9,11 +9,13 @@ using MyBox;
 public class AlternateWorldGenerator : MonoBehaviour
 {
     public static AlternateWorldGenerator Singleton;
-    //[HideInInspector]
+    [HideInInspector]
     public List<Vector3> TurnPositions = new List<Vector3>();
 
-    //[HideInInspector]
+    [HideInInspector]
     public List<bool> AllDirections = new List<bool>();
+
+    public Vector3[] StartTurns;
 
     [Range(10, 500)] public float YDistance = 10;
     [Range(10, 500)] public float XDistance = 10;
@@ -40,9 +42,9 @@ public class AlternateWorldGenerator : MonoBehaviour
 
         Planes.positionCount = 3;
 
-        Planes.SetPosition(0,new Vector3(5000, 0,4850));
-        Planes.SetPosition(1, new Vector3(4900, 0, 4950));
-        Planes.SetPosition(2, new Vector3(5000, 0, 5050));
+        Planes.SetPosition(0, StartTurns[0]);
+        Planes.SetPosition(1, StartTurns[1]);
+        Planes.SetPosition(2, StartTurns[2]);
 
         TurnPositions.Add(Planes.GetPosition(0));
         TurnPositions.Add(Planes.GetPosition(1));
