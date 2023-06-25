@@ -13,8 +13,7 @@ public class MenuManager : MonoBehaviour
 {
     // public Color DefaultColor;
     [Header("Menu Panels")]
-    [SerializeField]
-    private GameObject TitlePanel;
+   
 
     [SerializeField]
     private GameObject MainMenuPanel;
@@ -28,8 +27,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private Image GameOverBlack;
 
-    [SerializeField]
-    private Image GameOverRetryPanelBlack;
+
 
     [SerializeField, Range(0.1f, 2f)]
     private float TransitionSpeed;
@@ -101,7 +99,7 @@ public class MenuManager : MonoBehaviour
 
         //Intro Screen
         MainMenuPanel.SetActive(false);
-        CanvasGroup TitleAlpha = TitlePanel.GetComponent<CanvasGroup>();
+     
         DOVirtual
             .Float(100f,
             0f,
@@ -109,13 +107,11 @@ public class MenuManager : MonoBehaviour
             v =>
             {
                 source.Strength = v;
-                TitleAlpha.alpha = v / 100;
                 if (v <= 10) TitleName.gameObject.SetActive(true);
             })
             .OnComplete(() =>
             {
                 MainMenuPanel.SetActive(true);
-                TitlePanel.SetActive(false);
             });
     }
 
@@ -251,7 +247,6 @@ public class MenuManager : MonoBehaviour
 
     public void Retry()
     {
-        GameOverRetryPanelBlack.DOFade(0f, 1f);
         Player.Singleton.ResetSunInstantly();
         Player.ResetIndex--;
 

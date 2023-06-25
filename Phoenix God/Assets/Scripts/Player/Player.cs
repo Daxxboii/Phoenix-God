@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -148,8 +149,7 @@ public class Player : MonoBehaviour
         InputManager.CanReceiveInput = false;
         UpdatedPlayerPos.y += FlyHeight;
         SetMeshVis(true);
-       
-
+        TurnPlayer(false);
     }
 
     public void resetDifficulty()
@@ -203,7 +203,7 @@ public class Player : MonoBehaviour
                 }
             }
         }
-        UpdatedPlayerPos = ((GeneratorScript.TurnPositions[LRIndex]));
+        UpdatedPlayerPos = GetQuarterPoint(GeneratorScript.TurnPositions[LRIndex],GeneratorScript.TurnPositions[LRIndex+1]);
         UpdatedPlayerPos.y += FlyHeight;
         Phoenix.transform.position =
             Vector3
@@ -244,6 +244,7 @@ public class Player : MonoBehaviour
             }
             else
             {
+                Debug.Log("wrong Input");
                 if (ResetIndex == 1 || ResetIndex == 2)
                 {
                     ResetWorld.Invoke();
@@ -313,6 +314,13 @@ public class Player : MonoBehaviour
     public float Remap(float value, float from1, float to1, float from2, float to2)
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
+
+    public Vector3 GetQuarterPoint(Vector3 point1, Vector3 point2)
+    {
+        Vector3 difference = point2 - point1;
+        Vector3 quarterPoint = point1 + difference * 0.25f;
+        return quarterPoint;
     }
 
 }

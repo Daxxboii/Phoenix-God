@@ -44,7 +44,6 @@ public class Tutorial : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         TutorialImage.gameObject.SetActive(false);
         TutorialOver = true;
-
     }
 
 

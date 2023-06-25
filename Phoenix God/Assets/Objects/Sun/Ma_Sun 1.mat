@@ -16,7 +16,7 @@ Material:
   - _EMISSION
   - _GLOSSYREFLECTIONS_OFF
   m_InvalidKeywords: []
-  m_LightmapFlags: 1
+  m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
   m_CustomRenderQueue: 3000
@@ -126,7 +126,7 @@ Material:
     - Color_2AB28301: {r: 1, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 0.90588236, g: 0.69841045, b: 0.23529401, a: 0}
-    - _EmissionColor: {r: 1, g: 0.7527375, b: 0.514151, a: 0}
+    - _EmissionColor: {r: 1, g: 0.75273746, b: 0.5141509, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SunColor1: {r: 1, g: 0, b: 0, a: 1}
     - _SunColor2: {r: 1, g: 0.8798679, b: 0, a: 1}

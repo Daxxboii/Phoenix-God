@@ -9,10 +9,10 @@ using MyBox;
 public class AlternateWorldGenerator : MonoBehaviour
 {
     public static AlternateWorldGenerator Singleton;
-    [HideInInspector]
+    
     public List<Vector3> TurnPositions = new List<Vector3>();
 
-    [HideInInspector]
+  
     public List<bool> AllDirections = new List<bool>();
 
     public Vector3[] StartTurns;
@@ -29,7 +29,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     public Transform Camera;
     public LineRenderer Planes;
 
-    public Player player;
+    //public Player player;
     void Start()
     {
         if (Singleton == null) Singleton = this;
@@ -92,24 +92,34 @@ public class AlternateWorldGenerator : MonoBehaviour
     bool LorR()
     {
         var randomNumber = Random.Range(0f, 2f); //Generates number between 1 & 2
-        bool Decide = false;
+        bool Decide;
         if (randomNumber > 1)
             Decide = true;
         else
             Decide = false;
 
-        //Debug.Log(randomNumber);
+       
         if (AllDirections.Count > 4)
         {
             bool topValue = AllDirections[AllDirections.Count - 1];
             bool secondValue = AllDirections[AllDirections.Count - 2];
+            bool thirdValue = AllDirections[AllDirections.Count - 3];
+
             if ((topValue!=secondValue))
             {
                 return Decide;
             }
             else 
             {
-                return !topValue;
+                if(topValue == thirdValue)
+                {
+                    return !topValue;
+                }
+                else
+                {
+                    return Decide;
+                }
+               
             }
             
         }
