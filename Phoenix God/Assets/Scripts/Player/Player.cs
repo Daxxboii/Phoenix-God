@@ -245,14 +245,15 @@ public class Player : MonoBehaviour
             else
             {
                 Debug.Log("wrong Input");
-                if (ResetIndex == 1 || ResetIndex == 2)
+                _GameManager.GameOver();
+            /*    if (ResetIndex == 1 || ResetIndex == 2)
                 {
                     ResetWorld.Invoke();
                 }
                 else
                 {
                     _GameManager.GameOver();
-                }
+                }*/
             }
         }
        // Debug.Log("DownSpeed: "+SunDownSpeed+"\n Up Factor: "+SunUpForce);

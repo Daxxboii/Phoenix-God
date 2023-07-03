@@ -115,14 +115,7 @@ public class MenuManager : MonoBehaviour
             });
     }
 
-    /*public void Pause()
-    {
-        GameManager.GameManagerInstance.isPlaying = false;
-        PauseMenuPanel.SetActive(true);
-        PauseMenuButton.SetActive(false);
-        Player.Singleton.Player_Animator.SetBool("Gliding", false);
-        Player.Singleton.Phoenix.transform.rotation = Quaternion.identity;
-    }*/
+   
 
     //When play button is pressed
     public void Play()
@@ -287,7 +280,7 @@ public class MenuManager : MonoBehaviour
 
     public void UpdateTitleColor()
     {
-        TitleTextBackGround.outlineColor = TitleTextOutlines[TitleTextColorIndex];
+       /* TitleTextBackGround.outlineColor = TitleTextOutlines[TitleTextColorIndex];
 
         if (TitleTextColorIndex == TitleTextOutlines.Length - 1)
         {
@@ -296,7 +289,7 @@ public class MenuManager : MonoBehaviour
         else
         {
             TitleTextColorIndex++;
-        }
+        }*/
     }
 
 

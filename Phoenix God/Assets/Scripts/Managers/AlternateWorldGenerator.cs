@@ -20,7 +20,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     [Range(10, 500)] public float YDistance = 10;
     [Range(10, 500)] public float XDistance = 10;
 
-    bool LastDir = true;
+   // bool LastDir = true;
     bool Dir;
     int StartSpawn;
 
@@ -28,6 +28,18 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     public Transform Camera;
     public LineRenderer Planes;
+
+
+    public void ResetWorld()
+    {
+        Debug.Log("Reset World");
+        AllDirections.Clear();
+        TurnPositions.Clear();
+        NextSpawn = Vector3.zero;
+        StartSpawn = 0;
+        Start();
+    }
+
 
     //public Player player;
     void Start()
@@ -38,8 +50,7 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     void SpawnStart()
     {
-        LastDir = false;
-
+      
         Planes.positionCount = 3;
 
         Planes.SetPosition(0, StartTurns[0]);
@@ -56,8 +67,6 @@ public class AlternateWorldGenerator : MonoBehaviour
 
         AllDirections.Add(false);
         AllDirections.Add(true);
-
-       
     }
 
     public void SpawnSingle()
@@ -82,10 +91,6 @@ public class AlternateWorldGenerator : MonoBehaviour
 
             Planes.positionCount = TurnPositions.Count;
             Planes.SetPosition(TurnPositions.Count - 1, NextSpawn);
-
-            LastDir = Dir;
-        
-
     }
 
 
@@ -145,17 +150,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     }
 
 
-    public void ResetWorld()
-    {
-        AllDirections.Clear();
-        TurnPositions.Clear();
-
-        //AllPlanes.Clear();
-        NextSpawn = Vector3.zero;
-        LastDir = false;
-        StartSpawn = 0;
-        Start();
-    }
+    
 
 
    
