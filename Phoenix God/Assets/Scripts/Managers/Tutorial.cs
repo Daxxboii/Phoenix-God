@@ -36,7 +36,6 @@ public class Tutorial : MonoBehaviour
         else
         {
             TutorialImage.sprite = Tutorial_Images[ImageIndex];
-            
         }
     }
 

@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     [Range(0f, 100f)]
     private float SunUpForce;
 
-    [Range(0f, 5f)]
+    [Range(0f, 5f),SerializeField]
     private float SunDownSpeed;
 
     // float HourglassProgress;
@@ -150,6 +150,7 @@ public class Player : MonoBehaviour
         UpdatedPlayerPos.y += FlyHeight;
         SetMeshVis(true);
         TurnPlayer(false);
+        NextMove = false;
     }
 
     public void resetDifficulty()
@@ -193,14 +194,15 @@ public class Player : MonoBehaviour
             }
             if (Sun.transform.localPosition.y <= SunDownPosition.y + 10)
             {
-                if (ResetIndex == 1 || ResetIndex == 2)
-                {
-                    ResetWorld.Invoke();
-                }
-                else
-                {
-                    _GameManager.GameOver();
-                }
+                _GameManager.GameOver();
+                /* if (ResetIndex == 1 || ResetIndex == 2)
+                 {
+                     ResetWorld.Invoke();
+                 }
+                 else
+                 {
+                     _GameManager.GameOver();
+                 }*/
             }
         }
         UpdatedPlayerPos = GetQuarterPoint(GeneratorScript.TurnPositions[LRIndex],GeneratorScript.TurnPositions[LRIndex+1]);
@@ -222,9 +224,11 @@ public class Player : MonoBehaviour
         if (_GameManager.isPlaying)
         {
             ChangePlaneStars();
+          
+          
             if (PerformedStep == NextMove)
             {
-                if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.3f;
+                if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.1f;
                 if (SunUpForce > SunUpForceMax) SunUpForce -= 10f;
 
                 //if (PreviousPlane != null) PreviousPlane.SetActive(true);
