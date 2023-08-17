@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isPlaying = false;
-        MenuManager.Instance.GameOver();
         PlayerPrefs.SetInt(MaxScoreSaveName, MaxScore);
         PlayerPrefs.Save();
     }

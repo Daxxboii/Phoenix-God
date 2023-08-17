@@ -14,6 +14,7 @@ public class AlternateWorldGenerator : MonoBehaviour
 
   
     public List<bool> AllDirections = new List<bool>();
+    public List<GameObject> AllPlanes = new List<GameObject>();
 
     public Vector3[] StartTurns;
 
@@ -27,17 +28,25 @@ public class AlternateWorldGenerator : MonoBehaviour
     Vector3 NextSpawn;
 
     public Transform Camera;
-    public LineRenderer Planes;
+   // public LineRenderer Planes;
+
+    public GameObject Hexagon;
+    public int HexagonIndex;
 
 
     public void ResetWorld()
     {
-        Debug.Log("Reset World");
+        Debug.Log("Generator Reset World");
+        //Player.Singleton.Start();
         AllDirections.Clear();
         TurnPositions.Clear();
-        NextSpawn = Vector3.zero;
+        foreach(var Road in AllPlanes){
+           Destroy(Road);
+        }
+        AllPlanes.Clear();
         StartSpawn = 0;
-        Start();
+        HexagonIndex = 0;
+        SpawnStart();
     }
 
 
@@ -50,19 +59,18 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     void SpawnStart()
     {
-      
-        Planes.positionCount = 3;
+        Debug.Log("Spwaning");
 
-        Planes.SetPosition(0, StartTurns[0]);
-        Planes.SetPosition(1, StartTurns[1]);
-        Planes.SetPosition(2, StartTurns[2]);
+        TurnPositions.Add(StartTurns[0]);
+        TurnPositions.Add(StartTurns[1]);
+        TurnPositions.Add(StartTurns[2]);
 
-        TurnPositions.Add(Planes.GetPosition(0));
-        TurnPositions.Add(Planes.GetPosition(1));
-        TurnPositions.Add(Planes.GetPosition(2));
+        Spawn(false);
+        Spawn(true);
+        Spawn(true);
 
 
-        NextSpawn = Planes.GetPosition(2);
+        NextSpawn = StartTurns[2];
         
 
         AllDirections.Add(false);
@@ -89,8 +97,9 @@ public class AlternateWorldGenerator : MonoBehaviour
             TurnPositions.Add(NextSpawn);
             AllDirections.Add(Dir);
 
-            Planes.positionCount = TurnPositions.Count;
-            Planes.SetPosition(TurnPositions.Count - 1, NextSpawn);
+         //   Planes.positionCount = TurnPositions.Count;
+           // Planes.SetPosition(TurnPositions.Count - 1, NextSpawn);
+            Spawn(Dir);
     }
 
 
@@ -148,10 +157,12 @@ public class AlternateWorldGenerator : MonoBehaviour
             }
         }
     }
-
-
-    
-
-
    
+   public void Spawn(bool Dir){
+    var HexagonPlane = Instantiate(Hexagon);
+    HexagonPlane.transform.position = TurnPositions[HexagonIndex];
+    HexagonIndex++;
+    HexagonPlane.transform.rotation = Dir?HexagonPlane.transform.rotation*Quaternion.Euler(0,70,0):HexagonPlane.transform.rotation*Quaternion.Euler(0,-70,0);
+    AllPlanes.Add(HexagonPlane);
+   }
 }

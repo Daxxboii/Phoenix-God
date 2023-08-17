@@ -85,9 +85,9 @@ public class MenuManager : MonoBehaviour
     {
         if (Instance == null) Instance = this;
         source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
-        TitleTextBackGroundMaterial = TitleTextBackGround.fontSharedMaterial;
-        TitleTextBackGroundMaterial.EnableKeyword("_UnderlayColor");
-        UpdateTitleColor();
+        //TitleTextBackGroundMaterial = TitleTextBackGround.fontSharedMaterial;
+        //TitleTextBackGroundMaterial.EnableKeyword("_UnderlayColor");
+        //UpdateTitleColor();
         UpdateText();
         //RetryButtom.color = DisabledColor;
         //RetryButtonCount.color = DisabledColor;
@@ -95,7 +95,7 @@ public class MenuManager : MonoBehaviour
         TitleName.gameObject.SetActive(false);
 
         Player.PlanesHaveChanged += UpdateText;
-        Player.ResetWorld += UpdateRetryButton;
+       // Player.ResetWorld += UpdateRetryButton;
 
         //Intro Screen
         MainMenuPanel.SetActive(false);
@@ -161,34 +161,6 @@ public class MenuManager : MonoBehaviour
                     });
             });
     }
-    //When Continue Button is Pressed From Pause Menu
-    public void Continue()
-    {
-        CountDown();
-    }
-
-    void CountDown()
-    {
-        CountDownText.gameObject.SetActive(true);
-        PauseMenuPanel.SetActive(false);
-        CountDownText.gameObject.SetActive(true);
-        DOVirtual
-            .Float(4,
-            1,
-            3,
-            x =>
-            {
-                CountDownText.text = ((int)x).ToString();
-            })
-            .OnComplete(() =>
-            {
-                CountDownText.transform.gameObject.SetActive(false);
-                GameManager.GameManagerInstance.isPlaying = true;
-                GamePlayPanel.SetActive(true);
-                Player.Singleton.Player_Animator.SetBool("Gliding", true);
-                PauseMenuButton.SetActive(true);
-            });
-    }
     public void GameOver()
     {
         Player.Singleton.SetMeshVis(false);
@@ -207,12 +179,15 @@ public class MenuManager : MonoBehaviour
 
     public void ResetGame()
     {
-        UpdateTitleColor();
+        Debug.Log("Menu Manager Reset Called");
         RetryButtonCount.color = ActivatedColor;
         RetryButtonCount.text = "1x";
         GameManager.GameManagerInstance.Score = 0;
-        AlternateWorldGenerator.Singleton.ResetWorld();
+        Player.Singleton.LRIndex = 0;
         Player.Singleton.Start();
+        AlternateWorldGenerator.Singleton.ResetWorld();
+        
+       
         DOVirtual
             .Float(100,
             0,
@@ -231,43 +206,6 @@ public class MenuManager : MonoBehaviour
             });
     }
 
-    public void UpdateRetryButton()
-    {
-        GameManager.GameManagerInstance.isPlaying = false;
-        RetryButtonCount.color = ActivatedColor;
-        Retry();
-    }
-
-    public void Retry()
-    {
-        Player.Singleton.ResetSunInstantly();
-        Player.ResetIndex--;
-
-        Player.Singleton.SetMeshVis(false);
-        PauseMenuPanel.SetActive(false);
-        CountDownText.gameObject.SetActive(true);
-        DOVirtual
-            .Float(4,
-            1,
-            3,
-            x =>
-            {
-                CountDownText.text = ((int)x).ToString();
-            })
-            .OnComplete(() =>
-            {
-                Player.Singleton.SetMeshVis(true);
-                CountDownText.transform.gameObject.SetActive(false);
-                GameManager.GameManagerInstance.isPlaying = true;
-                GamePlayPanel.SetActive(true);
-
-                // RetryButtonCount.color = DisabledColor;
-                RetryButtonCount.text = Player.ResetIndex.ToString() + "x";
-                // RetryButtom.color = DisabledColor;
-
-                Player.Singleton.resetDifficulty();
-            });
-    }
 
     private void UpdateText()
     {
@@ -275,21 +213,6 @@ public class MenuManager : MonoBehaviour
             ((int)GameManager.GameManagerInstance.Score).ToString();
         MaxScoreText.text =
             ((int)GameManager.GameManagerInstance.MaxScore).ToString();
-    }
-
-
-    public void UpdateTitleColor()
-    {
-       /* TitleTextBackGround.outlineColor = TitleTextOutlines[TitleTextColorIndex];
-
-        if (TitleTextColorIndex == TitleTextOutlines.Length - 1)
-        {
-            TitleTextColorIndex = 0;
-        }
-        else
-        {
-            TitleTextColorIndex++;
-        }*/
     }
 
 

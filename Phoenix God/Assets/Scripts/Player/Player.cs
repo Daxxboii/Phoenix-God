@@ -24,22 +24,19 @@ public class Player : MonoBehaviour
     [Range(0f, 5f)]
     public float FlyHeight;
 
-    [SerializeField,Range(0,100),Header("Sun Movement")]
-    private float SunUpForceMax,SunDownSpeedMax,SunUpForceInitial,SunDownSpeedInitial;
+    [SerializeField, Range(0, 500), Header("Sun Movement")]
+    private float SunUpForceMax,SunUpForceInitial,SunDownSpeedMax,SunDownSpeedInitial;
 
-    
+
 
     [Range(0f, 100f)]
     private float SunUpForce;
 
-    [Range(0f, 5f),SerializeField]
+    [Range(0f, 5f)]
     private float SunDownSpeed;
 
-    // float HourglassProgress;
 
-    // float timer;
-
-    [HideInInspector]
+    //[HideInInspector]
     public int LRIndex;
 
     private int PlaneIndex;
@@ -51,7 +48,7 @@ public class Player : MonoBehaviour
 
     private Color stripcolor;
 
-    
+
 
     [Header("Vectors")]
     public Vector3
@@ -67,10 +64,6 @@ public class Player : MonoBehaviour
     Collider[] hitColliders;
 
     [Header("Booleans")]
-    // public bool UsedUpSunPower;
-
-    // public bool KillTween = false;
-
     [HideInInspector]
     public bool PerformedStep;
 
@@ -91,11 +84,6 @@ public class Player : MonoBehaviour
     [Header("References")]
     public GameObject Phoenix;
 
-    /* public Image
-
-             HourGlassOuter,
-             HourGlassInner;*/
-
     [SerializeField]
     public Animator Player_Animator;
 
@@ -104,7 +92,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private SkinnedMeshRenderer Renderer;
-    [SerializeField]private MeshRenderer TailRenderer;
+    [SerializeField] private MeshRenderer TailRenderer;
 
     public GameObject Sun;
 
@@ -113,7 +101,7 @@ public class Player : MonoBehaviour
     public Material
 
             FadePath, Sky;
-    
+
 
     private GameObject PreviousPlane;
 
@@ -123,7 +111,7 @@ public class Player : MonoBehaviour
 
     private Vector3 Sunpos;
     public Material Plane;
-  
+
     Vector2 Offset;
 
     public EmissionTester strip;
@@ -133,8 +121,14 @@ public class Player : MonoBehaviour
         if (Singleton == null) Singleton = this;
     }
 
-    public void Start() 
+    public void Start()
     {
+        ResetEverything();
+    }
+
+    public void ResetEverything()
+    {
+        Debug.Log("Player Reset Called");
         resetDifficulty();
         ResetSunInstantly();
         LRIndex = 0;
@@ -162,12 +156,12 @@ public class Player : MonoBehaviour
     void ResetSun()
     {
         Sunpos = Sun.transform.localPosition;
-        Sunpos.y += SunUpForce;
+        Sunpos.y += 100;
         Sun.transform.localPosition =
             Vector3
                 .Lerp(Sun.transform.localPosition,
                 Sunpos,
-                Time.deltaTime * 5);
+                Time.deltaTime * SunUpForce);
 
         ClampedSunPos = Sun.transform.localPosition;
         ClampedSunPos.y =
@@ -192,28 +186,23 @@ public class Player : MonoBehaviour
             {
                 ResetSun();
             }
-            if (Sun.transform.localPosition.y <= SunDownPosition.y + 10)
+            if (Sun.transform.localPosition.y <= SunDownPosition.y + 200)
             {
+                Debug.Log("Sun Down");
                 _GameManager.GameOver();
-                /* if (ResetIndex == 1 || ResetIndex == 2)
-                 {
-                     ResetWorld.Invoke();
-                 }
-                 else
-                 {
-                     _GameManager.GameOver();
-                 }*/
+                MenuManager.Instance.GameOver();
             }
+
+
         }
-        UpdatedPlayerPos = GetQuarterPoint(GeneratorScript.TurnPositions[LRIndex],GeneratorScript.TurnPositions[LRIndex+1]);
+        //Debug.Log("LRIndex is" + LRIndex);
+        UpdatedPlayerPos = GetQuarterPoint(GeneratorScript.TurnPositions[LRIndex], GeneratorScript.TurnPositions[LRIndex + 1]);
         UpdatedPlayerPos.y += FlyHeight;
         Phoenix.transform.position =
             Vector3
                 .Lerp(Phoenix.transform.position,
                 UpdatedPlayerPos,
                 Time.deltaTime * ForwardPlayerSpeed);
-
-       // Debug.Log(UpdatedPlayerPos);
     }
 
 
@@ -223,25 +212,19 @@ public class Player : MonoBehaviour
     {
         if (_GameManager.isPlaying)
         {
-            ChangePlaneStars();
-          
-          
             if (PerformedStep == NextMove)
             {
-                if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.1f;
+                if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.5f;
                 if (SunUpForce > SunUpForceMax) SunUpForce -= 10f;
 
-                //if (PreviousPlane != null) PreviousPlane.SetActive(true);
                 StartCoroutine(Fading());
 
                 TurnPlayer(PerformedStep);
 
                 PlanesHaveChanged.Invoke();
                 Player_Animator.SetBool("Gliding", true);
-                
-                LRIndex++;
 
-              //  Debug.Log(LRIndex);
+                LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex];
 
                 StartCoroutine(SunDown());
@@ -250,17 +233,9 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("wrong Input");
                 _GameManager.GameOver();
-            /*    if (ResetIndex == 1 || ResetIndex == 2)
-                {
-                    ResetWorld.Invoke();
-                }
-                else
-                {
-                    _GameManager.GameOver();
-                }*/
+                MenuManager.Instance.GameOver();
             }
         }
-       // Debug.Log("DownSpeed: "+SunDownSpeed+"\n Up Factor: "+SunUpForce);
     }
 
     public void TurnPlayer(bool value)
@@ -295,27 +270,17 @@ public class Player : MonoBehaviour
     IEnumerator Fading()
     {
         yield return new WaitForSeconds(0.05f);
+        GeneratorScript.SpawnSingle();
+        PlaneIndex++;
 
-       
-            GeneratorScript.SpawnSingle();
-            PlaneIndex++;
-        
     }
 
     public void ResetSunInstantly()
     {
         Sun.transform.DOLocalMove(SunStartPosition, 1f);
-      strip.emission = 1;
-      
-    }
-    
+        strip.emission = 1;
 
-    void ChangePlaneStars()
-    {
-        Offset += new Vector2(Random.Range(0.1f, 0.3f), Random.Range(0.1f, 0.3f));
-        Plane.SetTextureOffset("_MainTex", Offset);
     }
-
     public float Remap(float value, float from1, float to1, float from2, float to2)
     {
         return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
