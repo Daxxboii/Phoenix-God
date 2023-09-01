@@ -49,18 +49,17 @@ public class AlternateWorldGenerator : MonoBehaviour
         SpawnStart();
     }
 
-
-    //public Player player;
-    void Start()
+    void Awake()
     {
         if (Singleton == null) Singleton = this;
+    }
+    void Start()
+    {
         SpawnStart();
     }
 
     void SpawnStart()
     {
-        Debug.Log("Spwaning");
-
         TurnPositions.Add(StartTurns[0]);
         TurnPositions.Add(StartTurns[1]);
         TurnPositions.Add(StartTurns[2]);
@@ -75,6 +74,7 @@ public class AlternateWorldGenerator : MonoBehaviour
 
         AllDirections.Add(false);
         AllDirections.Add(true);
+        Debug.Log("Spawning");
     }
 
     public void SpawnSingle()
@@ -97,8 +97,6 @@ public class AlternateWorldGenerator : MonoBehaviour
             TurnPositions.Add(NextSpawn);
             AllDirections.Add(Dir);
 
-         //   Planes.positionCount = TurnPositions.Count;
-           // Planes.SetPosition(TurnPositions.Count - 1, NextSpawn);
             Spawn(Dir);
     }
 
