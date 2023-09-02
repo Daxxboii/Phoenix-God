@@ -50,7 +50,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private SkinnedMeshRenderer Renderer;
-    [SerializeField] private MeshRenderer TailRenderer;
 
     public GameObject Sun;
 
@@ -139,13 +138,13 @@ public class Player : MonoBehaviour
 
         }
         //Debug.Log("LRIndex is" + LRIndex);
-      /*  UpdatedPlayerPos = GetQuarterPoint(GeneratorScript.TurnPositions[LRIndex], GeneratorScript.TurnPositions[LRIndex + 1]);
+        UpdatedPlayerPos = GetQuarterPoint(GeneratorScript.TurnPositions[LRIndex], GeneratorScript.TurnPositions[LRIndex + 1]);
         UpdatedPlayerPos.y += FlyHeight;
         Phoenix.transform.position =
             Vector3
                 .Lerp(Phoenix.transform.position,
                 UpdatedPlayerPos,
-                Time.deltaTime * ForwardPlayerSpeed);*/
+                Time.deltaTime * ForwardPlayerSpeed);
     }
 
 
@@ -200,7 +199,6 @@ public class Player : MonoBehaviour
     public void SetMeshVis(bool value)
     {
         Renderer.enabled = value;
-        TailRenderer.enabled = value;
     }
 
     IEnumerator SunDown()
