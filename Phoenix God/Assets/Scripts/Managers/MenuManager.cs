@@ -32,8 +32,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField, Range(0.1f, 2f)]
     private float TransitionSpeed;
 
-    [SerializeField]
-    private TranslucentImageSource translucentImageSource;
+   // [SerializeField]
+   // private TranslucentImageSource translucentImageSource;
 
     private ScalableBlurConfig source;
 
@@ -84,7 +84,7 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
+       // source = (ScalableBlurConfig)translucentImageSource.BlurConfig;
         //TitleTextBackGroundMaterial = TitleTextBackGround.fontSharedMaterial;
         //TitleTextBackGroundMaterial.EnableKeyword("_UnderlayColor");
         //UpdateTitleColor();
@@ -106,7 +106,7 @@ public class MenuManager : MonoBehaviour
             0f,
             v =>
             {
-                source.Strength = v;
+               // source.Strength = v;
                 if (v <= 10) TitleName.gameObject.SetActive(true);
             })
             .OnComplete(() =>
@@ -194,12 +194,12 @@ public class MenuManager : MonoBehaviour
             TransitionSpeed,
             v =>
             {
-                source.Strength = v;
+                //source.Strength = v;
             })
             .OnComplete(() =>
             {
                 TitleName.gameObject.SetActive(true);
-                translucentImageSource.enabled = false;
+               // translucentImageSource.enabled = false;
                 PauseMenuPanel.SetActive(false);
                 MainMenuPanel.SetActive(true);
                 MainMenuPanel.transform.DOScale(1, TransitionSpeed);
