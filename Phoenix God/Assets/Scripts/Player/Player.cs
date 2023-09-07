@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
         Sunpos.y += 100;
         Sun.transform.localPosition =
             Vector3
-                .Lerp(Sun.transform.localPosition,
+                .Slerp(Sun.transform.localPosition,
                 Sunpos,
                 Time.deltaTime * SunUpForce);
 

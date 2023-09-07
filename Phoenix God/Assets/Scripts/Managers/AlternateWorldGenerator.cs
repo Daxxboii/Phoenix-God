@@ -21,6 +21,8 @@ public class AlternateWorldGenerator : MonoBehaviour
     [Range(10, 500)] public float YDistance = 10;
     [Range(10, 500)] public float XDistance = 10;
 
+    public Material StartupPlaneMaterial;
+
    // bool LastDir = true;
     bool Dir;
     int StartSpawn;
@@ -46,12 +48,29 @@ public class AlternateWorldGenerator : MonoBehaviour
         AllPlanes.Clear();
         StartSpawn = 0;
         HexagonIndex = 0;
+
+        Color baseColor = StartupPlaneMaterial.color; // Get the base color
+        float H, S, V;
+        Color.RGBToHSV(baseColor, out H, out S, out V); // Convert the color to HSV
+        H = (H + 50/360f) % 1; // Shift the hue by 50 (out of 360), and wrap around if it exceeds 1
+        StartupPlaneMaterial.color = Color.HSVToRGB(H, S, V); // Convert back to RGB and assign to the material
+
+        // Do the same for emission
+        Color emissionColor = StartupPlaneMaterial.GetColor("_EmissionColor"); // Get the emission color
+        Color.RGBToHSV(emissionColor, out H, out S, out V); // Convert the color to HSV
+        H = (H + 50/360f) % 1; // Shift the hue by 50 (out of 360), and wrap around if it exceeds 1
+        StartupPlaneMaterial.SetColor("_EmissionColor", Color.HSVToRGB(H, S, V)); // Convert back to RGB and assign to the emission color
+        
+        
+
+
         SpawnStart();
     }
 
     void Awake()
     {
         if (Singleton == null) Singleton = this;
+
     }
     void Start()
     {
@@ -79,7 +98,8 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     public void SpawnSingle()
     {
-      
+      Destroy(AllPlanes[0]);
+      AllPlanes.RemoveAt(0);
             Dir = LorR();
 
             if (Dir)

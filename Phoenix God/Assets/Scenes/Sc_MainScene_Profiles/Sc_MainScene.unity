@@ -10219,7 +10219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402907654}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -93, y: 153, z: 4490}
+  m_LocalPosition: {x: -93, y: 716.3, z: 4490}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -20157,6 +20157,7 @@ MonoBehaviour:
   - {x: 5000, y: 0, z: 4910}
   YDistance: 30
   XDistance: 30
+  StartupPlaneMaterial: {fileID: 0}
   Camera: {fileID: 1073232122}
   Hexagon: {fileID: 4792602081592001022, guid: 57b037f827c24d3478e9b3f82bebe369, type: 3}
   HexagonIndex: 0
@@ -20564,6 +20565,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Scene
+      objectReference: {fileID: 0}
+    - target: {fileID: 2156607432304460592, guid: 3ad15dca1d4b42c49bd1279358143028,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2156607432304460592, guid: 3ad15dca1d4b42c49bd1279358143028,
         type: 3}
@@ -26313,6 +26319,11 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4278190335
       objectReference: {fileID: 0}
+    - target: {fileID: 5262978855641211982, guid: c3b9530a84b380a4c91d26b489f0a099,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -106.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6175085825147896195, guid: c3b9530a84b380a4c91d26b489f0a099,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -26386,6 +26397,11 @@ PrefabInstance:
     - target: {fileID: 9017675554097158131, guid: c3b9530a84b380a4c91d26b489f0a099,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9156824241008309280, guid: c3b9530a84b380a4c91d26b489f0a099,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
