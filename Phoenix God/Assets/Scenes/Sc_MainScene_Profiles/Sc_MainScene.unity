@@ -20157,7 +20157,8 @@ MonoBehaviour:
   - {x: 5000, y: 0, z: 4910}
   YDistance: 30
   XDistance: 30
-  StartupPlaneMaterial: {fileID: 0}
+  StartupPlaneMaterial: {fileID: 2100000, guid: b86c573bdea684e4b94f1a9b08018af2,
+    type: 2}
   Camera: {fileID: 1073232122}
   Hexagon: {fileID: 4792602081592001022, guid: 57b037f827c24d3478e9b3f82bebe369, type: 3}
   HexagonIndex: 0
