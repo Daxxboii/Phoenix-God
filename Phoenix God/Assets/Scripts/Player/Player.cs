@@ -55,10 +55,10 @@ public class Player : MonoBehaviour
 
     public AlternateWorldGenerator GeneratorScript;
     private Vector3 Sunpos;
-
+    
 
     Vector2 Offset;
-
+    public GameObject[] StartupItems;
 
     void Awake()
     {
@@ -86,7 +86,10 @@ public class Player : MonoBehaviour
         SetMeshVis(true);
         TurnPlayer(false);
         NextMove = false;
-        
+        foreach(var item in StartupItems)
+        {
+            item.SetActive(true);
+        }
         Debug.Log("Player Reset Called");
     }
 
@@ -137,6 +140,9 @@ public class Player : MonoBehaviour
 
 
         }
+       
+            
+        
         //Debug.Log("LRIndex is" + LRIndex);
         UpdatedPlayerPos = GetQuarterPoint(GeneratorScript.TurnPositions[LRIndex], GeneratorScript.TurnPositions[LRIndex + 1]);
         UpdatedPlayerPos.y += FlyHeight;
@@ -154,6 +160,10 @@ public class Player : MonoBehaviour
     {
         if (_GameManager.isPlaying)
         {
+            foreach (var item in StartupItems)
+            {
+                item.SetActive(false);
+            }
             if (PerformedStep == NextMove)
             {
                 if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += 0.5f;

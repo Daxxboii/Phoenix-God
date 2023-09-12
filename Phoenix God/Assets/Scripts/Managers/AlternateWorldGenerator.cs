@@ -22,6 +22,10 @@ public class AlternateWorldGenerator : MonoBehaviour
     [Range(10, 500)] public float XDistance = 10;
 
     public Material StartupPlaneMaterial;
+    public Color[] StartUpPlaneColors;
+    public int StartUpPlaneColorIndex = 0;
+
+    
 
    // bool LastDir = true;
     bool Dir;
@@ -49,28 +53,23 @@ public class AlternateWorldGenerator : MonoBehaviour
         StartSpawn = 0;
         HexagonIndex = 0;
 
-        Color baseColor = StartupPlaneMaterial.color; // Get the base color
-        float H, S, V;
-        Color.RGBToHSV(baseColor, out H, out S, out V); // Convert the color to HSV
-        H = (H + 50/360f) % 1; // Shift the hue by 50 (out of 360), and wrap around if it exceeds 1
-        StartupPlaneMaterial.color = Color.HSVToRGB(H, S, V); // Convert back to RGB and assign to the material
+     
+        StartupPlaneMaterial.color = StartUpPlaneColors[StartUpPlaneColorIndex]; // Convert back to RGB and assign to the material
 
-        // Do the same for emission
-        Color emissionColor = StartupPlaneMaterial.GetColor("_EmissionColor"); // Get the emission color
-        Color.RGBToHSV(emissionColor, out H, out S, out V); // Convert the color to HSV
-        H = (H + 50/360f) % 1; // Shift the hue by 50 (out of 360), and wrap around if it exceeds 1
-        StartupPlaneMaterial.SetColor("_EmissionColor", Color.HSVToRGB(H, S, V)); // Convert back to RGB and assign to the emission color
-        
-        
-
-
+       
+        StartupPlaneMaterial.SetColor("_EmissionColor", StartUpPlaneColors[StartUpPlaneColorIndex]); // Convert back to RGB and assign to the emission color
+        StartUpPlaneColorIndex++;
+        if (StartUpPlaneColorIndex >= 8)
+        {
+            StartUpPlaneColorIndex = 0;
+        }
         SpawnStart();
     }
 
     void Awake()
     {
         if (Singleton == null) Singleton = this;
-
+        StartUpPlaneColorIndex = 0;
     }
     void Start()
     {
