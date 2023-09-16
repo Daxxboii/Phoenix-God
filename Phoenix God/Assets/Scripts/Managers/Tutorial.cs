@@ -33,10 +33,6 @@ public class Tutorial : MonoBehaviour
             StartCoroutine(Disable());
             Player.PlanesHaveChanged -= NextImage;
         }
-        else if(ImageIndex == 1)
-        {
-            
-        }
         else
         {
             TutorialImage.sprite = Tutorial_Images[ImageIndex];

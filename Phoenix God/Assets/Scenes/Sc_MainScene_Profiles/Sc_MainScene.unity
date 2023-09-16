@@ -10219,7 +10219,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 402907654}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -93, y: 716.3, z: 4490}
+  m_LocalPosition: {x: -93, y: 1342, z: 4490}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15333,13 +15333,13 @@ MonoBehaviour:
     type: 2}
   StartUpPlaneColors:
   - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0.37961724, b: 0, a: 1}
+  - {r: 1, g: 0.11694215, b: 0, a: 1}
   - {r: 1, g: 0.9490196, b: 0, a: 1}
   - {r: 0, g: 1, b: 0.12898159, a: 1}
   - {r: 0, g: 0.06529021, b: 1, a: 1}
   - {r: 0.44591188, g: 0, b: 1, a: 1}
   - {r: 1, g: 0, b: 0.77448034, a: 1}
-  - {r: 0.3773585, g: 0, b: 0.040432554, a: 1}
+  - {r: 0.1509434, g: 0.049413543, b: 0.0021359876, a: 1}
   StartUpPlaneColorIndex: 0
   Camera: {fileID: 1073232122}
   Hexagon: {fileID: 4792602081592001022, guid: 57b037f827c24d3478e9b3f82bebe369, type: 3}

@@ -28,10 +28,11 @@ public class InputManager : MonoBehaviour
             if (Input.touchCount > 0)
             {
                 RecievingInput = true;
+                
                 touch = Input.GetTouch(0);
                 if (touch.phase == TouchPhase.Began)
                 {
-                    if (touch.position.y < (Screen.height / 2f))
+                    if (touch.position.y < (Screen.height / 1.2f))
                     {
                         TouchInputX = touch.position.x;
 

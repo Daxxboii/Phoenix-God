@@ -69,7 +69,11 @@ public class AlternateWorldGenerator : MonoBehaviour
     void Awake()
     {
         if (Singleton == null) Singleton = this;
-        StartUpPlaneColorIndex = 0;
+         StartupPlaneMaterial.color = StartUpPlaneColors[StartUpPlaneColorIndex]; // Convert back to RGB and assign to the material
+
+       
+        StartupPlaneMaterial.SetColor("_EmissionColor", StartUpPlaneColors[StartUpPlaneColorIndex]); // Convert back to RGB and assign to the emission color
+        StartUpPlaneColorIndex++;
     }
     void Start()
     {
@@ -93,6 +97,7 @@ public class AlternateWorldGenerator : MonoBehaviour
         AllDirections.Add(false);
         AllDirections.Add(true);
         Debug.Log("Spawning");
+        
     }
 
     public void SpawnSingle()
