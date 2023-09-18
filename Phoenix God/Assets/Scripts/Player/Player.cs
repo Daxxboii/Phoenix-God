@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public float ForwardPlayerSpeed;
     [Range(0f, 5f)]
     public float FlyHeight;
-    [SerializeField, Range(0, 500), Header("Sun Movement")]
+    [SerializeField, Range(0, 1000), Header("Sun Movement")]
     private float SunUpForceMax,SunUpForceInitial,SunDownSpeedMax,SunDownSpeedInitial;
 
     [Range(0f, 100f)]
@@ -144,7 +144,7 @@ public class Player : MonoBehaviour
             
         
         //Debug.Log("LRIndex is" + LRIndex);
-        UpdatedPlayerPos = GetQuarterPoint(GeneratorScript.TurnPositions[LRIndex], GeneratorScript.TurnPositions[LRIndex + 1]);
+        UpdatedPlayerPos = GeneratorScript.TurnPositions[LRIndex];
         UpdatedPlayerPos.y += FlyHeight;
         Phoenix.transform.position =
             Vector3

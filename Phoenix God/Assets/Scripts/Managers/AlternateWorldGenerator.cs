@@ -139,7 +139,6 @@ public class AlternateWorldGenerator : MonoBehaviour
         {
             bool topValue = AllDirections[AllDirections.Count - 1];
             bool secondValue = AllDirections[AllDirections.Count - 2];
-            bool thirdValue = AllDirections[AllDirections.Count - 3];
 
             if ((topValue!=secondValue))
             {
@@ -147,14 +146,8 @@ public class AlternateWorldGenerator : MonoBehaviour
             }
             else 
             {
-                if(topValue == thirdValue)
-                {
                     return !topValue;
-                }
-                else
-                {
-                    return Decide;
-                }
+                
                
             }
             
