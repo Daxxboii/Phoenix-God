@@ -127,30 +127,21 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     bool LorR()
     {
-        var randomNumber = Random.Range(0f, 2f); //Generates number between 1 & 2
-        bool Decide;
-        if (randomNumber > 1)
-            Decide = true;
-        else
-            Decide = false;
+        var Decide = (Random.Range(0, 2) == 0) ? false : true;
 
-       
+
         if (AllDirections.Count > 4)
         {
-            bool topValue = AllDirections[AllDirections.Count - 1];
-            bool secondValue = AllDirections[AllDirections.Count - 2];
+            bool latestValue = AllDirections[AllDirections.Count - 1];
+            bool secondLatestValue = AllDirections[AllDirections.Count - 2];
 
-            if ((topValue!=secondValue))
+            if (latestValue == secondLatestValue)
             {
-                return Decide;
+                // If they are the same, return the opposite of randomDecision
+                return !Decide;
             }
-            else 
-            {
-                    return !topValue;
-                
-               
-            }
-            
+
+            return Decide;
         }
         else
         {
