@@ -140,7 +140,7 @@ PrefabInstance:
     - target: {fileID: 730140726506357000, guid: 57b037f827c24d3478e9b3f82bebe369,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5042.8
+      value: 5030
       objectReference: {fileID: 0}
     - target: {fileID: 730140726506357000, guid: 57b037f827c24d3478e9b3f82bebe369,
         type: 3}
@@ -150,7 +150,7 @@ PrefabInstance:
     - target: {fileID: 730140726506357000, guid: 57b037f827c24d3478e9b3f82bebe369,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4799.2
+      value: 4831
       objectReference: {fileID: 0}
     - target: {fileID: 730140726506357000, guid: 57b037f827c24d3478e9b3f82bebe369,
         type: 3}
@@ -15265,11 +15265,7 @@ MonoBehaviour:
   TurnPositions: []
   AllDirections: 
   AllPlanes: []
-  StartTurns:
-  - {x: 5000, y: 0, z: 4850}
-  - {x: 4970, y: 0, z: 4880}
-  - {x: 5000, y: 0, z: 4910}
-  YDistance: 30
+  YDistance: 25
   XDistance: 30
   StartupPlaneMaterial: {fileID: 2100000, guid: b86c573bdea684e4b94f1a9b08018af2,
     type: 2}
@@ -15283,6 +15279,7 @@ MonoBehaviour:
   - {r: 1, g: 0, b: 0.77448034, a: 0.50980395}
   - {r: 0.1509434, g: 0.049413543, b: 0.0021359876, a: 0.50980395}
   StartUpPlaneColorIndex: 0
+  StartupSpawnLoc: {x: 5000, y: 0, z: 4850}
   Camera: {fileID: 1073232122}
   Hexagon: {fileID: 4792602081592001022, guid: 57b037f827c24d3478e9b3f82bebe369, type: 3}
   HexagonIndex: 0
@@ -15579,7 +15576,7 @@ PrefabInstance:
     - target: {fileID: 730140726506357000, guid: 57b037f827c24d3478e9b3f82bebe369,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5020.3
+      value: 4995.8
       objectReference: {fileID: 0}
     - target: {fileID: 730140726506357000, guid: 57b037f827c24d3478e9b3f82bebe369,
         type: 3}
@@ -15589,7 +15586,7 @@ PrefabInstance:
     - target: {fileID: 730140726506357000, guid: 57b037f827c24d3478e9b3f82bebe369,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4827.6
+      value: 4853.7
       objectReference: {fileID: 0}
     - target: {fileID: 730140726506357000, guid: 57b037f827c24d3478e9b3f82bebe369,
         type: 3}
@@ -16135,7 +16132,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9a94cdafc34c7904a83909ec3bd7dd37, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 33e3e666ded475f49b754df74ca2e544, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -16247,10 +16244,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForwardPlayerSpeed: 10
   FlyHeight: 5
-  SunUpForceMax: 600
-  SunUpForceInitial: 500
+  SunUpForceMax: 500
+  SunUpForceInitial: 300
   SunDownSpeedMax: 5
   SunDownSpeedInitial: 0.1
+  SunDownFactor: 0.1
+  SunUpFactor: 100
+  SunUpForce: 0
+  SunDownSpeed: 0
   LRIndex: 0
   SunUpPosition: {x: -65, y: 7732, z: 4865}
   SunDownPosition: {x: -65, y: -7286, z: 4865}

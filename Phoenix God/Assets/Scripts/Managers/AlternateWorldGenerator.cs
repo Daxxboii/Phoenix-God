@@ -16,7 +16,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     public List<bool> AllDirections = new List<bool>();
     public List<GameObject> AllPlanes = new List<GameObject>();
 
-    public Vector3[] StartTurns;
+    //public Vector3[] StartTurns;
 
     [Range(10, 500)] public float YDistance = 10;
     [Range(10, 500)] public float XDistance = 10;
@@ -25,7 +25,7 @@ public class AlternateWorldGenerator : MonoBehaviour
     public Color[] StartUpPlaneColors;
     public int StartUpPlaneColorIndex = 0;
 
-    
+    public Vector3 StartupSpawnLoc;
 
    // bool LastDir = true;
     bool Dir;
@@ -82,28 +82,21 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     void SpawnStart()
     {
-        TurnPositions.Add(StartTurns[0]);
-        TurnPositions.Add(StartTurns[1]);
-        TurnPositions.Add(StartTurns[2]);
+        NextSpawn = StartupSpawnLoc;
+        SpawnSingle();
+        SpawnSingle();
+        SpawnSingle();
 
-        Spawn(false);
-        Spawn(true);
-        Spawn(true);
-
-
-        NextSpawn = StartTurns[2];
-        
-
-        AllDirections.Add(false);
-        AllDirections.Add(true);
         Debug.Log("Spawning");
-        
     }
 
     public void SpawnSingle()
     {
-      Destroy(AllPlanes[0]);
-      AllPlanes.RemoveAt(0);
+        if (AllDirections.Count > 4)
+        {
+            Destroy(AllPlanes[0]);
+            AllPlanes.RemoveAt(0);
+        }
             Dir = LorR();
 
             if (Dir)
@@ -152,7 +145,7 @@ public class AlternateWorldGenerator : MonoBehaviour
                     return false;
                 case 1:
                     StartSpawn++;
-                    return true;
+                    return false;
 
                 case 2:
                     StartSpawn++;
