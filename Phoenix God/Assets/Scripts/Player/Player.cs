@@ -142,6 +142,7 @@ public class Player : MonoBehaviour
             }
             if (PerformedStep == NextMove)
             {
+                
                 if (SunDownSpeed < SunDownSpeedMax) SunDownSpeed += SunDownFactor;
                 if (SunUpForce > SunUpForceInitial) SunUpForce -= SunUpFactor;
 
@@ -152,7 +153,7 @@ public class Player : MonoBehaviour
                 PlanesHaveChanged.Invoke();
                 Player_Animator.SetBool("Gliding", true);
 
-                // GeneratorScript.AllPlanes[0].SetActive(false);
+       
                 LRIndex++;
                 NextMove = GeneratorScript.AllDirections[LRIndex+1];
                 StartCoroutine(SunDown());
@@ -189,6 +190,9 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.05f);
         GeneratorScript.SpawnSingle();
+        Debug.Log(LRIndex);
+        if(LRIndex != 1)GeneratorScript.AllPlanes[1].SetActive(false);
+        else GeneratorScript.AllPlanes[0].SetActive(false);
     }
 
     public void ResetSunInstantly()
