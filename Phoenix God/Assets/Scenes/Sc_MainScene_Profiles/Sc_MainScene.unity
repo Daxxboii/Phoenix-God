@@ -15280,6 +15280,7 @@ MonoBehaviour:
   - {r: 0.1509434, g: 0.049413543, b: 0.0021359876, a: 0.50980395}
   StartUpPlaneColorIndex: 0
   StartupSpawnLoc: {x: 5000, y: 0, z: 4850}
+  StartSpawn: 0
   Camera: {fileID: 1073232122}
   Hexagon: {fileID: 4792602081592001022, guid: 57b037f827c24d3478e9b3f82bebe369, type: 3}
   HexagonIndex: 0
@@ -16244,12 +16245,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ForwardPlayerSpeed: 10
   FlyHeight: 5
-  SunUpForceMax: 500
-  SunUpForceInitial: 300
+  SunUpForceMax: 3024
+  SunUpForceInitial: 1500
   SunDownSpeedMax: 5
   SunDownSpeedInitial: 0.1
   SunDownFactor: 0.1
-  SunUpFactor: 100
+  SunUpFactor: 300
   SunUpForce: 0
   SunDownSpeed: 0
   LRIndex: 0

@@ -99,10 +99,11 @@ public class Player : MonoBehaviour
     {
         Sunpos = Sun.transform.localPosition;
         Sunpos.y += SunUpForce;
-        Sun.transform.localPosition = Vector3.Slerp(Sun.transform.localPosition,Sunpos,Time.deltaTime * 500);
-        ClampedSunPos = Sun.transform.localPosition;
+
+        ClampedSunPos = Sunpos;
         ClampedSunPos.y = Mathf.Clamp(ClampedSunPos.y, SunDownPosition.y, SunUpPosition.y);
-        Sun.transform.localPosition = ClampedSunPos;
+
+        Sun.transform.localPosition = Vector3.Slerp(Sun.transform.localPosition, ClampedSunPos, Time.deltaTime * 10);
     }
 
     void FixedUpdate()
@@ -111,7 +112,6 @@ public class Player : MonoBehaviour
         {
             if (Sun.transform.localPosition.y <= SunDownPosition.y + 200)
             {
-                Debug.Log("Sun Down");
                 _GameManager.GameOver();
                 MenuManager.Instance.GameOver();
             }
@@ -190,7 +190,6 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.05f);
         GeneratorScript.SpawnSingle();
-        Debug.Log(LRIndex);
         if(LRIndex != 1)GeneratorScript.AllPlanes[1].SetActive(false);
         else GeneratorScript.AllPlanes[0].SetActive(false);
     }

@@ -16,7 +16,6 @@ public class AlternateWorldGenerator : MonoBehaviour
     public List<bool> AllDirections = new List<bool>();
     public List<GameObject> AllPlanes = new List<GameObject>();
 
-    //public Vector3[] StartTurns;
 
     [Range(10, 500)] public float YDistance = 10;
     [Range(10, 500)] public float XDistance = 10;
@@ -117,14 +116,14 @@ public class AlternateWorldGenerator : MonoBehaviour
 
     bool LorR()
     {
-        if (AllDirections.Count > 4)
+        if (AllDirections.Count > 5)
         {
             var Decide = (Random.Range(0, 2) == 0) ? false : true;
             bool latestValue = AllDirections[AllDirections.Count - 1];
             bool secondLatestValue = AllDirections[AllDirections.Count - 2];
             bool thirdLatestValue = AllDirections[AllDirections.Count - 3];
-
-            if (latestValue == secondLatestValue == thirdLatestValue)
+            bool fourthLatestValue = AllDirections[AllDirections.Count - 4];
+            if (latestValue == secondLatestValue && latestValue == thirdLatestValue &&  latestValue == fourthLatestValue)
             {
                 // If they are the same, return the opposite of randomDecision
                 return !latestValue;
