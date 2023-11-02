@@ -131,8 +131,8 @@ public class MenuManager : MonoBehaviour
                 GamePlayPanel.SetActive(true);
                 MainMenuPanel.SetActive(false);
                 GameManager.GameManagerInstance.isPlaying = true;
-                AudioManager.instance.currentVolume = 0.1f;
-                AudioManager.instance.MakeWindLouder();
+               // AudioManager.instance.currentVolume = 0.1f;
+             //   AudioManager.instance.MakeWindLouder();
             });
 
         DOVirtual
@@ -174,7 +174,7 @@ public class MenuManager : MonoBehaviour
             });
 
         Tutorial.instance.Reset();
-        AudioManager.instance.MakeWindLouder();
+       // AudioManager.instance.MakeWindLouder();
     }
 
     public void ResetGame()
